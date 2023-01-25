@@ -1,0 +1,48 @@
+$border-width: 0.25in;
+
+:host {
+  display: flex;
+  background: white;
+  padding: $border-width 0;
+}
+
+.team {
+  flex: 1;
+  padding: 0.25in;
+  text-align: center;
+
+  &:first-child {
+    margin-right: $border-width;
+  }
+
+  &:last-child {
+  }
+
+  .score {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    .score-up, .score-down {
+      background: green;
+      flex: 1;
+      border-radius: 10px;
+      cursor: pointer;
+
+      &:hover {
+        background: #fff4;
+      }
+    }
+
+    .score-value {
+      flex: auto;
+      font-size: 2in;
+      font-weight: bold;
+    }
+
+    .team-name {
+      font-size: 1in;
+    }
+  }
+
+}

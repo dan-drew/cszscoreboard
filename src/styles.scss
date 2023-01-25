@@ -1,6 +1,18 @@
 body {
   background: black;
+  color: white;
+  font-family: sans-serif;
+  padding: 0;
+  margin: 0;
 
   --csz-blue: royalblue;
   --csz-red: darkred;
+}
+
+.csz-bg-blue {
+  background: var(--csz-blue) !important;
+}
+
+.csz-bg-red {
+  background: var(--csz-red) !important;
 }

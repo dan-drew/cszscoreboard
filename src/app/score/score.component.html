@@ -1,0 +1,15 @@
+<ng-template #team let-$team>
+  <div class="team csz-bg-{{$team.type}}">
+    <div class="score">
+      <div class="score-down" (click)="$team.score = $team.score - 1">-</div>
+      <div class="score-value">{{$team.score}}</div>
+      <div class="score-up" (click)="$team.score = $team.score + 1">+</div>
+    </div>
+    <div class="team-name">
+      {{$team.name}}
+    </div>
+  </div>
+</ng-template>
+
+<ng-container [ngTemplateOutlet]="team" [ngTemplateOutletContext]="{$implicit: match.blueTeam}"></ng-container>
+<ng-container [ngTemplateOutlet]="team" [ngTemplateOutletContext]="{$implicit: match.redTeam}"></ng-container>
