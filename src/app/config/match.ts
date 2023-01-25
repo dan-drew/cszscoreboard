@@ -2,8 +2,10 @@ import {config} from "./configuration";
 import {Profile} from "./profile";
 import {Team} from "./team";
 
+export type MatchView = 'scoreboard' | 'slate'
+
 export class Match {
-  private currentProfile: Profile = config.profiles[0]
+  currentProfile: Profile = config.profiles[0]
   logo: string = ''
   rounds: string[] = []
   currentRound: number = 0
@@ -11,7 +13,7 @@ export class Match {
   redTeam?: Team
   optionalTeam?: Team
   optionalTeamEnabled: boolean = false
-  activeView: 'scoreboard' | 'slate' = 'slate'
+  activeView: MatchView = 'slate'
 
   constructor() {
     this.reset()

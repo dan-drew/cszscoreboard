@@ -1,0 +1,27 @@
+app-score {
+  margin-top: 28vh;
+}
+
+.logo {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 50vh;
+  object-fit: contain;
+  object-position: center;
+  z-index: 100;
+}
+
+.slate {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  padding: 10vh;
+  opacity: 0.3;
+  object-fit: contain;
+  object-position: center;
+}

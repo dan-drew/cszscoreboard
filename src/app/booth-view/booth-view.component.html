@@ -1,1 +1,37 @@
-<app-score></app-score>
+<ng-template #profile let-$profile="$profile">
+  <img class="profile-logo" src="/assets/logos/{{$profile.logo}}" alt="logo">
+  <span class="px-3">{{$profile.name}}</span>
+</ng-template>
+
+<div class="toolbar d-flex flex-nowrap p-3">
+  <div class="dropdown">
+    <button class="btn btn-outline-secondary text-light dropdown-toggle" type="button" id="profileButton" data-bs-toggle="dropdown" aria-expanded="false">
+      <ng-container [ngTemplateOutlet]="profile" [ngTemplateOutletContext]="{$profile: match.currentProfile}"></ng-container>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="profileButton">
+      <li *ngFor="let $profile of config.profiles">
+        <button class="dropdown-item" (click)="match.profile = $profile">
+          <ng-container [ngTemplateOutlet]="profile" [ngTemplateOutletContext]="{$profile}"></ng-container>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="btn-group mx-2" role="group" aria-label="View">
+    <ng-container *ngFor="let $view of viewOptions">
+      <button
+        type="button"
+        class="btn {{match.activeView === $view.view ? 'btn-primary' : 'btn-outline-secondary'}}"
+        (click)="match.activeView = $view.view"
+        >
+        <i class="bi-{{$view.icon}}"></i>
+      </button>
+    </ng-container>
+  </div>
+
+  <div class="flex-fill"></div>
+  <button class="btn btn-outline-success" (click)="openLive()">
+    <i class="bi-pip"></i> Live
+  </button>
+</div>
+<app-score [editable]="true"></app-score>

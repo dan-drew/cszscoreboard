@@ -1,0 +1,9 @@
+<ng-container [ngSwitch]="match.activeView">
+  <ng-container *ngSwitchCase="'scoreboard'">
+    <img class="logo" alt="logo" src="/assets/logos/{{match.logo}}">
+    <app-score></app-score>
+  </ng-container>
+  <ng-container *ngSwitchCase="'slate'">
+    <img class="slate" alt="logo" src="/assets/logos/{{match.logo}}">
+  </ng-container>
+</ng-container>

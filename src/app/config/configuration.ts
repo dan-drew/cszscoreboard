@@ -1,7 +1,7 @@
 import {Profile} from "./profile";
 
-export interface Configuration {
-  profiles: Profile[]
+export class Configuration {
+  profiles: Profile[] = []
 }
 
 const STANDARD_ROUNDS: string[] = [
@@ -28,8 +28,8 @@ export const config: Configuration = {
       logo: 'minorleague.png',
       rounds: STANDARD_ROUNDS,
       teams: {
-        blue: 'Laughletics',
-        red: 'San Jose Snarks',
+        blue: 'ML Blue',
+        red: 'ML Red',
         optional: 'Alyssa'
       }
     }

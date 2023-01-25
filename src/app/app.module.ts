@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ScoreComponent } from './score/score.component';
 import { BoothViewComponent } from './booth-view/booth-view.component';
+import { LiveViewComponent } from './live-view/live-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ScoreComponent,
-    BoothViewComponent
+    BoothViewComponent,
+    LiveViewComponent
   ],
   imports: [
     BrowserModule,
