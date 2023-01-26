@@ -1,0 +1,34 @@
+<button
+  *ngIf="editable"
+  class="btn hover-highlight"
+  [disabled]="selected(0)"
+  (click)="select(match.currentRound - 1)"
+>
+  <i class="bi-dash-circle"></i>
+</button>
+
+<div class="round-list flex-fill overflow-hidden position-relative">
+  <div roundNames
+       class="round-names position-absolute d-flex flex-nowrap align-items-center"
+       [style.left]="roundOffset(match.currentRound)"
+  >
+    <div
+      *ngFor="let $round of match.rounds; index as $i"
+      roundName
+      class="round-name clickable hover-highlight"
+      [class.selected]="selected($i)"
+      (click)="select($i)"
+    >{{$round}}</div>
+  </div>
+  <div class="fade-left"></div>
+  <div class="fade-right"></div>
+</div>
+
+<button
+  *ngIf="editable"
+  class="btn hover-highlight"
+  [disabled]="selected(match.rounds.length - 1)"
+  (click)="select(match.currentRound + 1)"
+>
+  <i class="bi-plus-circle"></i>
+</button>

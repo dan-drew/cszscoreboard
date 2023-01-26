@@ -1,29 +1,32 @@
 $border-width: 1vh;
-$score-size: 20vh;
+$score-size: 25vh;
 $team-size: 10vh;
 
 :host {
   display: flex;
   position: relative;
-  background: white;
   padding: $border-width 0;
 }
 
 .team {
   width: 50%;
-  //padding: 0.25in;
+  box-sizing: content-box;
+  border-top: $border-width solid white;
+  border-bottom: $border-width solid white;
+  border-left: calc($border-width / 2) solid white;
+  border-right: calc($border-width / 2) solid white;
   text-align: center;
 
   &:first-child {
-    margin-right: $border-width;
+    border-left: none;
   }
 
   &:last-child {
+    border-right: none;
   }
 
   .score {
     .score-button {
-      margin: 0 5vh;
       padding: 5vh;
       color: white;
       font-size: calc($score-size / 4);

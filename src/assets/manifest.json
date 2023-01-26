@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "ComedySportz Scoreboard",
+  "short_name": "Scoreboard",
+  "start_url": "/",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "assets/logos/comedysportz.png",
+      "sizes": "16x16 24x24 32x32 256x256 512x512",
+      "type": "image/png"
+    }
+  ],
+  "background_color": "black",
+  "theme_color": "blue",
+  "orientation": "landscape"
+}

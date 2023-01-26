@@ -8,7 +8,12 @@ const STANDARD_ROUNDS: string[] = [
   'Opening',
   'Choice',
   'Ref\'s Option',
-  'Catch Up'
+  'Catch Up',
+  'Half Time',
+  'Head to Head',
+  'Challenge',
+  'Last Chance',
+  'Finale'
 ]
 
 export const config: Configuration = {

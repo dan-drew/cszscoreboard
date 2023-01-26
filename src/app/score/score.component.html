@@ -1,7 +1,6 @@
 <ng-template #team let-$team>
   <div class="team flex-fill d-flex flex-column csz-bg-{{$team.type}}">
-    <div class="score d-flex flex-row align-items-center position-relative">
-      <div class="flex-fill"></div>
+    <div class="score d-flex flex-nowrap align-items-center position-relative justify-content-center">
       <button *ngIf="editable" class="score-button btn hover-highlight" (click)="$team.score = $team.score - 1">
         <i class="bi-dash-circle"></i>
       </button>
@@ -11,7 +10,6 @@
       <button *ngIf="editable" class="score-button btn hover-highlight" (click)="$team.score = $team.score + 1">
         <i class="bi-plus-circle"></i>
       </button>
-      <div class="flex-fill"></div>
     </div>
     <div class="team-name">
       {{$team.name}}

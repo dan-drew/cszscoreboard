@@ -4,9 +4,10 @@
 </ng-template>
 
 <div class="toolbar d-flex flex-nowrap p-3">
+  <!-- PROFILE CHOOSER -->
   <div class="dropdown">
     <button class="btn btn-outline-secondary text-light dropdown-toggle" type="button" id="profileButton" data-bs-toggle="dropdown" aria-expanded="false">
-      <ng-container [ngTemplateOutlet]="profile" [ngTemplateOutletContext]="{$profile: match.currentProfile}"></ng-container>
+      <ng-container [ngTemplateOutlet]="profile" [ngTemplateOutletContext]="{$profile: match.profile}"></ng-container>
     </button>
     <ul class="dropdown-menu" aria-labelledby="profileButton">
       <li *ngFor="let $profile of config.profiles">
@@ -17,6 +18,7 @@
     </ul>
   </div>
 
+  <!-- VIEW CHOOSER -->
   <div class="btn-group mx-2" role="group" aria-label="View">
     <ng-container *ngFor="let $view of viewOptions">
       <button
@@ -30,8 +32,12 @@
   </div>
 
   <div class="flex-fill"></div>
+
+  <!-- SHOW LIVE WINDOW -->
   <button class="btn btn-outline-success" (click)="openLive()">
     <i class="bi-pip"></i> Live
   </button>
 </div>
+
 <app-score [editable]="true"></app-score>
+<app-rounds [editable]="true"></app-rounds>

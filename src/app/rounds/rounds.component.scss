@@ -1,0 +1,59 @@
+:host {
+  --height: 15vh;
+  --font-size: calc(var(--height) * 0.6);
+  --button-font-size: calc(var(--height) * 0.5);
+
+  position: relative;
+  height: var(--height);
+
+  &.round-edit {
+    --height: 10vh;
+
+    button.btn {
+      width: var(--height);
+      height: var(--height);
+      padding: 2vh;
+      font-size: var(--button-font-size) !important;
+      border: none;
+      color: white;
+    }
+  }
+}
+
+.round-list {
+  .fade-left, .fade-right {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 10vh;
+  }
+
+  .fade-left {
+    left: 0;
+    background: linear-gradient(to left, transparent, black);
+  }
+
+  .fade-right {
+    right: 0;
+    background: linear-gradient(to right, transparent, black);
+  }
+
+  .round-names {
+    font-size: var(--font-size) !important;
+      color: gray;
+
+    .round-name {
+      white-space: nowrap;
+      padding: 1vh 2.5vh;
+
+      &.selected {
+        color: white;
+      }
+
+      &:not(.selected) {
+        transform: scale(0.8);
+        margin: 0 -2.5vh;
+      }
+    }
+  }
+}
