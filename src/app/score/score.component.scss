@@ -1,6 +1,6 @@
-$border-width: 1vh;
-$score-size: 25vh;
-$team-size: 10vh;
+$border-width: var(--size-1);
+$score-size: var(--size-20);
+$team-size: var(--size-10);
 
 :host {
   display: flex;
@@ -16,6 +16,7 @@ $team-size: 10vh;
   border-left: calc($border-width / 2) solid white;
   border-right: calc($border-width / 2) solid white;
   text-align: center;
+  overflow: hidden;
 
   &:first-child {
     border-left: none;
@@ -27,7 +28,7 @@ $team-size: 10vh;
 
   .score {
     .score-button {
-      padding: 5vh;
+      padding: 15px;
       color: white;
       font-size: calc($score-size / 4);
     }
@@ -35,13 +36,15 @@ $team-size: 10vh;
     .score-value {
       font-size: $score-size;
       font-weight: bold;
-      padding: 0 5vh;
+      padding: 0 var(--size-2);
     }
 
   }
 
   .team-name {
     font-size: $team-size;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
 }

@@ -1,21 +1,33 @@
 <ng-template #team let-$team>
   <div class="team flex-fill d-flex flex-column csz-bg-{{$team.type}}">
-    <div class="score d-flex flex-nowrap align-items-center position-relative justify-content-center">
-      <button *ngIf="editable" class="score-button btn hover-highlight" (click)="$team.score = $team.score - 1">
-        <i class="bi-dash-circle"></i>
-      </button>
-      <div class="score-value" [class.clickable]="editable" [class.hover-highlight]="editable">
-        {{$team.score}}
-      </div>
-      <button *ngIf="editable" class="score-button btn hover-highlight" (click)="$team.score = $team.score + 1">
-        <i class="bi-plus-circle"></i>
-      </button>
+    <div class="score flex-fill d-flex flex-nowrap align-items-center position-relative justify-content-center">
+      <ng-container *ngIf="editable">
+        <!-- DECREMENT SCORE -->
+        <button class="score-button btn hover-highlight" (click)="$team.score = $team.score - 1">
+          <i class="bi-dash-circle"></i>
+        </button>
+        <!-- CURRENT SCORE -->
+        <div class="score-value csz-bold-text clickable hover-highlight" (click)="editScore($team)">
+          {{$team.score}}
+        </div>
+        <!-- INCREMENT SCORE -->
+        <button class="score-button btn hover-highlight" (click)="$team.score = $team.score + 1">
+          <i class="bi-plus-circle"></i>
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="!editable">
+        <div class="score-value csz-bold-text">
+          {{$team.score}}
+        </div>
+      </ng-container>
     </div>
-    <div class="team-name">
+
+    <div class="team-name csz-bold-text flex-1 pb-3">
       {{$team.name}}
     </div>
   </div>
 </ng-template>
 
-<ng-container [ngTemplateOutlet]="team" [ngTemplateOutletContext]="{$implicit: match.blueTeam}"></ng-container>
-<ng-container [ngTemplateOutlet]="team" [ngTemplateOutletContext]="{$implicit: match.redTeam}"></ng-container>
+<ng-container [ngTemplateOutlet]="team" [ngTemplateOutletContext]="{$implicit: match.teams.blue}"></ng-container>
+<ng-container [ngTemplateOutlet]="team" [ngTemplateOutletContext]="{$implicit: match.teams.red}"></ng-container>

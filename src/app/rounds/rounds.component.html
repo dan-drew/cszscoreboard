@@ -2,7 +2,7 @@
   *ngIf="editable"
   class="btn hover-highlight"
   [disabled]="selected(0)"
-  (click)="select(match.currentRound - 1)"
+  (click)="select(round.current - 1)"
 >
   <i class="bi-dash-circle"></i>
 </button>
@@ -10,12 +10,12 @@
 <div class="round-list flex-fill overflow-hidden position-relative">
   <div roundNames
        class="round-names position-absolute d-flex flex-nowrap align-items-center"
-       [style.left]="roundOffset(match.currentRound)"
+       [style.left]="roundOffset(round.current)"
   >
     <div
-      *ngFor="let $round of match.rounds; index as $i"
+      *ngFor="let $round of round.names; index as $i"
       roundName
-      class="round-name clickable hover-highlight"
+      class="round-name csz-bold-text clickable hover-highlight"
       [class.selected]="selected($i)"
       (click)="select($i)"
     >{{$round}}</div>
@@ -27,8 +27,8 @@
 <button
   *ngIf="editable"
   class="btn hover-highlight"
-  [disabled]="selected(match.rounds.length - 1)"
-  (click)="select(match.currentRound + 1)"
+  [disabled]="selected(round.count - 1)"
+  (click)="select(round.current + 1)"
 >
   <i class="bi-plus-circle"></i>
 </button>

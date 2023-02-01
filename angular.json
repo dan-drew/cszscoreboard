@@ -27,13 +27,21 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
+              {
+                "input": "node_modules/bootstrap/dist/css/bootstrap.css",
+                "bundleName": "bootstrap"
+              },
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.js"
+              {
+                "input": "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+                "bundleName": "bootstrap"
+              }
             ]
           },
           "configurations": {
@@ -70,7 +78,7 @@
               "browserTarget": "cszscoreboard:build:production"
             },
             "development": {
-              "browserTarget": "cszscoreboard:build:development"
+                "browserTarget": "cszscoreboard:build:development"
             }
           },
           "defaultConfiguration": "development"

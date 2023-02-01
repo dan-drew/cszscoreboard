@@ -1,28 +1,42 @@
 app-score {
-  height: 50vh;
-  margin-top: 35vh;
+  height: var(--size-50);
+  margin-top: var(--size-35);
 }
 
 .logo {
   position: fixed;
-  top: 5vh;
+  top: var(--size-5);
   width: 100%;
-  height: 60vh;
+  height: var(--size-60);
   object-fit: contain;
   object-position: center;
   z-index: 100;
 }
 
+//.slate, .guess {
+//  position: fixed;
+//  top: 0;
+//  left: 0;
+//  right: 0;
+//  bottom: 0;
+//  overflow: hidden;
+//}
+
 .slate {
-  position: fixed;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  min-height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  padding: 10vh;
   opacity: 0.3;
   object-fit: contain;
-  object-position: center;
+  object-position: center center;
+}
+
+.guess {
+  background: linear-gradient(to bottom, #aaa, #888);
+
+  .guess-text {
+    padding: var(--size-5);
+    color: white;
+    font-size: var(--size-15);
+    line-height: 1;
+    text-shadow: 5px 5px 10px #222222;
+    text-align: center;
+  }
 }

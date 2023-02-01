@@ -1,0 +1,84 @@
+:host {
+  --bar-width: 1in;
+  --panel-width: 25vw;
+  --border-color: #888;
+  --background: #444;
+}
+
+.bar-spacer {
+  min-width: var(--bar-width);
+  max-width: var(--bar-width);
+  height: 100%;
+}
+
+.bar-backdrop {
+  background: #0008;
+}
+
+.bar-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--background);
+  color: white;
+  z-index: 100;
+  box-shadow: 0 0 10px 5px #222;
+
+  .bar-tabs {
+    min-width: var(--bar-width);
+    max-width: var(--bar-width);
+    border-right: 1px solid var(--border-color);
+
+    .tab {
+      --tab-color: white;
+
+      color: var(--tab-color);
+      width: 100%;
+      height: var(--size-10);
+      //line-height: var(--size-10);
+      font-size: var(--size-5);
+      //vertical-align: center;
+      margin: 0;
+      text-align: center;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      border: 0;
+
+      i {
+        font-family: bootstrap-icons sans-serif;
+        font-size: var(--size-5);
+        padding: 0;
+        margin: 0;
+      }
+
+      &.green {
+        --tab-color: var(--bs-success);
+      }
+
+      &:hover:not(.selected) {
+        background: var(--tab-color);
+        color: var(--background);
+      }
+
+      &.selected {
+        background: var(--bs-primary);
+      }
+    }
+  }
+
+  .bar-panel {
+    > * {
+      width: var(--panel-width);
+    }
+
+    h1 {
+      font-size: var(--size-5);
+      line-height: 1;
+      background: #666;
+      padding: 10px 10px !important;
+      margin: 0;
+    }
+  }
+}

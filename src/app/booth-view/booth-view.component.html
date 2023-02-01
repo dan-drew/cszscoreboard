@@ -3,41 +3,43 @@
   <span class="px-3">{{$profile.name}}</span>
 </ng-template>
 
-<div class="toolbar d-flex flex-nowrap p-3">
-  <!-- PROFILE CHOOSER -->
-  <div class="dropdown">
-    <button class="btn btn-outline-secondary text-light dropdown-toggle" type="button" id="profileButton" data-bs-toggle="dropdown" aria-expanded="false">
-      <ng-container [ngTemplateOutlet]="profile" [ngTemplateOutletContext]="{$profile: match.profile}"></ng-container>
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="profileButton">
-      <li *ngFor="let $profile of config.profiles">
-        <button class="dropdown-item" (click)="match.profile = $profile">
-          <ng-container [ngTemplateOutlet]="profile" [ngTemplateOutletContext]="{$profile}"></ng-container>
-        </button>
-      </li>
-    </ul>
-  </div>
-
-  <!-- VIEW CHOOSER -->
-  <div class="btn-group mx-2" role="group" aria-label="View">
-    <ng-container *ngFor="let $view of viewOptions">
-      <button
-        type="button"
-        class="btn {{match.activeView === $view.view ? 'btn-primary' : 'btn-outline-secondary'}}"
-        (click)="match.activeView = $view.view"
-        >
-        <i class="bi-{{$view.icon}}"></i>
+<!-- TOOLBAR -->
+<div class="flex-fill d-flex flex-column flex-nowrap h-size-10">
+  <div class="toolbar d-flex flex-nowrap p-3">
+    <!-- PROFILE CHOOSER -->
+    <div class="dropdown">
+      <button class="btn btn-outline-secondary text-light dropdown-toggle" type="button" id="profileButton" data-bs-toggle="dropdown" aria-expanded="false">
+        <ng-container [ngTemplateOutlet]="profile" [ngTemplateOutletContext]="{$profile: match.profile}"></ng-container>
       </button>
-    </ng-container>
+      <ul class="dropdown-menu" aria-labelledby="profileButton">
+        <li *ngFor="let $profile of config.profiles">
+          <button class="dropdown-item" (click)="match.profile = $profile">
+            <ng-container [ngTemplateOutlet]="profile" [ngTemplateOutletContext]="{$profile}"></ng-container>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- VIEW CHOOSER -->
+    <div class="btn-group mx-2" role="group" aria-label="View">
+      <ng-container *ngFor="let $view of viewOptions">
+        <button
+          *ngIf="viewAvailable($view.view)"
+          type="button"
+          class="btn {{match.activeView === $view.view ? 'btn-primary' : 'btn-outline-secondary'}}"
+          (click)="match.activeView = $view.view"
+          >
+          <i class="bi-{{$view.icon}}"></i>
+        </button>
+      </ng-container>
+    </div>
+
+    <div class="flex-fill"></div>
   </div>
 
-  <div class="flex-fill"></div>
-
-  <!-- SHOW LIVE WINDOW -->
-  <button class="btn btn-outline-success" (click)="openLive()">
-    <i class="bi-pip"></i> Live
-  </button>
+  <app-score [editable]="true" class="h-size-50"></app-score>
+  <app-guess-selector class="h-size-25"></app-guess-selector>
+  <app-rounds [editable]="true" class="hsize-15"></app-rounds>
 </div>
 
-<app-score [editable]="true"></app-score>
-<app-rounds [editable]="true"></app-rounds>
+<app-sidebar></app-sidebar>

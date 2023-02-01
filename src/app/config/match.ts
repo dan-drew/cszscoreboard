@@ -1,22 +1,21 @@
 import {config} from "./configuration";
 import {Profile} from "./profile";
-import {Team} from "./team";
+import {Teams} from "./teams";
+import {Rounds} from "./rounds";
+import {Guesses} from "./guesses";
 
-export type MatchView = 'scoreboard' | 'slate'
+export type MatchView = 'scoreboard' | 'slate' | 'guesses'
 
 export class Match {
-  private currentProfile: Profile = config.profiles[0]
-  logo: string = ''
-  rounds: string[] = []
-  currentRound: number = 0
-  blueTeam?: Team
-  redTeam?: Team
-  optionalTeam?: Team
-  optionalTeamEnabled: boolean = false
+  private currentProfile!: Profile
+  logo!: string
+  round!: Rounds
+  teams!: Teams
+  guesses!: Guesses
   activeView: MatchView = 'scoreboard'
 
   constructor() {
-    this.reset()
+    this.profile = config.profiles[0]
   }
 
   get profile() {
@@ -30,12 +29,9 @@ export class Match {
 
   reset() {
     this.logo = this.currentProfile.logo
-    this.rounds = Array.from(this.currentProfile.rounds)
-    this.blueTeam = new Team(this.currentProfile.teams.blue, 'blue')
-    this.redTeam = new Team(this.currentProfile.teams.red, 'red')
-    this.optionalTeam = new Team(this.currentProfile.teams.optional, 'optional')
-    this.optionalTeamEnabled = false
-    this.currentRound = 0
+    this.round = new Rounds(this.currentProfile)
+    this.teams = new Teams(this.currentProfile)
+    this.guesses = new Guesses()
   }
 }
 

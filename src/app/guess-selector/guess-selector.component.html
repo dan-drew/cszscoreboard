@@ -1,0 +1,7 @@
+<i class="bi-question-circle flex-1 h-100 mx-2 guess-icon"></i>
+
+<button *ngFor="let $val of match.guesses.values; index as $i"
+        class="guess-item csz-text fs-3 me-2 flex-fill rounded clickable"
+        [class.selected]="match.guesses.selected === $i"
+        (click)="match.guesses.selected = $i"
+>{{$val}}</button>

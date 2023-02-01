@@ -1,0 +1,15 @@
+.guess-item {
+  border: 2px solid var(--bs-light);
+  background: #222222;
+  height: 100%;
+  color: var(--bs-light);
+
+  &.selected {
+    border-color: var(--bs-primary);
+    background: #226;
+  }
+}
+
+.guess-icon {
+  font-size: var(--size-5);
+}

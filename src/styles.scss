@@ -1,17 +1,36 @@
-@use "bootstrap/scss/bootstrap";
 @use "bootstrap-icons/font/bootstrap-icons";
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+
+$size-steps: 1, 2, 5, 10, 15, 20, 25, 30, 33, 40, 45, 50, 60, 70, 75, 80, 100;
 
 body {
   background: black;
   color: white;
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Roboto Light', sans-serif;
   padding: 0;
   margin: 0;
 
+  --size-base: 1vh;
+
+  @each $step in $size-steps {
+    --size-#{$step}: calc(var(--size-base) * #{$step});
+  }
+
   --csz-blue: royalblue;
   --csz-red: darkred;
+}
+
+@each $step in $size-steps {
+  .w-size-#{$step} {
+    min-width: var(--size-#{$step});
+    max-width: var(--size-#{$step});
+  }
+  .h-size-#{$step} {
+    min-height: var(--size-#{$step});
+    max-height: var(--size-#{$step});
+  }
 }
 
 .csz-bg-blue {
@@ -22,13 +41,31 @@ body {
   background: var(--csz-red) !important;
 }
 
+.csz-text, .csz-bold-text {
+  font-family: 'Oswald', sans-serif;
+  font-stretch: condensed;
+}
+
+.csz-bold-text {
+  font-weight: 700;
+}
+
 .hover-highlight {
   &:hover {
-    background: #fff2;
+    background: #fff2 !important;
   }
 }
 
 .clickable {
   cursor: pointer;
   user-select: none;
+}
+
+.fullscreen {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
 }

@@ -1,0 +1,13 @@
+<button class="btn btn-danger mb-3"
+        (click)="reset()"
+        >
+  Reset
+</button>
+
+<textarea *ngFor="let $f of guesses.controls"
+          [formControl]="$f"
+          class="guess-text mb-3 form-control"
+          placeholder="Enter answer..."
+          rows="3"
+>
+</textarea>

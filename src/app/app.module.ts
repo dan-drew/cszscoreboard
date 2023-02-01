@@ -9,6 +9,10 @@ import { LiveViewComponent } from './live-view/live-view.component';
 import { RoundsComponent } from './rounds/rounds.component';
 import { RoundNameDirective } from './round-name.directive';
 import { RoundNamesDirective } from './round-names.directive';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { GuessEditorComponent } from './guess-editor/guess-editor.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import { GuessSelectorComponent } from './guess-selector/guess-selector.component';
 
 @NgModule({
   declarations: [
@@ -18,12 +22,16 @@ import { RoundNamesDirective } from './round-names.directive';
     LiveViewComponent,
     RoundsComponent,
     RoundNameDirective,
-    RoundNamesDirective
+    RoundNamesDirective,
+    SidebarComponent,
+    GuessEditorComponent,
+    GuessSelectorComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

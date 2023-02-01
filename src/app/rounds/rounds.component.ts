@@ -13,6 +13,7 @@ import {Match} from "../config/match";
 import {RoundNamesDirective} from "../round-names.directive";
 import {RoundNameDirective} from "../round-name.directive";
 import {BehaviorSubject} from "rxjs";
+import {Rounds} from "../config/rounds";
 
 class NameInfo {
   offset: number
@@ -49,6 +50,10 @@ export class RoundsComponent implements AfterViewInit {
   ) {
   }
 
+  get round() {
+    return this.match.round
+  }
+
   ngAfterViewInit() {
     this.updateInfo()
     // setTimeout(() => this.updateInfo(), 200)
@@ -60,11 +65,11 @@ export class RoundsComponent implements AfterViewInit {
   }
 
   selected(roundIndex: number) {
-    return this.match.currentRound === roundIndex
+    return this.round.current === roundIndex
   }
 
   select(roundIndex: number) {
-    this.match.currentRound = roundIndex
+    this.round.current = roundIndex
     // this.updateOffset()
   }
 
@@ -84,15 +89,6 @@ export class RoundsComponent implements AfterViewInit {
       return newOffset
     } else {
       return 0
-    }
-  }
-
-  updateOffset() {
-    if (this.nameInfo) {
-      const info = this.nameInfo[this.match.currentRound]
-      const newOffset = (this.containerRect!.width / 2) - info.offset - (info.width / 2)
-      console.info('New offset', newOffset)
-      this.roundNameOffset.next(`${newOffset.toFixed(3)}px`)
     }
   }
 }
