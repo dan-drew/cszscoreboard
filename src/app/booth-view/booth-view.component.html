@@ -3,9 +3,9 @@
   <span class="px-3">{{$profile.name}}</span>
 </ng-template>
 
-<!-- TOOLBAR -->
-<div class="flex-fill d-flex flex-column flex-nowrap h-size-10">
-  <div class="toolbar d-flex flex-nowrap p-3">
+<div class="flex-fill d-flex flex-column flex-nowrap">
+  <!-- TOOLBAR -->
+  <div class="toolbar d-flex flex-nowrap align-items-center h-size-10 ps-3">
     <!-- PROFILE CHOOSER -->
     <div class="dropdown">
       <button class="btn btn-outline-secondary text-light dropdown-toggle" type="button" id="profileButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -39,7 +39,7 @@
 
   <app-score [editable]="true" class="h-size-50"></app-score>
   <app-guess-selector class="h-size-25"></app-guess-selector>
-  <app-rounds [editable]="true" class="hsize-15"></app-rounds>
+  <app-rounds [editable]="true" class="h-size-15"></app-rounds>
 </div>
 
 <app-sidebar></app-sidebar>

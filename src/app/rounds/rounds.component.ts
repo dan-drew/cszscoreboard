@@ -34,19 +34,19 @@ class NameInfo {
   templateUrl: './rounds.component.html',
   styleUrls: ['./rounds.component.scss'],
   host: {
-    class: 'd-flex flex-nowrap'
+    class: 'd-flex flex-nowrap align-items-center'
   }
 })
-export class RoundsComponent implements AfterViewInit {
+export class RoundsComponent implements OnInit {
   @Input() editable: boolean = false
   @ViewChild(RoundNamesDirective) roundNameContainer?: RoundNamesDirective
   @ViewChildren(RoundNameDirective) roundNameList?: QueryList<RoundNameDirective>
   nameInfo?: NameInfo[]
-  roundNameOffset = new BehaviorSubject<string>("0px")
   containerRect?: DOMRect
 
   constructor(
-    public readonly match: Match
+    public readonly match: Match,
+    readonly changeDetector: ChangeDetectorRef
   ) {
   }
 
@@ -54,9 +54,8 @@ export class RoundsComponent implements AfterViewInit {
     return this.match.round
   }
 
-  ngAfterViewInit() {
-    this.updateInfo()
-    // setTimeout(() => this.updateInfo(), 200)
+  ngOnInit() {
+    setTimeout(() => this.updateInfo(), 200)
   }
 
   @HostBinding('class.round-edit')
@@ -70,14 +69,14 @@ export class RoundsComponent implements AfterViewInit {
 
   select(roundIndex: number) {
     this.round.current = roundIndex
-    // this.updateOffset()
+    // this.updateInfo()
   }
 
   updateInfo() {
     if (this.roundNameList) {
       this.containerRect = this.roundNameContainer!.el.nativeElement.parentElement.getBoundingClientRect()
       this.nameInfo = this.roundNameList?.map(name => new NameInfo(this.containerRect!, name.el)) || []
-      // this.updateOffset()
+      // this.changeDetector.markForCheck()
     }
   }
 
@@ -86,7 +85,7 @@ export class RoundsComponent implements AfterViewInit {
       const info = this.nameInfo![roundIndex]
       const newOffset = (this.containerRect!.width / 2) - info.offset - (info.width / 2)
       console.info('New offset', newOffset)
-      return newOffset
+      return `${newOffset}px`
     } else {
       return 0
     }

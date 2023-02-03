@@ -1,17 +1,17 @@
 :host {
-  --height: 15vh;
-  --font-size: calc(var(--height) * 0.6);
+  --height: var(--size-10);
+  --font-size: calc(var(--height) * 0.8);
   --button-font-size: calc(var(--height) * 0.5);
 
   position: relative;
   height: var(--height);
 
   &.round-edit {
-    --height: 10vh;
+    //--height: var(--size-10);
 
     button.btn {
       width: var(--height);
-      height: var(--height);
+      height: 100%;
       padding: 2vh;
       font-size: var(--button-font-size) !important;
       border: none;
@@ -25,7 +25,7 @@
     position: absolute;
     top: 0;
     height: 100%;
-    width: 10vh;
+    width: var(--height);
   }
 
   .fade-left {
@@ -39,21 +39,25 @@
   }
 
   .round-names {
-    font-size: var(--font-size) !important;
-      color: gray;
+    color: gray;
+    vertical-align: baseline;
 
     .round-name {
+      font-size: var(--font-size) !important;
+      line-height: 1.5;
       white-space: nowrap;
-      padding: 1vh 2.5vh;
 
       &.selected {
         color: white;
       }
 
       &:not(.selected) {
-        transform: scale(0.8);
-        margin: 0 -2.5vh;
+        font-size: calc(var(--font-size) * 0.8) !important;
       }
+    }
+
+    .separator {
+      //width: 10px;
     }
   }
 }

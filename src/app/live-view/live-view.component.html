@@ -1,17 +1,14 @@
-<ng-container [ngSwitch]="match.activeView">
-  <ng-container *ngSwitchCase="'scoreboard'">
-    <img class="logo" alt="logo" src="/assets/logos/{{match.logo}}">
-    <app-score></app-score>
-    <app-rounds></app-rounds>
-  </ng-container>
-  <ng-container *ngSwitchCase="'slate'">
-    <div class="fullscreen">
-      <img class="slate w-100 h-100 p-5" alt="logo" src="/assets/logos/{{match.logo}}">
-    </div>
-  </ng-container>
-  <ng-container *ngSwitchCase="'guesses'">
-    <div class="guess fullscreen d-flex justify-content-center align-items-center">
-      <div class="guess-text">{{match.guesses.values[match.guesses.selected]}}</div>
-    </div>
-  </ng-container>
-</ng-container>
+<div class="scoreboard view fullscreen" [class.active]="match.activeView === 'scoreboard'">
+  <img class="logo" alt="logo" src="/assets/logos/{{match.logo}}">
+  <app-score></app-score>
+  <app-rounds class="h-size-15"></app-rounds>
+</div>
+
+<div class="view fullscreen" [class.active]="match.activeView === 'slate'">
+  <img class="slate w-100 h-100 p-5" alt="logo" src="/assets/logos/{{match.logo}}">
+</div>
+
+<div class="view fullscreen guess d-flex justify-content-center align-items-center"
+     [class.active]="match.activeView === 'guesses'">
+  <div class="guess-text">{{match.guesses.values[match.guesses.selected]}}</div>
+</div>

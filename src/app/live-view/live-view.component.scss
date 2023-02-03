@@ -1,26 +1,27 @@
-app-score {
-  height: var(--size-50);
-  margin-top: var(--size-35);
+.view {
+  visibility: hidden;
+
+  &.active {
+    visibility: visible;
+  }
 }
 
-.logo {
-  position: fixed;
-  top: var(--size-5);
-  width: 100%;
-  height: var(--size-60);
-  object-fit: contain;
-  object-position: center;
-  z-index: 100;
-}
+.scoreboard {
+  app-score {
+    height: var(--size-50);
+    margin-top: var(--size-30);
+  }
 
-//.slate, .guess {
-//  position: fixed;
-//  top: 0;
-//  left: 0;
-//  right: 0;
-//  bottom: 0;
-//  overflow: hidden;
-//}
+  .logo {
+    position: fixed;
+    top: var(--size-5);
+    width: 100%;
+    height: var(--size-60);
+    object-fit: contain;
+    object-position: center;
+    z-index: 100;
+  }
+}
 
 .slate {
   opacity: 0.3;

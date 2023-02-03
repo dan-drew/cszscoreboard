@@ -7,18 +7,20 @@
   <i class="bi-dash-circle"></i>
 </button>
 
-<div class="round-list flex-fill overflow-hidden position-relative">
+<div class="round-list flex-fill overflow-hidden position-relative h-100">
   <div roundNames
-       class="round-names position-absolute d-flex flex-nowrap align-items-center"
+       class="round-names position-absolute d-flex flex-nowrap align-items-baseline"
        [style.left]="roundOffset(round.current)"
   >
-    <div
-      *ngFor="let $round of round.names; index as $i"
-      roundName
-      class="round-name csz-bold-text clickable hover-highlight"
-      [class.selected]="selected($i)"
-      (click)="select($i)"
-    >{{$round}}</div>
+    <ng-container *ngFor="let $round of round.names; index as $i; last as $last">
+      <div
+        roundName
+        class="round-name csz-bold-text clickable hover-highlight px-3"
+        [class.selected]="selected($i)"
+        (click)="select($i)"
+      >{{$round}}</div>
+      <div *ngIf="!$last" class="separator"></div>
+    </ng-container>
   </div>
   <div class="fade-left"></div>
   <div class="fade-right"></div>
