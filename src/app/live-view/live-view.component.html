@@ -12,3 +12,10 @@
      [class.active]="match.activeView === 'guesses'">
   <div class="guess-text">{{match.guesses.values[match.guesses.selected]}}</div>
 </div>
+
+<button *ngIf="fullScreen.canEnter"
+        class="fullscreen-button btn btn-outline-info"
+        (click)="enterFullScreen()"
+>
+  <i class="bi-fullscreen"></i> Fullscreen
+</button>

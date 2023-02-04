@@ -41,3 +41,10 @@
     text-align: center;
   }
 }
+
+.fullscreen-button {
+  position: fixed;
+  top: var(--size-5);
+  right: var(--size-5);
+  font-size: var(--size-5);
+}

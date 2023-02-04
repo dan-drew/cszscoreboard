@@ -3,6 +3,8 @@
   background: #222222;
   height: 100%;
   color: var(--bs-light);
+  white-space: pre-line;
+  overflow: hidden;
 
   &.selected {
     border-color: var(--bs-primary);
