@@ -1,18 +1,17 @@
 :host {
-  --height: var(--size-10);
-  --font-size: calc(var(--height) * 0.8);
+  --height: var(--size-15);
+  --font-size: calc(var(--height) * 0.6);
   --button-font-size: calc(var(--height) * 0.5);
 
   position: relative;
   height: var(--height);
 
   &.round-edit {
-    //--height: var(--size-10);
+    --height: var(--size-10);
 
-    button.btn {
+    button {
+      background: transparent;
       width: var(--height);
-      height: 100%;
-      padding: 2vh;
       font-size: var(--button-font-size) !important;
       border: none;
       color: white;
@@ -44,20 +43,17 @@
 
     .round-name {
       font-size: var(--font-size) !important;
-      line-height: 1.5;
       white-space: nowrap;
+      padding: 0 1ch;
 
       &.selected {
         color: white;
+        font-weight: 700;
       }
 
       &:not(.selected) {
         font-size: calc(var(--font-size) * 0.8) !important;
       }
-    }
-
-    .separator {
-      //width: 10px;
     }
   }
 }

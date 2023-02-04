@@ -1,8 +1,9 @@
 export interface Profile {
-  readonly name: string
-  readonly logo: string
-  readonly rounds: string[];
-  readonly teams: {
+  id: string
+  name: string
+  logo: string
+  rounds: string[];
+  teams: {
     blue: string
     red: string
     optional: string

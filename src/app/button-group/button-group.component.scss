@@ -1,0 +1,27 @@
+app-button-group {
+  background: var(--bs-dark);
+  border: 2px solid var(--bs-light);
+  overflow: hidden;
+
+  .button-group-item {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: var(--bs-light);
+    flex: 1;
+    border-left: 1px solid #666666;
+
+    &.selected {
+      box-shadow: inset 0 0 20px var(--bs-primary);
+    }
+  }
+
+  .title {
+    text-align: center;
+    writing-mode: vertical-lr;
+    text-transform: uppercase;
+    background: #666666;
+    transform: rotate(180deg);
+  }
+}
+

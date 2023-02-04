@@ -28,7 +28,7 @@
   .bar-tabs {
     min-width: var(--bar-width);
     max-width: var(--bar-width);
-    border-right: 1px solid var(--border-color);
+    border-right: 1px solid var(--bs-dark);
 
     .tab {
       --tab-color: white;
@@ -69,16 +69,19 @@
   }
 
   .bar-panel {
-    > * {
-      width: var(--panel-width);
+    .bar-form {
+      min-width: var(--panel-width);
+      max-width: var(--panel-width);
     }
 
     h1 {
       font-size: var(--size-5);
       line-height: 1;
       background: #666;
+      text-align: center;
       padding: 10px 10px !important;
       margin: 0;
+      box-shadow: 0 5px 5px #222;
     }
   }
 }

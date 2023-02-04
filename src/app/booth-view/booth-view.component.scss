@@ -1,11 +1,9 @@
 .toolbar {
-  .profile-logo {
-    width: 5vh;
-    height: 5vh;
-    object-fit: contain;
-  }
-
-  button {
-    font-size: 4vh;
+  app-button-group {
+    button {
+      width: 10vw;
+      min-width: 1in;
+      font-size: var(--size-5);
+    }
   }
 }

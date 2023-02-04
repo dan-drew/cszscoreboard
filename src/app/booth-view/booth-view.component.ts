@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {Match, MatchView} from "../config/match";
-import {Configuration} from "../config/configuration";
 
 interface ViewOption {
   view: MatchView
@@ -23,13 +22,8 @@ export class BoothViewComponent {
   ]
 
   constructor(
-    public match: Match,
-    public config: Configuration
+    public match: Match
     ) {
-  }
-
-  openLive() {
-    window.open('/live', 'cszScoreboardLive', 'popup')
   }
 
   viewAvailable(view: MatchView) {

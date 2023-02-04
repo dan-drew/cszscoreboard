@@ -11,8 +11,11 @@ import { RoundNameDirective } from './round-name.directive';
 import { RoundNamesDirective } from './round-names.directive';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { GuessEditorComponent } from './guess-editor/guess-editor.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { GuessSelectorComponent } from './guess-selector/guess-selector.component';
+import { MatchEditorComponent } from './match-editor/match-editor.component';
+import { ButtonGroupComponent } from './button-group/button-group.component';
+import { ButtonGroupItemDirective } from './button-group/button-group-item.directive';
 
 @NgModule({
   declarations: [
@@ -25,13 +28,17 @@ import { GuessSelectorComponent } from './guess-selector/guess-selector.componen
     RoundNamesDirective,
     SidebarComponent,
     GuessEditorComponent,
-    GuessSelectorComponent
+    GuessSelectorComponent,
+    MatchEditorComponent,
+    ButtonGroupComponent,
+    ButtonGroupItemDirective
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

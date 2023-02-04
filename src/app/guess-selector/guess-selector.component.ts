@@ -5,9 +5,9 @@ import {Match} from "../config/match";
   selector: 'app-guess-selector',
   templateUrl: './guess-selector.component.html',
   styleUrls: ['./guess-selector.component.scss'],
-  host: {
-    class: 'w-100 d-flex flex-nowrap align-items-center'
-  }
+  // host: {
+  //   class: 'w-100 d-flex flex-nowrap align-items-center'
+  // }
 })
 export class GuessSelectorComponent {
   constructor(

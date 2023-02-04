@@ -34,7 +34,7 @@ class NameInfo {
   templateUrl: './rounds.component.html',
   styleUrls: ['./rounds.component.scss'],
   host: {
-    class: 'd-flex flex-nowrap align-items-center'
+    class: 'd-flex flex-nowrap align-items-stretch'
   }
 })
 export class RoundsComponent implements OnInit {

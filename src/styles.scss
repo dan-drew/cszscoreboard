@@ -69,3 +69,13 @@ body {
   bottom: 0;
   overflow: hidden;
 }
+
+.image-fit {
+  object-fit: contain;
+  object-position: center;
+}
+
+.image-cover {
+  object-fit: cover;
+  object-position: center;
+}

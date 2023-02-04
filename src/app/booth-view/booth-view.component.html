@@ -1,45 +1,25 @@
-<ng-template #profile let-$profile="$profile">
-  <img class="profile-logo" src="/assets/logos/{{$profile.logo}}" alt="logo">
-  <span class="px-3">{{$profile.name}}</span>
-</ng-template>
-
 <div class="flex-fill d-flex flex-column flex-nowrap">
   <!-- TOOLBAR -->
-  <div class="toolbar d-flex flex-nowrap align-items-center h-size-10 ps-3">
-    <!-- PROFILE CHOOSER -->
-    <div class="dropdown">
-      <button class="btn btn-outline-secondary text-light dropdown-toggle" type="button" id="profileButton" data-bs-toggle="dropdown" aria-expanded="false">
-        <ng-container [ngTemplateOutlet]="profile" [ngTemplateOutletContext]="{$profile: match.profile}"></ng-container>
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="profileButton">
-        <li *ngFor="let $profile of config.profiles">
-          <button class="dropdown-item" (click)="match.profile = $profile">
-            <ng-container [ngTemplateOutlet]="profile" [ngTemplateOutletContext]="{$profile}"></ng-container>
-          </button>
-        </li>
-      </ul>
-    </div>
-
+  <div class="toolbar d-flex flex-nowrap align-items-stretch h-size-15 px-2 py-2">
     <!-- VIEW CHOOSER -->
-    <div class="btn-group mx-2" role="group" aria-label="View">
-      <ng-container *ngFor="let $view of viewOptions">
-        <button
-          *ngIf="viewAvailable($view.view)"
-          type="button"
-          class="btn {{match.activeView === $view.view ? 'btn-primary' : 'btn-outline-secondary'}}"
-          (click)="match.activeView = $view.view"
-          >
-          <i class="bi-{{$view.icon}}"></i> 🤔⚽
-        </button>
-      </ng-container>
-    </div>
+    <app-button-group title="View" [(selectedValue)]="match.activeView">
+      <button id="slateButton" buttonGroupItem="slate" title="Show Slate">
+        <img [src]="match.logoUrl" class="w-100 h-100 image-fit p-2" alt="Show Slate">
+      </button>
+      <button buttonGroupItem="scoreboard" title="Scoreboard" class="p-2">
+        <img src="/assets/whapnerz.png" class="w-100 h-100 image-cover rounded" alt="Guess">
+      </button>
+      <button buttonGroupItem="guesses" title="Guess" *ngIf="viewAvailable('guesses')">
+        <img src="/assets/guess.png" class="w-100 h-100 image-fit p-2" alt="Guess">
+      </button>
+    </app-button-group>
 
     <div class="flex-fill"></div>
   </div>
 
   <app-score [editable]="true" class="h-size-50"></app-score>
-  <app-guess-selector class="h-size-25"></app-guess-selector>
-  <app-rounds [editable]="true" class="h-size-15"></app-rounds>
+  <app-guess-selector class="h-size-25 pt-2 mx-2"></app-guess-selector>
+  <app-rounds [editable]="true" class="h-size-10"></app-rounds>
 </div>
 
 <app-sidebar></app-sidebar>

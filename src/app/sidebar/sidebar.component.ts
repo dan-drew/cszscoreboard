@@ -4,8 +4,9 @@ type TabName = 'guesses' | 'settings'
 
 interface TabDef {
   name: TabName
-  icon: string
-  selectedIcon: string
+  icon?: string
+  selectedIcon?: string
+  image?: string
 }
 
 @Component({
@@ -19,10 +20,10 @@ interface TabDef {
 export class SidebarComponent {
   readonly tabs: TabDef[] = [
     { name: 'settings', icon: 'gear', selectedIcon: 'gear-fill' },
-    { name: 'guesses', icon: 'question-circle', selectedIcon: 'question-circle-fill' }
+    { name: 'guesses', image: '/assets/guess.png', selectedIcon: 'question-circle-fill' }
   ]
 
-  selectedTab?: TabName
+  selectedTab?: TabName = 'settings'  // Open to settings by default
 
   openLive() {
     window.open('/live', 'cszScoreboardLive', 'popup')

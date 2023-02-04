@@ -1,0 +1,101 @@
+<ng-template #profile let-$profile="$profile">
+  <div class="d-inline-block">
+    <img class="profile-logo" src="/assets/logos/{{$profile.logo}}" alt="logo">
+    <span class="px-2">{{$profile.name}}</span>
+  </div>
+</ng-template>
+
+<ng-template #logo let-$logo="$logo">
+  <img class="profile-logo" src="/assets/logos/{{$logo}}" alt="logo">
+</ng-template>
+
+<div class="settings-form flex-fill">
+  <div class="w-100 pe-1" style="max-height: 100px">
+    <!-- PROFILE -->
+    <div class="dropdown">
+      <button class="btn btn-light dropdown-toggle mb-3 form-control" type="button" id="profileButton"
+              data-bs-toggle="dropdown" aria-expanded="false">
+        <ng-container [ngTemplateOutlet]="profile" [ngTemplateOutletContext]="{$profile: match.profile}"></ng-container>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="profileButton">
+        <li *ngFor="let $profile of profiles.profiles">
+          <button class="dropdown-item" (click)="match.profile = $profile">
+            <ng-container [ngTemplateOutlet]="profile" [ngTemplateOutletContext]="{$profile}"></ng-container>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- TABS -->
+    <ul class="nav nav-tabs nav-fill mb-2">
+      <li class="nav-item" *ngFor="let $tab of tabs">
+        <a class="nav-link"
+           [class.active]="activeTab === $tab"
+           aria-current="page"
+           (click)="activeTab = $tab">
+          {{$tab | titlecase}}</a>
+      </li>
+    </ul>
+
+    <ng-container [ngSwitch]="activeTab">
+      <!-- TEAM NAMES -->
+      <ng-container *ngSwitchCase="'teams'">
+        <div class="mb-2">
+          <label for="blueTeam" class="form-label">Blue Team</label>
+          <input id="blueTeam" class="form-control" required [(ngModel)]="match.teams.blue.name">
+        </div>
+
+        <div class="mb-2">
+          <label for="redTeam" class="form-label">Red Team</label>
+          <input id="redTeam" class="form-control" required [(ngModel)]="match.teams.red.name">
+        </div>
+
+        <div class="mb-1">
+          <label for="optionalTeam" class="form-label">Optional Team</label>
+          <input id="optionalTeam" class="form-control" required [(ngModel)]="match.teams.optional.name">
+        </div>
+        <div class="form-check mb-2">
+          <input id="optionalTeamEnabled" type="checkbox" class="form-check-input"
+                 [(ngModel)]="match.teams.optionalEnabled">
+          <label for="optionalTeamEnabled" class="form-check-label">Enabled</label>
+        </div>
+
+      </ng-container>
+
+      <!-- ROUNDS -->
+      <ng-container *ngSwitchCase="'rounds'">
+        <div class="mb-3">
+          <textarea id="rounds" class="form-control" required rows="10" [(ngModel)]="rounds"></textarea>
+        </div>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'profile'">
+        <label class="form-label" for="profileLogo">Logo</label>
+        <div class="dropdown">
+          <button class="btn btn-light dropdown-toggle mb-5 form-control" type="button" id="profileLogo"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+            <ng-container [ngTemplateOutlet]="logo" [ngTemplateOutletContext]="{$logo: match.logo}"></ng-container>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="profileLogo">
+            <li *ngFor="let $logo of profiles.logos">
+              <button class="dropdown-item" (click)="match.logo = $logo">
+                <ng-container [ngTemplateOutlet]="logo" [ngTemplateOutletContext]="{$logo}"></ng-container>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <button class="btn btn-primary form-control mb-2" (click)="save()">
+          Save
+        </button>
+        <button class="btn btn-success form-control mb-2" (click)="saveAs()">
+          Save As...
+        </button>
+        <button class="btn btn-danger form-control mb-2" (click)="delete()" [disabled]="profiles.profiles.length === 1">
+          Delete
+        </button>
+      </ng-container>
+    </ng-container>
+
+  </div>
+</div>

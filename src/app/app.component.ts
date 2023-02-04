@@ -1,16 +1,11 @@
 import { Component } from '@angular/core';
-import {match, Match} from "./config/match";
-import {config, Configuration} from "./config/configuration";
+import {Match} from "./config/match";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [
-    { provide: Match, useValue: match },
-    { provide: Configuration, useValue: config }
-  ]
+  providers: [Match.provider]
 })
 export class AppComponent {
-  title = 'cszscoreboard';
 }
