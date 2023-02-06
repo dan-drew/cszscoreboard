@@ -1,10 +1,8 @@
 import {
-  AfterContentInit,
   AfterViewInit,
-  ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
-  ElementRef, HostBinding,
-  Input, OnInit,
+  HostBinding,
+  Input, OnDestroy, Optional,
   QueryList,
   ViewChild,
   ViewChildren
@@ -12,22 +10,8 @@ import {
 import {Match} from "../config/match";
 import {RoundNamesDirective} from "../round-names.directive";
 import {RoundNameDirective} from "../round-name.directive";
-import {BehaviorSubject} from "rxjs";
-import {Rounds} from "../config/rounds";
-
-class NameInfo {
-  offset: number
-  center: number
-  width: number
-
-  constructor(containerRect: DOMRect, el: ElementRef) {
-    const rect = el.nativeElement.getBoundingClientRect()
-
-    this.width = rect.width
-    this.offset = rect.x - containerRect.x
-    this.center = this.offset + (this.width / 2)
-  }
-}
+import {BehaviorSubject, merge, Subscription, timer} from "rxjs";
+import {LiveViewComponent} from "../live-view/live-view.component";
 
 @Component({
   selector: 'app-rounds',
@@ -37,25 +21,44 @@ class NameInfo {
     class: 'd-flex flex-nowrap align-items-stretch'
   }
 })
-export class RoundsComponent implements OnInit {
+export class RoundsComponent implements AfterViewInit, OnDestroy {
   @Input() editable: boolean = false
   @ViewChild(RoundNamesDirective) roundNameContainer?: RoundNamesDirective
   @ViewChildren(RoundNameDirective) roundNameList?: QueryList<RoundNameDirective>
-  nameInfo?: NameInfo[]
-  containerRect?: DOMRect
+
+  namesChangeSubscription?: Subscription
+  resizeListener: { (): void }
+  readonly roundOffset = new BehaviorSubject<string>('0')
 
   constructor(
     public readonly match: Match,
-    readonly changeDetector: ChangeDetectorRef
+    @Optional() readonly live?: LiveViewComponent
   ) {
+    this.namesChangeSubscription = merge(
+      this.match.round.namesChange,
+      this.match.round.current
+    ).subscribe(() => {
+      this.updateRoundOffset(true)
+    })
+
+    this.resizeListener = () => {
+      this.updateRoundOffset()
+    }
+
+    window.addEventListener('resize', this.resizeListener)
   }
 
   get round() {
     return this.match.round
   }
 
-  ngOnInit() {
-    setTimeout(() => this.updateInfo(), 200)
+  ngAfterViewInit() {
+    this.updateRoundOffset()
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('resize', this.resizeListener)
+    this.namesChangeSubscription?.unsubscribe()
   }
 
   @HostBinding('class.round-edit')
@@ -63,31 +66,30 @@ export class RoundsComponent implements OnInit {
     return this.editable
   }
 
+  get selectedIndex() {
+    return this.round.current.value
+  }
+
   selected(roundIndex: number) {
-    return this.round.current === roundIndex
+    return this.round.current.value === roundIndex
   }
 
   select(roundIndex: number) {
-    this.round.current = roundIndex
-    // this.updateInfo()
+    this.round.setCurrent(roundIndex)
   }
 
-  updateInfo() {
-    if (this.roundNameList) {
-      this.containerRect = this.roundNameContainer!.el.nativeElement.parentElement.getBoundingClientRect()
-      this.nameInfo = this.roundNameList?.map(name => new NameInfo(this.containerRect!, name.el)) || []
-      // this.changeDetector.markForCheck()
-    }
+  private updateRoundOffset(force: boolean = false): void {
+    if (!this.roundNameList) return
+    window.setTimeout(() => this.doOffsetUpdate(), 0)
   }
 
-  roundOffset(roundIndex: number) {
-    if (this.nameInfo) {
-      const info = this.nameInfo![roundIndex]
-      const newOffset = (this.containerRect!.width / 2) - info.offset - (info.width / 2)
-      console.info('New offset', newOffset)
-      return `${newOffset}px`
-    } else {
-      return 0
-    }
+  private doOffsetUpdate() {
+    const el = this.roundNameList!.get(this.selectedIndex)!.el!.nativeElement
+    const roundWidth = el.getBoundingClientRect().width
+    const offset = this.roundNameList!
+      .map((item, i) => i < this.selectedIndex ? item.el.nativeElement.getBoundingClientRect().width : 0)
+      .reduce((prev, curr) => prev + curr, 0)
+
+    this.roundOffset.next(`-${offset + roundWidth / 2}px`)
   }
 }

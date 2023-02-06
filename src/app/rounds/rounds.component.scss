@@ -38,6 +38,7 @@
   }
 
   .round-names {
+    left: 50%;
     color: gray;
     vertical-align: baseline;
 
@@ -48,11 +49,8 @@
 
       &.selected {
         color: white;
-        font-weight: 700;
-      }
-
-      &:not(.selected) {
-        font-size: calc(var(--font-size) * 0.8) !important;
+        font-weight: bolder;
+        font-size: calc(var(--font-size) * 1.1) !important;
       }
     }
   }

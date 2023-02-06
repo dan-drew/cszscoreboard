@@ -1,4 +1,6 @@
 import {Profile} from "./profile";
+import {EventEmitter} from "@angular/core";
+import {BehaviorSubject} from "rxjs";
 
 export class Rounds {
   static readonly default: string[] = [
@@ -13,11 +15,25 @@ export class Rounds {
     'Finale'
   ]
 
-  names: string[]
-  current: number = 0
+  private _names: string[]
+  readonly current = new BehaviorSubject<number>(0)
+  readonly namesChange = new EventEmitter<void>()
 
   constructor(profile: Profile) {
-    this.names = Array.from(profile.rounds)
+    this._names = Array.from(profile.rounds)
+  }
+
+  setCurrent(val: number) {
+    this.current.next(val)
+  }
+
+  get names() {
+    return this._names
+  }
+
+  set names(val) {
+    this._names = val
+    this.namesChange.emit()
   }
 
   get count() {
