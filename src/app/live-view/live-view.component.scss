@@ -32,6 +32,14 @@
 .guess {
   background: linear-gradient(to bottom, #aaa, #888);
 
+  .guess-game {
+    font-size: var(--size-10);
+    padding: 2pt 0;
+    text-align: center;
+    text-shadow: 5px 5px 10px #222222;
+    background: #666666;
+  }
+
   .guess-text {
     padding: var(--size-5);
     color: white;
@@ -39,6 +47,11 @@
     line-height: 1;
     text-shadow: 5px 5px 10px #222222;
     text-align: center;
+    white-space: pre-line;
+
+    &.single-slide {
+    font-size: var(--size-10);
+    }
   }
 }
 

@@ -1,30 +1,53 @@
-export class Guesses {
-  static readonly maxGuesses = 5
-  public selected: number = 0
-  private readonly _values: string[] = new Array<string>(Guesses.maxGuesses)
+import {GuessingGame} from "./guessing-game";
 
-  get editValues() {
-    return this._values
+export class Guesses {
+  public selected: number = 0
+  private _game?: GuessingGame
+  private _answers: string[] = []
+  private requiredAnswers: number = 0
+
+  get game() {
+    return this._game
   }
 
-  get values(): string[] {
-    return this._values.filter(val => val.length !== 0)
+  set game(val) {
+    if (val !== this._game) {
+      this._game = val
+      this.selected = 0
+      if (val) {
+        this._answers = new Array<string>(val.answers.length)
+        this.requiredAnswers = this._game!.answers.filter(a => a.optional !== true).length
+      } else {
+        this._answers = []
+        this.requiredAnswers = 0
+      }
+    }
+  }
+
+  get maxAnswers() {
+    return this._game!.answers.length
+  }
+
+  get answers(): string[] {
+    return this._answers.filter((val, index) => {
+      return (index < this.requiredAnswers) || (val.length > 0)
+    })
   }
 
   set(index: number, value: string) {
-    this._values[index] = value.trim()
+    this._answers[index] = value.trim()
   }
 
   get count() {
-    return this.values.length
+    return this.answers.length
   }
 
   move(from: number, to: number) {
-    this._values.splice(to, 0, this._values[from])
-    this._values.splice(from > to ? from + 1 : from, 1)
+    this._answers.splice(to, 0, this._answers[from])
+    this._answers.splice(from > to ? from + 1 : from, 1)
   }
 
   reset() {
-    this._values.fill('')
+    this.game = undefined
   }
 }

@@ -1,7 +1,18 @@
-<app-button-group title="Guesses" class="h-100 w-100" [(selectedValue)]="match.guesses.selected">
-  <button *ngFor="let $val of match.guesses.values; index as $i"
-          class="csz-text fs-3"
-          [buttonGroupItem]="$i"
-  >{{$val}}</button>
+<app-button-group *ngIf="game" title="Guesses" class="h-100 w-100" [(selectedValue)]="match.guesses.selected">
+  <ng-container [ngSwitch]="game.singleSlide || false">
+    <ng-container *ngSwitchCase="true">
+      <button [buttonGroupItem]="0"
+              class="guess-item csz-text fs-3"
+              >
+        {{match.guesses.answers.join(', ')}}
+      </button>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <button *ngFor="let $val of match.guesses.answers; index as $i"
+              class="guess-item csz-text fs-3"
+              [buttonGroupItem]="$i"
+      >{{$val}}</button>
+    </ng-container>
+  </ng-container>
 </app-button-group>
 

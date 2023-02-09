@@ -1,18 +1,43 @@
+<!--
+SCOREBOARD
+-->
 <div class="scoreboard view fullscreen" [class.active]="match.activeView === 'scoreboard'">
   <img class="logo" alt="logo" src="/assets/logos/{{match.logo}}">
   <app-score></app-score>
   <app-rounds class="h-size-15"></app-rounds>
 </div>
 
+<!--
+SHIELD SLATE
+-->
 <div class="view fullscreen" [class.active]="match.activeView === 'slate'">
   <img class="slate w-100 h-100 p-5" alt="logo" src="/assets/logos/{{match.logo}}">
 </div>
 
-<div class="view fullscreen guess d-flex justify-content-center align-items-center"
+<!--
+GUESSING GAME SLIDES
+-->
+<div *ngIf="game"
+     class="view fullscreen guess d-flex flex-column align-items-stretch"
      [class.active]="match.activeView === 'guesses'">
-  <div class="guess-text">{{match.guesses.values[match.guesses.selected]}}</div>
+  <div class="guess-game csz-bold-text" *ngIf="game.id !== 'generic'">{{game.name}}</div>
+  <div class="flex-fill d-flex flex-column flex-nowrap justify-content-center align-items-center">
+    <ng-container [ngSwitch]="game.singleSlide">
+      <ng-container *ngSwitchCase="true">
+        <ng-container *ngFor="let $answer of game.answers; index as $i">
+          <div class="guess-text single-slide"><b>{{$answer.name}}:</b> {{match.guesses.answers[$i]}}</div>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        <div class="guess-text">{{match.guesses.answers[match.guesses.selected]}}</div>
+      </ng-container>
+    </ng-container>
+  </div>
 </div>
 
+<!--
+FULL-SCREEN BUTTON
+-->
 <button *ngIf="fullScreen.canEnter"
         class="fullscreen-button btn btn-outline-info"
         (click)="enterFullScreen()"

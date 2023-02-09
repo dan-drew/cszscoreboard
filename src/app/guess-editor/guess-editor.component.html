@@ -1,13 +1,29 @@
 <button class="btn btn-danger mb-3"
         (click)="reset()"
-        >
+>
   Reset
 </button>
 
-<textarea *ngFor="let $f of guesses.controls"
-          [formControl]="$f"
-          class="guess-text mb-3 form-control"
-          placeholder="Enter answer..."
-          rows="3"
->
-</textarea>
+<select class="form-control mb-1" name="game" [(ngModel)]="game">
+  <option [ngValue]="undefined">Select a game...</option>
+  <option *ngFor="let $game of games"
+          [ngValue]="$game">
+    {{$game.name}}
+  </option>
+</select>
+
+<ng-container *ngIf="this.game as $game">
+  <ng-container *ngFor="let $answer of $game.answers; index as $i">
+    <ng-container *ngIf="$i < guesses.length">
+      <label class="form-label" for="answer{{$i}}">{{$answer.name}}</label>
+      <textarea [formControl]="guesses.controls[$i]"
+                id="answer{{$i}}"
+                name="answer{{$i}}"
+                class="guess-text mb-1 form-control"
+                [placeholder]="$answer.placeholder || 'Enter answer...'"
+                rows="3"
+      >
+    </textarea>
+    </ng-container>
+  </ng-container>
+</ng-container>

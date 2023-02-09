@@ -35,4 +35,8 @@ export class LiveViewComponent implements OnInit, OnDestroy {
       console.error('Failed to enter fullscreen', err)
     })
   }
+
+  get game() {
+    return this.match.guesses.game
+  }
 }

@@ -15,8 +15,12 @@ export class GuessSelectorComponent {
   ) {
   }
 
+  get game() {
+    return this.match.guesses.game
+  }
+
   @HostBinding('class.invisible')
   get invisible() {
-    return this.match.guesses.count === 0
+    return !this.game
   }
 }
