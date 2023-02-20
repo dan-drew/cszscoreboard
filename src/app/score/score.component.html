@@ -1,6 +1,6 @@
 <ng-template #team let-$team>
-  <div class="team flex-fill d-flex flex-column csz-bg-{{$team.type}}">
-    <div class="score flex-fill d-flex flex-nowrap align-items-center position-relative justify-content-center">
+  <div class="team csz-bg-{{$team.type}}">
+    <div class="score">
       <ng-container *ngIf="editable">
         <!-- DECREMENT SCORE -->
         <button class="score-button btn hover-highlight" (click)="$team.score = $team.score - 1">
@@ -23,7 +23,7 @@
       </ng-container>
     </div>
 
-    <div class="team-name csz-bold-text flex-1 pb-3">
+    <div class="team-name csz-bold-text">
       {{$team.name}}
     </div>
   </div>
@@ -31,3 +31,8 @@
 
 <ng-container [ngTemplateOutlet]="team" [ngTemplateOutletContext]="{$implicit: match.teams.blue}"></ng-container>
 <ng-container [ngTemplateOutlet]="team" [ngTemplateOutletContext]="{$implicit: match.teams.red}"></ng-container>
+<ng-container
+  *ngIf="editable && match.teams.optionalEnabled"
+  [ngTemplateOutlet]="team"
+  [ngTemplateOutletContext]="{$implicit: match.teams.optional}"
+></ng-container>

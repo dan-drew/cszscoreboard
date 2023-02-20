@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {Match, MatchView} from "../config/match";
+import {Component, OnInit} from '@angular/core';
+import {Match, MatchView} from "../../config/match";
 
 interface ViewOption {
   view: MatchView
@@ -11,10 +11,10 @@ interface ViewOption {
   templateUrl: './booth-view.component.html',
   styleUrls: ['./booth-view.component.scss'],
   host: {
-    class: 'position-fixed top-0 bottom-0 start-0 end-0 overflow-hidden d-flex flex-nowrap'
+    class: 'position-fixed top-0 bottom-0 start-0 end-0 overflow-hidden d-flex-row'
   }
 })
-export class BoothViewComponent {
+export class BoothViewComponent implements OnInit {
   readonly viewOptions: ViewOption[] = [
     { view: 'slate', icon: 'image-fill' },
     { view: 'scoreboard', icon: 'joystick' },
@@ -24,6 +24,14 @@ export class BoothViewComponent {
   constructor(
     public match: Match
     ) {
+  }
+
+  ngOnInit() {
+    this.openLive()
+  }
+
+  openLive() {
+    window.open('/live', 'cszScoreboardLive', 'popup')
   }
 
   viewAvailable(view: MatchView) {

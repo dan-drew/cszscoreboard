@@ -1,0 +1,77 @@
+// Parent must define --round-lg-size and --round-sm-size
+
+:host {
+  --selected-text-color: white;
+  --unselected-text-color: #888888;
+  --hover-text-color: #bbbbbb;
+
+  display: block;
+  position: relative;
+  overflow-x: hidden;
+  font-size: var(--round-sm-size);
+
+  .round-container-center {
+    position: relative;
+    margin-left: 50% !important;
+    min-width: 50%;
+    max-width: 50%;
+    height: 100%;
+    overflow: visible;
+
+    .round-name-container {
+      height: 100%;
+      align-items: stretch;
+      gap: 2ch;
+    }
+  }
+}
+
+@mixin hidden-name {
+  visibility: hidden;
+  position: absolute;
+}
+
+@mixin visible-name {
+  visibility: visible;
+  position: relative;
+}
+
+.round-name {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: "main";
+  align-items: center;
+  justify-items: center;
+  white-space: nowrap;
+
+  .unselected {
+    @include visible-name;
+    font-size: var(--round-sm-size);
+    grid-area: main;
+    color: var(--unselected-text-color);
+
+    &:hover {
+      color: var(--hover-text-color);
+    }
+  }
+
+  .selected {
+    @include hidden-name;
+    font-size: var(--round-lg-size);
+    grid-area: main;
+    color: var(--selected-text-color);
+
+    // Better vertical center
+    padding-bottom: calc(var(--round-lg-size) * 0.2);
+  }
+
+  &.selected {
+    .unselected {
+      @include hidden-name
+    }
+
+    .selected {
+      @include visible-name;
+    }
+  }
+}

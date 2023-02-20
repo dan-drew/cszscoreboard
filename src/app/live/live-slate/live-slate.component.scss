@@ -1,0 +1,16 @@
+:host {
+  background: linear-gradient(100deg, var(--csz-blue), var(--csz-red));
+}
+
+.logo {
+  position: absolute;
+  object-fit: contain;
+  object-position: center center;
+  padding: var(--size-10);
+  filter: drop-shadow(0 0 var(--size-1) #222222);
+}
+
+.dimmer {
+  background-color: black;
+  opacity: 0.5;
+}

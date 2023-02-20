@@ -1,0 +1,23 @@
+<app-live-scoreboard
+  class="view"
+  [class.active]="match.activeView === 'scoreboard'"
+></app-live-scoreboard>
+<app-live-slate
+  class="view"
+  [class.active]="match.activeView === 'slate'"
+></app-live-slate>
+<app-live-guesses
+  *ngIf="match.guesses.game"
+  class="view"
+  [class.active]="match.activeView === 'guesses'"
+></app-live-guesses>
+
+<!--
+FULL-SCREEN BUTTON
+-->
+<button *ngIf="fullScreen.canEnter"
+        class="fullscreen-button btn btn-outline-info"
+        (click)="enterFullScreen()"
+>
+  <i class="bi-fullscreen"></i> Fullscreen
+</button>

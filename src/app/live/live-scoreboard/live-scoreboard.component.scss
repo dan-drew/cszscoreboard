@@ -1,0 +1,22 @@
+app-score {
+  height: var(--size-50);
+  margin-top: var(--size-30);
+}
+
+.logo {
+  position: fixed;
+  top: var(--size-5);
+  width: 100%;
+  height: var(--size-45);
+  object-fit: contain;
+  object-position: center center;
+  z-index: 100;
+}
+
+app-round-names {
+  --round-height: var(--size-20);
+  --round-lg-size: calc(var(--round-height) * 0.6); //10vh;
+  --round-sm-size: calc(var(--round-lg-size) * 0.6);
+
+  height: var(--round-height);
+}

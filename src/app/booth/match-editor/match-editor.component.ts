@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {Match} from "../config/match";
-import {Profiles} from "../config/profiles";
+import {Match} from "../../config/match";
+import {Profiles} from "../../config/profiles";
 
 type MatchTab = 'teams' | 'rounds' | 'profile'
 
@@ -9,7 +9,7 @@ type MatchTab = 'teams' | 'rounds' | 'profile'
   templateUrl: './match-editor.component.html',
   styleUrls: ['./match-editor.component.scss'],
   host: {
-    class: 'p-3 d-flex flex-column flex-nowrap'
+    class: 'p-3 d-flex-column'
   }
 })
 export class MatchEditorComponent {

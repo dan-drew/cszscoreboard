@@ -1,0 +1,13 @@
+<div class="guess-game csz-bold-text" *ngIf="game.id !== 'generic'">{{game.name}}</div>
+<div class="flex-fill d-flex flex-column flex-nowrap justify-content-center align-items-center">
+  <ng-container [ngSwitch]="game.singleSlide">
+    <ng-container *ngSwitchCase="true">
+      <ng-container *ngFor="let $answer of game.answers; index as $i">
+        <div class="guess-text single-slide"><b>{{$answer.name}}:</b> {{match.guesses.answers[$i]}}</div>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <div class="guess-text">{{match.guesses.answers[match.guesses.selected]}}</div>
+    </ng-container>
+  </ng-container>
+</div>

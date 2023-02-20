@@ -1,15 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormControl} from "@angular/forms";
-import {Match} from "../config/match";
+import {Match} from "../../config/match";
 import {Subscription} from "rxjs";
-import {guessingGames} from "../config/guessing-game";
+import {guessingGames} from "../../config/guessing-game";
 
 @Component({
   selector: 'app-guess-editor',
   templateUrl: './guess-editor.component.html',
   styleUrls: ['./guess-editor.component.scss'],
   host: {
-    class: 'w-100 p-3 d-flex flex-column flex-nowrap'
+    class: 'w-100 p-3 d-flex-column'
   }
 })
 export class GuessEditorComponent implements OnInit, OnDestroy {

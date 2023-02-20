@@ -1,0 +1,29 @@
+<div class="bar-backdrop position-fixed top-0 bottom-0 start-0 end-0"
+     *ngIf="selectedTab"
+     (click)="selectedTab = undefined"
+>
+</div>
+
+<div class="bar-spacer"></div>
+
+<div class="bar-container d-flex-row">
+  <div class="bar-tabs d-flex-column h-100 align-items-stretch">
+    <button
+      *ngFor="let $tab of tabs"
+      [ngClass]="$tab.classes"
+      [title]="$tab.name | titlecase"
+      [class.selected]="selectedTab === $tab.name"
+      (click)="tabClicked($tab)"
+    >
+      <i *ngIf="$tab.icon" [class]="tabIcon($tab)"></i>
+      <img *ngIf="$tab.image" [src]="$tab.image" [alt]="$tab.name">
+    </button>
+  </div>
+
+  <div class="bar-panel flex-fill d-flex flex-column flex-nowrap mh-100 h-100">
+    <ng-container [ngSwitch]="selectedTab">
+      <app-match-editor *ngSwitchCase="'settings'" class="bar-form flex-fill"></app-match-editor>
+      <app-guess-editor *ngSwitchCase="'guesses'" class="bar-form flex-fill"></app-guess-editor>
+    </ng-container>
+  </div>
+</div>

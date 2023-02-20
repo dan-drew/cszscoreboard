@@ -1,37 +1,27 @@
-<button
-  *ngIf="editable"
-  class="hover-highlight clickable"
-  [disabled]="selected(0)"
-  (click)="select(selectedIndex - 1)"
->
-  <i class="bi-chevron-left"></i>
-</button>
-
-<div class="round-list flex-fill overflow-hidden position-relative">
-  <div roundNames
-       class="round-names position-absolute d-flex flex-nowrap align-items-baseline"
-       [style.margin-left]="roundOffset | async"
+<ng-container *ngIf="{ current: round.current | async } as $round">
+  <button
+    *ngIf="editable"
+    title="Previous"
+    class="hover-highlight clickable"
+    [disabled]="$round.current === 0"
+    (click)="round.setCurrent($round.current! - 1)"
   >
-    <ng-container *ngFor="let $round of round.names; index as $i">
-      <div
-        roundName
-        class="round-name csz-text clickable hover-highlight"
-        [class.selected]="selected($i)"
-        (click)="select($i)"
-      >
-        {{$round}}
-      </div>
-    </ng-container>
-  </div>
-  <div class="fade-left"></div>
-  <div class="fade-right"></div>
-</div>
+    <i class="bi-caret-left-fill"></i>
+  </button>
 
-<button
-  *ngIf="editable"
-  class="hover-highlight clickable"
-  [disabled]="selected(round.count - 1)"
-  (click)="select(selectedIndex + 1)"
->
-  <i class="bi-chevron-right"></i>
-</button>
+  <div class="round-list flex-fill align-items-stretch">
+    <app-round-names></app-round-names>
+    <div class="fade-left"></div>
+    <div class="fade-right"></div>
+  </div>
+
+  <button
+    *ngIf="editable"
+    title="Next"
+    class="hover-highlight clickable"
+    [disabled]="$round.current! >= round.count - 1"
+    (click)="round.setCurrent($round.current! + 1)"
+  >
+    <i class="bi-caret-right-fill"></i>
+  </button>
+</ng-container>

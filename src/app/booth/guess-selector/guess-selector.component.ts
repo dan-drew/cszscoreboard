@@ -1,13 +1,13 @@
 import {Component, HostBinding} from '@angular/core';
-import {Match} from "../config/match";
+import {Match} from "../../config/match";
 
 @Component({
   selector: 'app-guess-selector',
   templateUrl: './guess-selector.component.html',
   styleUrls: ['./guess-selector.component.scss'],
-  // host: {
-  //   class: 'w-100 d-flex flex-nowrap align-items-center'
-  // }
+  host: {
+    class: 'pt-2 mx-2'
+  }
 })
 export class GuessSelectorComponent {
   constructor(

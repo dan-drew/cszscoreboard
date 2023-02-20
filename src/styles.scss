@@ -1,14 +1,23 @@
 @use "bootstrap-icons/font/bootstrap-icons";
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Just+Me+Again+Down+Here&family=Roboto+Condensed:wght@700&family=Oswald:wght@400;700&display=swap');
 
 $size-steps: 1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 33, 35, 40, 45, 50, 60, 65, 70, 75, 80, 85, 90, 100;
+
+:root {
+  --bs-body-line-height: 1; // Bootstrap defaults to 2 which isn't helpful here
+
+  --main-font-family: 'Roboto Light', sans-serif;
+  --csz-font-family: 'Oswald', sans-serif;
+  --postit-font-family: 'Just Me Again Down Here', fantasy;
+}
 
 body {
   background: black;
   color: white;
-  font-family: 'Roboto Light', sans-serif;
+  font-family: var(--main-font-family);
   padding: 0;
   margin: 0;
 
@@ -18,8 +27,10 @@ body {
     --size-#{$step}: calc(var(--size-base) * #{$step});
   }
 
-  --csz-blue: royalblue;
-  --csz-red: darkred;
+  --csz-blue-rgb: 11, 77, 130;
+  --csz-blue: rgb(var(--csz-blue-rgb));
+  --csz-red-rgb: 154, 27, 32;
+  --csz-red: rgb(var(--csz-red-rgb));
 }
 
 @each $step in $size-steps {
@@ -42,7 +53,7 @@ body {
 }
 
 .csz-text, .csz-bold-text {
-  font-family: 'Oswald', sans-serif;
+  font-family: var(--csz-font-family);
   font-stretch: condensed;
 }
 
@@ -64,9 +75,11 @@ body {
 .fullscreen {
   position: fixed;
   left: 0;
-  right: 0;
+  min-width: 100vw;
+  max-width: 100vw;
   top: 0;
-  bottom: 0;
+  min-height: 100vh;
+  max-height: 100vh;
   overflow: hidden;
 }
 
@@ -78,4 +91,16 @@ body {
 .image-cover {
   object-fit: cover;
   object-position: center;
+}
+
+.d-flex-column {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.d-flex-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }

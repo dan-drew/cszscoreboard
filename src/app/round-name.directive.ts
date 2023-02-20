@@ -5,6 +5,6 @@ import {Directive, ElementRef} from '@angular/core';
 })
 export class RoundNameDirective {
 
-  constructor(public readonly el: ElementRef) { }
+  constructor(public readonly el: ElementRef<HTMLElement>) { }
 
 }

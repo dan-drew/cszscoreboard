@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {Match} from "../config/match";
-import {FullScreenTargetDirective} from "../full-screen-target.directive";
+import {Match} from "../../config/match";
+import {FullScreenTargetDirective} from "../../full-screen-target.directive";
 
 @Component({
   selector: 'app-live-view',
@@ -34,9 +34,5 @@ export class LiveViewComponent implements OnInit, OnDestroy {
     this.fullScreen.enter().catch(err => {
       console.error('Failed to enter fullscreen', err)
     })
-  }
-
-  get game() {
-    return this.match.guesses.game
   }
 }

@@ -1,0 +1,21 @@
+.toolbar {
+  app-button-group {
+    button {
+      width: 10vw;
+      min-width: 1in;
+      font-size: var(--size-5);
+    }
+  }
+}
+
+.main-grid {
+  display: grid;
+  overflow: hidden;
+  grid-template-rows: var(--size-15) var(--size-50) var(--size-25) var(--size-10);
+  grid-template-columns: minmax(1fr, 1fr);
+}
+
+app-rounds {
+  --round-lg-size: 6vh;
+  --round-sm-size: 5vh;
+}

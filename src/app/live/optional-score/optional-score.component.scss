@@ -1,0 +1,43 @@
+:host {
+  --width: var(--size-30);
+  --height: var(--size-30);
+  --tape-width: calc(var(--width) / 2);
+  --tape-height: var(--size-4);
+  --score-font-size: calc(var(--height) * 0.7);
+  --name-font-size: calc(var(--height) / 5);
+
+  position: fixed;
+  right: var(--size-10);
+  top: var(--size-5);
+  transform: rotate(-10deg);
+  width: var(--width);
+  height: var(--height);
+  z-index: 200;
+
+  // Post-it background
+  background: radial-gradient(circle at top left, #fefecb, #f8f482); //140deg, #fefecb, #f8f482);
+  filter: drop-shadow(2px 4px 6px #444444);
+
+  color: #666;
+  font-family: var(--postit-font-family);
+}
+
+.tape {
+  position: absolute;
+  width: var(--tape-width);
+  height: var(--tape-height);
+  top: calc(var(--tape-height) * -0.5);
+  left: calc((var(--width) - var(--tape-width)) / 2);
+  z-index: 210;
+  background: #dddddd80;
+  border: 1px solid #88888844;
+}
+
+.score {
+  font-size: var(--score-font-size);
+  font-weight: bold;
+}
+
+.name {
+  font-size: var(--name-font-size);
+}
