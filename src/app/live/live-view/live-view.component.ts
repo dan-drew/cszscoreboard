@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {Match} from "../../config/match";
 import {FullScreenTargetDirective} from "../../full-screen-target.directive";
+import {interval, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-live-view',
@@ -13,7 +14,7 @@ import {FullScreenTargetDirective} from "../../full-screen-target.directive";
   }
 })
 export class LiveViewComponent implements OnInit, OnDestroy {
-  private timer?: any
+  private timer?: Subscription
 
   constructor(
     public match: Match,
@@ -23,16 +24,28 @@ export class LiveViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.timer = setInterval(() => this.changeDetector.detectChanges(), 1000)
+    this.timer = interval(1000).subscribe(() => this.poll())
   }
 
   ngOnDestroy() {
-    if (this.timer) clearInterval(this.timer)
+    this.timer?.unsubscribe()
   }
 
   enterFullScreen() {
     this.fullScreen.enter().catch(err => {
       console.error('Failed to enter fullscreen', err)
     })
+  }
+
+  private poll() {
+    if (this.boothClosed) {
+      window.close()
+    } else {
+      this.changeDetector.detectChanges()
+    }
+  }
+
+  private get boothClosed() {
+    return !window.opener || (window.opener as Window).closed
   }
 }

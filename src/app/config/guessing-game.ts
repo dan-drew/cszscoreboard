@@ -1,86 +1,126 @@
-interface GuessAnswer {
-  name: string
+type GameVersus = 'vs' | 'shared'
+type GameStyle = 'normal' | 'list' | 'labeled'
+const IndexNames = ['First', 'Second', 'Third', 'Fourth', 'Fifth']
+
+interface GuessDef {
+  label?: string
   placeholder?: string
   optional?: boolean
+  multiline?: boolean
+  lines?: number
 }
 
-export interface GuessingGame {
+export interface Guess extends GuessDef {
+  id: string
+}
+
+interface GameOptions {
+  style?: GameStyle,
+  vs?: GameVersus,
+  labelTemplate?: string,
+  placeholderTemplate?: string,
+  multiline?: boolean,
+  listName?: string
+}
+
+export class GuessingGame {
   // Unique ID
   id: string
-  // Display name for settings and slides
+  // Display name for slides
   name: string
-  // Combine labelled answers on a single slide
-  singleSlide?: boolean
+  // Display name for settings
+  listName: string
   // Show label on each slide
-  showLabels?: boolean
-  answers: GuessAnswer[]
+  guesses!: Guess[]
+  vs?: GameVersus
+  style: GameStyle
+  required: number
+
+  constructor(
+    name: string,
+    guesses: GuessDef[],
+    options: Pick<GameOptions, 'vs' | 'style' | 'listName'>
+  )
+  constructor(
+    name: string,
+    guesses: number | [number, number],
+    options?: Pick<GameOptions, 'vs' | 'style' | 'labelTemplate' | 'placeholderTemplate' | 'multiline' | 'listName'>
+  )
+  constructor(
+    source: GuessingGame,
+    vs: GameVersus
+  )
+  constructor(
+    name: string | GuessingGame,
+    guesses: number | [number, number] | GuessDef[] | GameVersus,
+    {vs, labelTemplate, placeholderTemplate, style = 'normal', multiline = false, listName}: GameOptions = {}
+  ) {
+    if (name instanceof GuessingGame) {
+      this.id = name.id + '-vs'
+      this.name = name.name
+      this.listName = name.listName + ' (H2H)'
+      this.guesses = name.guesses
+      this.style = name.style
+      this.vs = guesses as GameVersus
+      this.required = name.required
+    } else {
+      this.name = name
+      this.listName = listName || name
+      this.id = name.toLowerCase().replaceAll(' ', '-').replaceAll(/[^A-Za-z0-9-]+/g, '')
+      this.vs = vs
+      this.style = style
+
+      if (typeof guesses === 'string') {
+        // Not allowed
+      } else if (typeof guesses === 'number') {
+        this.guesses = this.createGuesses(guesses, guesses, labelTemplate!, placeholderTemplate, multiline)
+      } else if (this.isGuessList(guesses)) {
+        this.guesses = guesses.map(def => this.guessFromDef(def))
+      } else {
+        this.guesses = this.createGuesses(guesses[0], guesses[1], labelTemplate!, placeholderTemplate, multiline)
+      }
+
+      this.required = this.guesses.filter(a => a.optional !== true).length
+    }
+  }
+
+  asVs(vs: GameVersus) {
+    return new GuessingGame(this, vs)
+  }
+
+  // Create templatized guesses
+  private createGuesses(
+    min: number,
+    max: number,
+    labelTemplate?: string,
+    placeholderTemplate?: string,
+    multiline?: boolean
+  ): Guess[] {
+    const guesses: Guess[] = []
+
+    for (let i = 0; i < max; i++) {
+      guesses.push({
+        id: this.nextGuessId(),
+        label: labelTemplate?.replaceAll('{{}}', IndexNames[i]),
+        placeholder: placeholderTemplate?.replaceAll('{{}}', IndexNames[i]),
+        optional: i >= min,
+        multiline
+      })
+    }
+
+    return guesses
+  }
+
+  private isGuessList(val: [number, number] | GuessDef[]): val is GuessDef[] {
+    return val.length > 0 && typeof val[0] !== 'number'
+  }
+
+  private nextGuessId() {
+    return window.crypto.randomUUID()
+  }
+
+  private guessFromDef(def: GuessDef): Guess {
+    return Object.assign({id: this.nextGuessId()}, def)
+  }
 }
 
-const FIVETHING_PROMPT = 'Activity where something is something else and another thing is too'
-const SHOPPING_PROMPT = 'Product where something is something else and another thing is too'
-
-export const guessingGames: GuessingGame[] = [
-  {
-    id: '5things',
-    name: '5 Things',
-    answers: [
-      { name: 'First Thing', placeholder: FIVETHING_PROMPT, optional: true  },
-      { name: 'Second Thing', placeholder: FIVETHING_PROMPT, optional: true  },
-      { name: 'Third Thing', placeholder: FIVETHING_PROMPT, optional: true  },
-      { name: 'Fourth Thing', placeholder: FIVETHING_PROMPT, optional: true  },
-      { name: 'Fifth Thing', placeholder: FIVETHING_PROMPT, optional: true  }
-    ]
-  },
-  {
-    id: 'home-shopping',
-    name: 'Home Shopping Network',
-    answers: [
-      { name: 'First Thing', placeholder: SHOPPING_PROMPT, optional: true  },
-      { name: 'Second Thing', placeholder: SHOPPING_PROMPT, optional: true  },
-      { name: 'Third Thing', placeholder: SHOPPING_PROMPT, optional: true  },
-      { name: 'Fourth Thing', placeholder: SHOPPING_PROMPT, optional: true  },
-      { name: 'Fifth Thing', placeholder: SHOPPING_PROMPT, optional: true  }
-    ]
-  },
-  {
-    id: 'chain-murder',
-    name: 'Chain Murder',
-    singleSlide: true,
-    answers: [
-      { name: 'Location' },
-      { name: 'Occupation' },
-      { name: 'Weapon' }
-    ]
-  },
-  {
-    id: 'principals-office',
-    name: "Principal's Office",
-    showLabels: true,
-    answers: [
-      { name: 'Crime' },
-      { name: 'Motive' },
-      { name: 'Accomplice' }
-    ]
-  },
-  {
-    id: 'crime-scene',
-    name: "Crime Scene",
-    showLabels: true,
-    answers: [
-      { name: 'Crime' },
-      { name: 'Motive' },
-      { name: 'Accomplice' }
-    ]
-  },
-  {
-    id: 'generic',
-    name: "Other",
-    answers: [
-      { name: 'Answer 1', optional: true },
-      { name: 'Answer 2', optional: true },
-      { name: 'Answer 3', optional: true },
-      { name: 'Answer 4', optional: true },
-      { name: 'Answer 5', optional: true }
-    ]
-  }
-]

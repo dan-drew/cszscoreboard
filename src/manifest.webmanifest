@@ -22,6 +22,6 @@
     }
   ],
   "background_color": "black",
-  "theme_color": "blue",
+  "theme_color": "#0b4d82",
   "orientation": "landscape"
 }

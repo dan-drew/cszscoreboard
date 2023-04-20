@@ -1,29 +1,32 @@
-<button class="btn btn-danger mb-3"
-        (click)="reset()"
->
-  Reset
-</button>
+<div class="d-flex-row gap-2">
+  <select class="form-control fs-4" name="game" [(ngModel)]="game">
+    <option [ngValue]="undefined">Select a game...</option>
+    <option *ngFor="let $game of games"
+            [ngValue]="$game">
+      {{$game.listName}}
+    </option>
+  </select>
 
-<select class="form-control mb-1" name="game" [(ngModel)]="game">
-  <option [ngValue]="undefined">Select a game...</option>
-  <option *ngFor="let $game of games"
-          [ngValue]="$game">
-    {{$game.name}}
-  </option>
-</select>
+  <button *ngIf="this.game" class="btn btn-danger fs-4" (click)="reset()">
+    <i class="bi-x-lg"></i>
+  </button>
+</div>
 
 <ng-container *ngIf="this.game as $game">
-  <ng-container *ngFor="let $answer of $game.answers; index as $i">
-    <ng-container *ngIf="$i < guesses.length">
-      <label class="form-label" for="answer{{$i}}">{{$answer.name}}</label>
-      <textarea [formControl]="guesses.controls[$i]"
-                id="answer{{$i}}"
-                name="answer{{$i}}"
-                class="guess-text mb-1 form-control"
-                [placeholder]="$answer.placeholder || 'Enter answer...'"
-                rows="3"
-      >
-    </textarea>
-    </ng-container>
+  <ng-container *ngIf="$game.vs === 'vs'; else normal">
+    <div>
+      <div class="csz-bg-blue text-white p-2 rounded-2 fs-4 text-center">Blue Team</div>
+      <app-guess-answers-form #blue [guesses]="$game.guesses" [answers]="match.guesses.blue!"></app-guess-answers-form>
+    </div>
+    <div>
+      <div class="csz-bg-red text-white p-2 rounded-2 fs-4 text-center">Red Team</div>
+      <app-guess-answers-form #red [guesses]="$game.guesses" [answers]="match.guesses.red!"></app-guess-answers-form>
+    </div>
   </ng-container>
+
+  <ng-template #normal>
+    <app-guess-answers-form #answers [guesses]="$game.guesses"
+                            [answers]="match.guesses.answers!"></app-guess-answers-form>
+  </ng-template>
 </ng-container>
+

@@ -1,10 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Match, MatchView} from "../../config/match";
-
-interface ViewOption {
-  view: MatchView
-  icon: string
-}
+import {GuessingService} from "../../guessing/guessing.service";
 
 @Component({
   selector: 'app-booth-view',
@@ -15,14 +11,9 @@ interface ViewOption {
   }
 })
 export class BoothViewComponent implements OnInit {
-  readonly viewOptions: ViewOption[] = [
-    { view: 'slate', icon: 'image-fill' },
-    { view: 'scoreboard', icon: 'joystick' },
-    { view: 'guesses', icon: 'question-circle' }
-  ]
-
   constructor(
-    public match: Match
+    readonly match: Match,
+    private readonly guessing: GuessingService
     ) {
   }
 
@@ -35,7 +26,7 @@ export class BoothViewComponent implements OnInit {
   }
 
   viewAvailable(view: MatchView) {
-    if (view === 'guesses') return this.match.guesses.count > 0
+    if (view === 'guesses') return this.guessing.enabled
     return true
   }
 }

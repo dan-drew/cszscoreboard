@@ -1,8 +1,7 @@
 .view {
-  visibility: hidden !important;
-
-  &.active {
-    visibility: visible !important;
+  &:not(.active) {
+    display: none;
+    visibility: hidden !important;
   }
 }
 

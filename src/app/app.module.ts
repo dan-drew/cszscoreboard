@@ -21,6 +21,8 @@ import { OptionalScoreComponent } from './live/optional-score/optional-score.com
 import { LiveSlateComponent } from './live/live-slate/live-slate.component';
 import { LiveScoreboardComponent } from './live/live-scoreboard/live-scoreboard.component';
 import { LiveGuessesComponent } from './live/live-guesses/live-guesses.component';
+import { GuessAnswersFormComponent } from './booth/guess-answers-form/guess-answers-form.component';
+import {Match} from "./config/match";
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { LiveGuessesComponent } from './live/live-guesses/live-guesses.component
     OptionalScoreComponent,
     LiveSlateComponent,
     LiveScoreboardComponent,
-    LiveGuessesComponent
+    LiveGuessesComponent,
+    GuessAnswersFormComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,7 @@ import { LiveGuessesComponent } from './live/live-guesses/live-guesses.component
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [Match.provider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

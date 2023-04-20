@@ -4,8 +4,7 @@ import {Match} from "./config/match";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  providers: [Match.provider]
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
 }

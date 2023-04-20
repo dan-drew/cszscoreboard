@@ -1,36 +1,32 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormArray, FormControl} from "@angular/forms";
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Match} from "../../config/match";
-import {Subscription} from "rxjs";
-import {guessingGames} from "../../config/guessing-game";
+import {guessingGames} from "../../config/guessing-games";
+import {GuessAnswersFormComponent} from "../guess-answers-form/guess-answers-form.component";
 
 @Component({
   selector: 'app-guess-editor',
   templateUrl: './guess-editor.component.html',
   styleUrls: ['./guess-editor.component.scss'],
   host: {
-    class: 'w-100 p-3 d-flex-column'
+    class: 'w-100 p-3 d-flex-column gap-3 overflow-hidden'
   }
 })
 export class GuessEditorComponent implements OnInit, OnDestroy {
   public readonly games = guessingGames
-  public readonly guesses = new FormArray<FormControl<string | null>>([])
-  changeSubscription?: Subscription
+
+  @ViewChild('blue') private blueAnswers?: GuessAnswersFormComponent
+  @ViewChild('red') private redAnswers?: GuessAnswersFormComponent
+  @ViewChild('answers') private answers?: GuessAnswersFormComponent
 
   constructor(
     readonly match: Match
   ) {
-    this.initForm()
   }
 
   ngOnInit() {
-    this.changeSubscription = this.guesses.valueChanges.subscribe({
-      next: value => this.onValueChange(value)
-    })
   }
 
   ngOnDestroy() {
-    if (this.changeSubscription) this.changeSubscription.unsubscribe()
   }
 
   get game() {
@@ -40,35 +36,16 @@ export class GuessEditorComponent implements OnInit, OnDestroy {
   set game(val) {
     if (val !== this.game) {
       this.match.guesses.game = val
-      this.initForm()
-    }
-  }
-
-  addGuess(value: string = '') {
-    if (this.guesses.length < this.match.guesses.maxAnswers) {
-      this.guesses.push(new FormControl<string>(value))
-    }
-  }
-
-  initForm() {
-    this.guesses.clear({emitEvent: false})
-    if (this.game) {
-      this.match.guesses.answers.forEach(value => this.addGuess(value))
-      this.addGuess()
+      this.blueAnswers?.initForm()
+      this.redAnswers?.initForm()
+      this.answers?.initForm()
     }
   }
 
   reset() {
-    this.guesses.clear()
+    this.blueAnswers?.reset()
+    this.redAnswers?.reset()
+    this.answers?.reset()
     this.match.guesses.reset()
-  }
-
-  onValueChange(values: (string | null)[]) {
-    values.forEach((val, index) => {
-      this.match.guesses.set(index, val || '')
-    })
-    while (this.match.guesses.count >= this.guesses.length && this.guesses.length < this.match.guesses.maxAnswers) {
-      this.addGuess()
-    }
   }
 }

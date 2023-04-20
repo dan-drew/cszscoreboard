@@ -1,5 +1,8 @@
-import {Component, HostBinding} from '@angular/core';
+import {Component, HostBinding, OnDestroy, OnInit} from '@angular/core';
 import {Match} from "../../config/match";
+import {GuessAnswers} from "../../config/guess-answers";
+import {GuessingService} from "../../guessing/guessing.service";
+import {fromEvent, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-guess-selector',
@@ -9,18 +12,41 @@ import {Match} from "../../config/match";
     class: 'pt-2 mx-2'
   }
 })
-export class GuessSelectorComponent {
-  constructor(
-    public readonly match: Match
-  ) {
-  }
+export class GuessSelectorComponent implements OnInit, OnDestroy {
+  private eventSubscription?: Subscription
 
-  get game() {
-    return this.match.guesses.game
+  constructor(
+    readonly match: Match,
+    readonly guessing: GuessingService
+  ) {
   }
 
   @HostBinding('class.invisible')
   get invisible() {
-    return !this.game
+    return !this.guessing.enabled
+  }
+
+  ngOnInit() {
+    this.eventSubscription = fromEvent<KeyboardEvent>(window, 'keyup').subscribe($event => this.onKey($event))
+  }
+
+  ngOnDestroy() {
+    this.eventSubscription?.unsubscribe()
+  }
+
+  private onKey($event: KeyboardEvent) {
+    if (this.match.activeView === 'guesses') {
+      switch($event.key) {
+        case 'ArrowLeft':
+          this.guessing.previous()
+          $event.stopImmediatePropagation()
+          break
+
+        case 'ArrowRight':
+          this.guessing.next()
+          $event.stopImmediatePropagation()
+          break
+      }
+    }
   }
 }

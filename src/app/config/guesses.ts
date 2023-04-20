@@ -1,10 +1,14 @@
 import {GuessingGame} from "./guessing-game";
+import {GuessAnswers} from "./guess-answers";
 
 export class Guesses {
   public selected: number = 0
   private _game?: GuessingGame
-  private _answers: string[] = []
   private requiredAnswers: number = 0
+
+  answers?: GuessAnswers
+  blue?: GuessAnswers
+  red?: GuessAnswers
 
   get game() {
     return this._game
@@ -14,37 +18,33 @@ export class Guesses {
     if (val !== this._game) {
       this._game = val
       this.selected = 0
-      if (val) {
-        this._answers = new Array<string>(val.answers.length)
-        this.requiredAnswers = this._game!.answers.filter(a => a.optional !== true).length
-      } else {
-        this._answers = []
+
+      if (!val) {
+        delete this.answers
+        delete this.blue
+        delete this.red
         this.requiredAnswers = 0
+      } else if (val.vs === 'vs') {
+        this.blue = new GuessAnswers(val)
+        this.red = new GuessAnswers(val)
+        this.requiredAnswers = val.required
+      } else {
+        this.answers = new GuessAnswers(val)
+        this.requiredAnswers = val.required
       }
     }
   }
 
   get maxAnswers() {
-    return this._game!.answers.length
+    return this._game!.guesses.length
   }
 
-  get answers(): string[] {
-    return this._answers.filter((val, index) => {
-      return (index < this.requiredAnswers) || (val.length > 0)
-    })
-  }
-
-  set(index: number, value: string) {
-    this._answers[index] = value.trim()
-  }
-
-  get count() {
-    return this.answers.length
-  }
-
-  move(from: number, to: number) {
-    this._answers.splice(to, 0, this._answers[from])
-    this._answers.splice(from > to ? from + 1 : from, 1)
+  get changed() {
+    return Math.max(
+      this.answers?.changed || 0,
+      this.blue?.changed || 0,
+      this.red?.changed || 0
+    )
   }
 
   reset() {

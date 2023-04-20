@@ -1,25 +1,74 @@
-.guess {
-  background: linear-gradient(to bottom, #aaa, #888);
+app-live-guesses {
+  --font-size: calc(var(--size-1) * 12);
+  --long-font-size: var(--size-10);
+  --text-shadow-color: #222222cc;
+  --guess-bg-light: #444;
+  --guess-bg-dark: #222;
+  --guess-text-color: white;
+  --label-text-color: #aaa;
+  --heading-text-color: var(--guess-bg-light);
+  --heading-bg-color: white;
 
-  .guess-game {
-    font-size: var(--size-10);
-    padding: 2pt 0;
+  background: radial-gradient(ellipse at center center, var(--guess-bg-light), var(--guess-bg-light) 50%, var(--guess-bg-dark));
+
+  .heading, .guess {
     text-align: center;
-    text-shadow: 5px 5px 10px #222222;
-    background: #666666;
+    text-shadow: 2px 2px 5px var(--text-shadow-color);
   }
 
-  .guess-text {
-    padding: var(--size-5);
-    color: white;
-    font-size: var(--size-15);
-    line-height: 1;
-    text-shadow: 5px 5px 10px #222222;
-    text-align: center;
-    white-space: pre-line;
+  .heading {
+    font-size: var(--font-size);
+    color: var(--heading-text-color);
+    background: var(--heading-bg-color);
+    line-height: 1.5;
+  }
 
-    &.single-slide {
-    font-size: var(--size-10);
+  .body {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-template-rows: 1fr;
+    overflow: hidden;
+    max-height: 100%;
+
+    .part {
+      grid-row: 1;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      align-items: center;
+      overflow: hidden;
+      max-width: 100%;
+
+      &.guess-style-blue {
+        background: var(--csz-blue);
+      }
+
+      &.guess-style-red {
+        background: var(--csz-red);
+      }
+
+      &.guess-style-vs {
+        background: linear-gradient(to right, var(--csz-blue), var(--csz-blue) 50%, var(--csz-red) 50%, var(--csz-red));
+      }
+
+      &.long {
+        .guess {
+          font-size: var(--long-font-size) !important;
+        }
+      }
+
+      .guess {
+        color: var(--guess-text-color);
+        font-size: var(--font-size);
+        font-weight: bold;
+        white-space: pre-line;
+
+        em {
+          color: var(--label-text-color);
+          font-style: normal;
+        }
+      }
     }
   }
 }

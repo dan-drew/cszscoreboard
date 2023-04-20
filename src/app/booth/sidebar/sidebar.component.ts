@@ -56,7 +56,7 @@ export class SidebarComponent {
     new TabDef({ name: 'Help', icon: 'info-circle-fill', action: () => this.help() })
   ]
 
-  selectedTab?: TabName //= 'settings'  // Open to settings by default
+  selectedTab?: TabName = 'settings'  // Open to settings by default
 
   constructor(
     readonly match: Match
