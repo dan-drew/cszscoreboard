@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Match, MatchView} from "../../config/match";
 import {GuessingService} from "../../guessing/guessing.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-booth-view',
@@ -13,11 +14,13 @@ import {GuessingService} from "../../guessing/guessing.service";
 export class BoothViewComponent implements OnInit {
   constructor(
     readonly match: Match,
-    private readonly guessing: GuessingService
+    private readonly guessing: GuessingService,
+    private readonly title: Title
     ) {
   }
 
   ngOnInit() {
+    this.title.setTitle('Booth - ComedySports Scoreboard')
     this.openLive()
   }
 

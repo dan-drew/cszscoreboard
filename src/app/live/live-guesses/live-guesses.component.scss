@@ -1,6 +1,7 @@
 app-live-guesses {
   --font-size: calc(var(--size-1) * 12);
-  --long-font-size: var(--size-10);
+  --long-font-size: calc(var(--size-1) * 8);
+  --longer-font-size: calc(var(--size-1) * 7);
   --text-shadow-color: #222222cc;
   --guess-bg-light: #444;
   --guess-bg-dark: #222;
@@ -38,7 +39,10 @@ app-live-guesses {
       justify-content: space-evenly;
       align-items: center;
       overflow: hidden;
+      column-gap: 2ch;
       max-width: 100%;
+      max-height: 100%;
+      padding: var(--size-2);
 
       &.guess-style-blue {
         background: var(--csz-blue);
@@ -53,8 +57,30 @@ app-live-guesses {
       }
 
       &.long {
+        row-gap: 1vh;
+
         .guess {
           font-size: var(--long-font-size) !important;
+          white-space: break-spaces;
+        }
+
+        &.longer {
+          justify-content: start;
+          align-items: start;
+
+          .guess {
+            font-size: var(--longer-font-size) !important;
+            max-width: 45%;
+            text-align: start;
+            text-indent: -1.5ch;
+            padding-left: 1.5ch;
+          }
+
+          &.longest {
+            .guess {
+              max-width: 30%;
+            }
+          }
         }
       }
 

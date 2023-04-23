@@ -3,8 +3,7 @@
 <div class="body flex-fill">
   <div
     *ngFor="let $part of slide.parts"
-    class="part d-flex-column justify-content-evenly align-items-center p-3 guess-style-{{$part.style || 'none'}}"
-    [class.long]="$part.long"
+    [ngClass]="partClasses($part)"
   >
     <div *ngFor="let $answer of $part.answers" class="guess" [innerHTML]="$answer"></div>
   </div>

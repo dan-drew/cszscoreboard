@@ -115,7 +115,7 @@ export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewInit {
       this.nameGap = name1.offset - name0.offset - name0.width
     }
 
-    console.info('Name data updated', `Gap: ${this.nameGap}`, this.nameData)
+    // console.info('Name data updated', `Gap: ${this.nameGap}`, this.nameData)
   }
 
   private updateOffset(selected: number = this.round.current.value) {

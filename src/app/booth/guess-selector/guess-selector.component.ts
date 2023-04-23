@@ -13,6 +13,8 @@ import {fromEvent, Subscription} from "rxjs";
   }
 })
 export class GuessSelectorComponent implements OnInit, OnDestroy {
+  private static INPUT_NODE_NAMES = ['INPUT', 'SELECT', 'TEXTAREA']
+
   private eventSubscription?: Subscription
 
   constructor(
@@ -35,7 +37,7 @@ export class GuessSelectorComponent implements OnInit, OnDestroy {
   }
 
   private onKey($event: KeyboardEvent) {
-    if (this.match.activeView === 'guesses') {
+    if (this.handleKeyEvent($event)) {
       switch($event.key) {
         case 'ArrowLeft':
           this.guessing.previous()
@@ -48,5 +50,10 @@ export class GuessSelectorComponent implements OnInit, OnDestroy {
           break
       }
     }
+  }
+
+  private handleKeyEvent($event: KeyboardEvent) {
+    return this.match.activeView === 'guesses'
+      && GuessSelectorComponent.INPUT_NODE_NAMES.indexOf(($event.target as HTMLElement).nodeName) < 0
   }
 }

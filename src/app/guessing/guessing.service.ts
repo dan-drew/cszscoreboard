@@ -2,9 +2,8 @@ import {Injectable} from '@angular/core';
 import {Match} from "../config/match";
 import {GuessAnswers} from "../config/guess-answers";
 
-interface GuessSlidePart {
+export interface GuessSlidePart {
   style?: 'red' | 'blue' | 'vs'
-  long?: boolean
   answers: string[]
 }
 
@@ -21,10 +20,9 @@ interface GuessPreview {
   providedIn: 'root'
 })
 export class GuessingService {
-  private readonly MAX_PREVIEW_LENGTH = 50
+  private readonly MAX_PREVIEW_LENGTH = 100
   private readonly NEW_LINE_PATTERN = /[\r\n]+/
   private readonly COMMA_SEPARATOR = ', '
-  private readonly LONG_LIST_MIN = 6
 
   private generated: number = 0
   private _slides: GuessSlide[] = []
@@ -129,7 +127,7 @@ export class GuessingService {
         const answers = this.listText(this.guesses.answers!)
         return [{
           title: this.game.name,
-          parts: [{answers, long: answers.length >= this.LONG_LIST_MIN}]
+          parts: [{answers}]
         }]
     }
   }
@@ -149,7 +147,7 @@ export class GuessingService {
     return this.guesses.answers!.value.map<GuessSlide>(answer => {
       return {
         title: this.game.name,
-        parts: [{answers: [answer]}]
+        parts: [{answers: this.splitLines(answer)}]
       }
     })
   }
@@ -179,14 +177,14 @@ export class GuessingService {
   }
 
   private guessPreviews(): GuessPreview[] {
-    return this.guesses.answers!.value.map<GuessPreview>(answer => {
-      return {text: this.previewText(answer)}
+    return this.guesses.answers!.value.map<GuessPreview>(text => {
+      return {text}
     })
   }
 
   private listText(answers: GuessAnswers): string[] {
     if (this.game.guesses.length === 1 && this.game.guesses[0].multiline) {
-      return answers.at(0).split(this.NEW_LINE_PATTERN)
+      return this.splitLines(answers.at(0))
     } else {
       return answers.value
     }
@@ -200,5 +198,9 @@ export class GuessingService {
     } else {
       return val
     }
+  }
+
+  private splitLines(text: string): string[] {
+    return text.split(this.NEW_LINE_PATTERN).filter(t => t.length > 0)
   }
 }

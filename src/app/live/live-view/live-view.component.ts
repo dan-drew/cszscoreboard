@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit
 import {Match} from "../../config/match";
 import {FullScreenTargetDirective} from "../../full-screen-target.directive";
 import {interval, Subscription} from "rxjs";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-live-view',
@@ -17,13 +18,15 @@ export class LiveViewComponent implements OnInit, OnDestroy {
   private timer?: Subscription
 
   constructor(
-    public match: Match,
-    public readonly fullScreen: FullScreenTargetDirective,
-    private changeDetector: ChangeDetectorRef
+    readonly match: Match,
+    readonly fullScreen: FullScreenTargetDirective,
+    private readonly changeDetector: ChangeDetectorRef,
+    private readonly title: Title
   ) {
   }
 
   ngOnInit() {
+    this.title.setTitle('TV - ComedySports Scoreboard')
     this.timer = interval(1000).subscribe(() => this.poll())
   }
 
