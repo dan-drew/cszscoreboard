@@ -1,0 +1,19 @@
+<div #modal class="modal" tabindex="-1">
+  <form #form="ngForm" class="modal-dialog modal-dialog-centered" (ngSubmit)="onOK()">
+    <div class="modal-content">
+      <div class="modal-header text-bg-primary">
+        <h5 class="modal-title">{{options?.title}}</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex-column gap-3 text-bg-light">
+        <div [innerHTML]="options?.prompt"></div>
+        <input #input class="form-control fs-3" tabindex="1" ngModel name="input" required
+               [placeholder]="options?.placeholder || ''">
+      </div>
+      <div class="modal-footer d-flex-row gap-1 justify-content-center text-bg-light">
+        <button type="submit" class="btn btn-primary" tabindex="2" [disabled]="form.invalid">OK</button>
+        <button type="button" class="btn border" tabindex="3" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>

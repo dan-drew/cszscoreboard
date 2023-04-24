@@ -36,12 +36,6 @@
                 "bundleName": "bootstrap"
               },
               "src/styles.scss"
-            ],
-            "scripts": [
-              {
-                "input": "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-                "bundleName": "bootstrap"
-              }
             ]
           },
           "configurations": {
@@ -49,8 +43,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -58,7 +52,14 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "sourceMap": {
+                "scripts": true,
+                "styles": false,
+                "vendor": false,
+                "hidden": false
+              },
+              "vendorChunk": true
             },
             "development": {
               "buildOptimizer": false,

@@ -1,0 +1,26 @@
+<div>
+  <label class="form-label">Optional Team Name</label>
+  <input
+    #teamName="ngModel"
+    class="form-control"
+    required
+    maxlength="20"
+    [(ngModel)]="match.teams.optional.name"
+  >
+</div>
+
+<button
+  *ngIf="!match.teams.optionalEnabled; else disableButton"
+  type="button"
+  class="btn btn-success"
+  [disabled]="teamName.invalid"
+  (click)="enable()"
+>Show</button>
+
+<ng-template #disableButton>
+  <button
+    type="button"
+    class="btn btn-danger"
+    (click)="disable()"
+  >Hide</button>
+</ng-template>

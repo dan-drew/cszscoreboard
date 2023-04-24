@@ -13,7 +13,7 @@ export class Profiles {
 
   private readonly default: Profile[] = [
     {
-      id: window.crypto.randomUUID(),
+      id: 'csz-main',
       name: 'ComedySportz',
       logo: 'comedysportz.png',
       rounds: Rounds.default,
@@ -24,14 +24,14 @@ export class Profiles {
       }
     },
     {
-      id: window.crypto.randomUUID(),
+      id: 'csz-minorleague',
       name: 'Minor League',
       logo: 'minorleague.png',
       rounds: Rounds.default,
       teams: {
-        blue: 'ML Blue',
-        red: 'ML Red',
-        optional: 'Alyssa'
+        blue: 'Snortyniners',
+        red: 'Mirthquakes',
+        optional: 'George'
       }
     }
 

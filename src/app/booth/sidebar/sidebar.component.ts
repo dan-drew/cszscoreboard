@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import {Match} from "../../config/match";
+import {Cache} from "../../config/cache";
 
-type TabName = 'guesses' | 'settings'
+type TabName = 'guesses' | 'settings' | 'optional'
 
 interface TabDefParam {
     tab?: TabName
@@ -52,15 +53,19 @@ export class SidebarComponent {
     new TabDef({ name: 'Open Live View', icon: 'pip', action: () => this.openLive(), classes: ['green'] }),
     new TabDef({ tab: 'settings', icon: 'gear', selectedIcon: 'gear-fill' }),
     new TabDef({ tab: 'guesses', image: '/assets/guess.png' }),
-    new TabDef({ name: 'Optional Team', image: '/assets/postit.png', action: () => this.optionalTeam() }),
+    new TabDef({ name: 'Optional Team', image: '/assets/postit.png', tab: 'optional' }),
     new TabDef({ name: 'Help', icon: 'info-circle-fill', action: () => this.help() })
   ]
 
-  selectedTab?: TabName = 'settings'  // Open to settings by default
+  selectedTab?: TabName
 
   constructor(
     readonly match: Match
   ) {
+    if (this.firstRun) {
+      // Open to settings by default
+      this.selectedTab = 'settings'
+    }
   }
 
   tabClicked(tab: TabDef) {
@@ -80,20 +85,15 @@ export class SidebarComponent {
     window.open('/live', 'cszScoreboardLive', 'popup')
   }
 
-  optionalTeam() {
-    if (this.match.teams.optionalEnabled) {
-      this.match.teams.optionalEnabled = false
-    } else {
-      const teamName = prompt('Enter a name for the team', this.match.teams.optional.name)
-
-      if (teamName) {
-        this.match.teams.optional.name = teamName
-        this.match.teams.optionalEnabled = true
-      }
-    }
-  }
-
   help() {
     window.open(this.helpLink)
+  }
+
+  private get firstRun() {
+    if (Cache.get('firstRun', true)) {
+      Cache.set('firstRun', false)
+      return true
+    }
+    return false
   }
 }

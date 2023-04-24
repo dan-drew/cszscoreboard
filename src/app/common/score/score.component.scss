@@ -44,6 +44,7 @@
     flex-wrap: nowrap;
     gap: var(--button-gap);
     align-items: center;
+    justify-content: center;
 
     .score-button {
       color: white;
@@ -53,7 +54,7 @@
     .score-value {
       font-size: var(--score-size);
       font-weight: bold;
-      width: 2ch;
+      min-width: 2ch;
       text-align: center;
     }
 

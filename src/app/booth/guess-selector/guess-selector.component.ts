@@ -1,7 +1,6 @@
 import {Component, HostBinding, OnDestroy, OnInit} from '@angular/core';
 import {Match} from "../../config/match";
-import {GuessAnswers} from "../../config/guess-answers";
-import {GuessingService} from "../../guessing/guessing.service";
+import {GuessingService} from "../../common/guessing.service";
 import {fromEvent, Subscription} from "rxjs";
 
 @Component({

@@ -10,8 +10,8 @@ import {
   ViewChild,
   ViewChildren
 } from '@angular/core';
-import {Match} from "../config/match";
-import {RoundNameDirective} from "../round-name.directive";
+import {Match} from "../../config/match";
+import {RoundNameDirective} from "../../round-name.directive";
 import {animationFrameScheduler, asyncScheduler, BehaviorSubject, observeOn, Subscription} from "rxjs";
 
 interface NameElementData {

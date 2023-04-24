@@ -1,6 +1,6 @@
 import {Component, HostBinding, Input, Optional,} from '@angular/core';
-import {Match} from "../config/match";
-import {LiveViewComponent} from "../live/live-view/live-view.component";
+import {Match} from "../../config/match";
+import {LiveViewComponent} from "../../live/live-view/live-view.component";
 
 @Component({
   selector: 'app-rounds',

@@ -1,5 +1,5 @@
 import {Component, HostBinding, Input, ViewEncapsulation} from '@angular/core';
-import {GuessingService, GuessSlidePart} from "../../guessing/guessing.service";
+import {GuessingService, GuessSlidePart} from "../../common/guessing.service";
 
 @Component({
   selector: 'app-live-guesses',

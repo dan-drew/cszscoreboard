@@ -4,8 +4,14 @@ import {Rounds} from "./rounds";
 import {Guesses} from "./guesses";
 import {Provider} from "@angular/core";
 import {Profiles} from "./profiles";
+import {Cache, CacheOptions} from "./cache";
 
 export type MatchView = 'scoreboard' | 'slate' | 'guesses'
+
+interface MatchCache {
+  profileId?: string
+  activeView?: MatchView
+}
 
 export class Match {
   static _current?: Match
@@ -27,18 +33,31 @@ export class Match {
 
   static current(profiles: Profiles): Match {
     if (!this._current) {
-      this._current = window.opener?.cszMatch || new Match(profiles)
-
-      // This is used to share match data between the booth view and live view
-      // @ts-ignore
-      window.cszMatch = this._current
+      // If there's a shared match then we're the TV instance. Otherwise
+      // we're the Booth instance and should create the match and shared it.
+      if (!(this._current = this.shared)) {
+        this._current = new Match(profiles)
+        this.shared = this._current
+      }
     }
 
     return this._current!
   }
 
+  // Get match shared by the Booth instance
+  static get shared(): Match | undefined {
+    return window.opener?.cszMatch
+  }
+
+  // Set match to be shared to the TV instance
+  static set shared(match: Match | undefined) {
+    // @ts-ignore
+    window.cszMatch = match
+  }
+
   constructor(readonly profiles: Profiles) {
-    this.profile = profiles.profiles[0]
+    const profile = this.cached.profileId ? profiles.profiles.find(p => p.id === this.cached.profileId) : null
+    this.setProfile(profile || profiles.profiles[0], {useCache: true})
   }
 
   get profile() {
@@ -52,6 +71,15 @@ export class Match {
 
   get logoUrl() {
     return `/assets/logos/${this.logo}`
+  }
+
+  private get cached(): MatchCache {
+    return Cache.get<MatchCache>('match', {})
+  }
+
+  setProfile(val: Profile, options: CacheOptions = {}) {
+    this.currentProfile = val
+    this.reset(options)
   }
 
   // Save match settings to profile
@@ -69,12 +97,12 @@ export class Match {
     this.profile = this.profiles.profiles[0]
   }
 
-  reset() {
+  reset(options: CacheOptions = {}) {
     this.logo = this.currentProfile.logo
     this.round = new Rounds(this.currentProfile)
-    this.teams = new Teams(this.currentProfile)
-    this.guesses = new Guesses()
-    this.activeView = 'scoreboard'
+    this.teams = new Teams(this.currentProfile, options)
+    this.guesses = new Guesses(options)
+    this.activeView = options.useCache && this.cached.activeView ||  'slate'
   }
 
   toProfile({from, name}: { from?: Profile, name?: string }): Profile {
@@ -89,5 +117,14 @@ export class Match {
         optional: this.teams.optional.name
       }
     }
+  }
+
+  cache() {
+    Cache.set<MatchCache>('match', {
+      profileId: this.profile.id,
+      activeView: this.activeView
+    })
+    this.teams.cache()
+    this.guesses.cache()
   }
 }

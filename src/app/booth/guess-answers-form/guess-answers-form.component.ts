@@ -2,7 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Guess} from "../../config/guessing-game";
 import {GuessAnswers} from "../../config/guess-answers";
 import {FormArray, FormControl} from "@angular/forms";
-import {GuessingService} from "../../guessing/guessing.service";
+import {GuessingService} from "../../common/guessing.service";
 import {Subscription} from "rxjs";
 
 @Component({

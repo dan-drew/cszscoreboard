@@ -31,6 +31,12 @@ export class GuessAnswers {
     this._changed = Date.now()
   }
 
+  setAll(values: string[]) {
+    this.answers.splice(0, this.answers.length, ...values)
+    this.normalize()
+    this._changed = Date.now()
+  }
+
   // Return the number of guesses based on minimum required
   // and what's been entered by the user
   get count() {

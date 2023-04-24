@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Match, MatchView} from "../../config/match";
-import {GuessingService} from "../../guessing/guessing.service";
+import {GuessingService} from "../../common/guessing.service";
 import {Title} from "@angular/platform-browser";
+import {interval, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-booth-view',
@@ -11,7 +12,11 @@ import {Title} from "@angular/platform-browser";
     class: 'position-fixed top-0 bottom-0 start-0 end-0 overflow-hidden d-flex-row'
   }
 })
-export class BoothViewComponent implements OnInit {
+export class BoothViewComponent implements OnInit, OnDestroy {
+  static readonly CACHE_INTERVAL = 5000
+
+  cacheTimer?: Subscription
+
   constructor(
     readonly match: Match,
     private readonly guessing: GuessingService,
@@ -22,6 +27,12 @@ export class BoothViewComponent implements OnInit {
   ngOnInit() {
     this.title.setTitle('Booth - ComedySports Scoreboard')
     this.openLive()
+
+    this.cacheTimer = interval(BoothViewComponent.CACHE_INTERVAL).subscribe(() => this.match.cache())
+  }
+
+  ngOnDestroy() {
+    this.cacheTimer?.unsubscribe()
   }
 
   openLive() {

@@ -1,4 +1,4 @@
-<ng-template #team let-$team>
+<ng-template #team let-$team let-$edit="edit">
   <div class="team csz-bg-{{$team.type}}">
     <div class="score">
       <ng-container *ngIf="editable">
@@ -29,8 +29,14 @@
   </div>
 </ng-template>
 
-<ng-container [ngTemplateOutlet]="team" [ngTemplateOutletContext]="{$implicit: match.teams.blue}"></ng-container>
-<ng-container [ngTemplateOutlet]="team" [ngTemplateOutletContext]="{$implicit: match.teams.red}"></ng-container>
+<ng-container
+  [ngTemplateOutlet]="team"
+  [ngTemplateOutletContext]="{$implicit: match.teams.blue}"
+></ng-container>
+<ng-container
+  [ngTemplateOutlet]="team"
+  [ngTemplateOutletContext]="{$implicit: match.teams.red}"
+></ng-container>
 <ng-container
   *ngIf="editable && match.teams.optionalEnabled"
   [ngTemplateOutlet]="team"
