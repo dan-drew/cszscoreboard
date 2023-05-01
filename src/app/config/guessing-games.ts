@@ -43,7 +43,7 @@ export const guessingGames: GuessingGame[] = [
     {style: 'labeled'}
   ),
   new GuessingGame(
-    'Crime Scene',
+    'Crime Story',
     [{label: 'Crime'}, {label: 'Motive'}, {label: 'Accomplice'}],
     {style: 'labeled'}
   ),
