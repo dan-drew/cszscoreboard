@@ -12,7 +12,18 @@ import {
 } from '@angular/core';
 import {Match} from "../../config/match";
 import {RoundNameDirective} from "../../round-name.directive";
-import {animationFrameScheduler, asyncScheduler, BehaviorSubject, observeOn, Subscription} from "rxjs";
+import {
+  animationFrameScheduler, asyncScheduler,
+  BehaviorSubject, delay,
+  fromEvent,
+  interval,
+  observeOn,
+  Subscription,
+  switchMap,
+  take,
+  tap,
+  throttleTime
+} from "rxjs";
 
 interface NameElementData {
   element: HTMLElement
@@ -24,6 +35,10 @@ interface NameData {
   selected: NameElementData
   unselected: NameElementData
 }
+
+const UPDATE_INTERVAL = 50
+const UPDATE_PERIOD = 5000
+const UPDATE_TIMES = UPDATE_PERIOD / UPDATE_INTERVAL
 
 @Component({
   selector: 'app-round-names',
@@ -46,6 +61,7 @@ export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewInit {
   nameChange?: Subscription
   selectChange?: Subscription
   offsetChange?: Subscription
+  resizeEvent?: Subscription
 
   constructor(
     public readonly match: Match,
@@ -54,26 +70,33 @@ export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
+    // Update position info if round names change
     this.nameChange = this.round.namesChange.pipe(
-      observeOn(asyncScheduler)
-    ).subscribe(() => {
-      this.updateData()
-      this.updateOffset(this.round.current.value)
-    })
+      switchMap(() => this.update())
+    ).subscribe()
 
+    // Update display if current round changes
     this.selectChange = this.round.current.pipe(
-      observeOn(asyncScheduler)
-    ).subscribe((index: number) => {
-      this.updateOffset(index)
-    })
+      tap(index => this.trace(`Selection changed to ${index}`)),
+      switchMap(index => this.update({selected: index}))
+    ).subscribe()
 
+    // Mark component for update when the round offset is updated
     this.offsetChange = this.offset.subscribe(() => this.changeDetector.markForCheck())
+
+    // Update position info if window size changes
+    fromEvent(window, 'resize').pipe(
+      throttleTime(100, asyncScheduler, {trailing: true, leading: false}),
+      tap(() => this.trace('Window resized!')),
+      switchMap(() => this.update())
+    ).subscribe()
   }
 
   ngOnDestroy() {
     this.nameChange?.unsubscribe()
     this.selectChange?.unsubscribe()
     this.offsetChange?.unsubscribe()
+    this.resizeEvent?.unsubscribe()
   }
 
   ngAfterViewInit() {
@@ -118,6 +141,20 @@ export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewInit {
     // console.info('Name data updated', `Gap: ${this.nameGap}`, this.nameData)
   }
 
+  private update(
+    {selected = this.round.current.value, times = UPDATE_TIMES}: {selected?: number, times?: number} = {}
+  ) {
+    return interval(UPDATE_INTERVAL).pipe(
+      take(times),
+      observeOn(asyncScheduler),
+      tap(() => {
+        this.trace('Updating!')
+        this.updateOffset(selected || this.round.current.value)
+        this.updateData()
+      })
+    )
+  }
+
   private updateOffset(selected: number = this.round.current.value) {
     let newOffset = 0
 
@@ -143,5 +180,9 @@ export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   pixels(val: number) {
     return `${val.toFixed(2)}px`
+  }
+
+  private trace(str: string, ...args: any[]) {
+    if (this.DEBUG) console.debug(str, ...args)
   }
 }
