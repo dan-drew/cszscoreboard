@@ -1,9 +1,7 @@
 import {
-  AfterViewInit,
+  AfterViewChecked,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  ElementRef,
   OnDestroy,
   OnInit,
   QueryList,
@@ -11,33 +9,23 @@ import {
   ViewChildren
 } from '@angular/core';
 import {Match} from "../../config/match";
-import {RoundNameDirective} from "../../round-name.directive";
+import {RoundNameData, RoundNameDirective} from "../round-name.directive";
 import {
-  animationFrameScheduler, asyncScheduler,
-  BehaviorSubject, delay,
+  asyncScheduler,
   fromEvent,
   interval,
   observeOn,
+  of,
   Subscription,
   switchMap,
   take,
   tap,
   throttleTime
 } from "rxjs";
-
-interface NameElementData {
-  element: HTMLElement
-  offset: number
-  width: number
-}
-
-interface NameData {
-  selected: NameElementData
-  unselected: NameElementData
-}
+import {RoundNamesDirective} from "../round-names.directive";
 
 const UPDATE_INTERVAL = 50
-const UPDATE_PERIOD = 5000
+const UPDATE_PERIOD = 500
 const UPDATE_TIMES = UPDATE_PERIOD / UPDATE_INTERVAL
 
 @Component({
@@ -46,60 +34,49 @@ const UPDATE_TIMES = UPDATE_PERIOD / UPDATE_INTERVAL
   styleUrls: ['./round-names.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewInit {
-  private readonly _offset = new BehaviorSubject<string>('0')
+export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   readonly DEBUG = false
   readonly round = this.match.round
-  readonly offset = this._offset.pipe(observeOn(animationFrameScheduler))
 
-  @ViewChild('roundNameContainer') private roundNameContainer!: ElementRef<HTMLElement>
+  @ViewChild(RoundNamesDirective) private roundNameContainer!: RoundNamesDirective
   @ViewChildren(RoundNameDirective) roundNames?: QueryList<RoundNameDirective>
 
-  nameData?: NameData[]
+  nameData?: RoundNameData[]
   nameGap: number = 0
   nameChange?: Subscription
   selectChange?: Subscription
-  offsetChange?: Subscription
   resizeEvent?: Subscription
 
   constructor(
-    public readonly match: Match,
-    readonly changeDetector: ChangeDetectorRef
+    public readonly match: Match
   ) {
   }
 
   ngOnInit() {
     // Update position info if round names change
-    this.nameChange = this.round.namesChange.pipe(
-      switchMap(() => this.update())
-    ).subscribe()
+    this.nameChange = this.round.namesChange.subscribe(() => this.update())
 
     // Update display if current round changes
     this.selectChange = this.round.current.pipe(
-      tap(index => this.trace(`Selection changed to ${index}`)),
-      switchMap(index => this.update({selected: index}))
-    ).subscribe()
-
-    // Mark component for update when the round offset is updated
-    this.offsetChange = this.offset.subscribe(() => this.changeDetector.markForCheck())
+      tap(index => this.trace(`Selection changed to ${index}`))
+    ).subscribe(index => this.update({selected: index}))
 
     // Update position info if window size changes
     fromEvent(window, 'resize').pipe(
       throttleTime(100, asyncScheduler, {trailing: true, leading: false}),
-      tap(() => this.trace('Window resized!')),
-      switchMap(() => this.update())
-    ).subscribe()
+      tap(() => this.trace('Window resized!'))
+    ).subscribe(() => this.update())
   }
 
   ngOnDestroy() {
     this.nameChange?.unsubscribe()
     this.selectChange?.unsubscribe()
-    this.offsetChange?.unsubscribe()
     this.resizeEvent?.unsubscribe()
   }
 
-  ngAfterViewInit() {
+  ngAfterViewChecked() {
+    this.updateSelected()
     this.updateData()
     this.updateOffset()
   }
@@ -107,27 +84,8 @@ export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewInit {
   private updateData() {
     if (!this.roundNames) return
 
-    this.nameData = this.roundNames.map(item => {
-      const el = item.el.nativeElement
-      const containerRect = this.roundNameContainer.nativeElement.getBoundingClientRect()
-      const selected = el.getElementsByClassName('selected').item(0)! as HTMLElement
-      const unselected = el.getElementsByClassName('unselected').item(0)! as HTMLElement
-      const selectedRect = selected.getBoundingClientRect()
-      const unselectedRect = unselected.getBoundingClientRect()
-
-      return {
-        selected: {
-          element: selected,
-          offset: selectedRect.left - containerRect.left,
-          width: selectedRect.width
-        },
-        unselected: {
-          element: unselected,
-          offset: unselectedRect.left - containerRect.left,
-          width: unselectedRect.width
-        }
-      }
-    })
+    const containerRect = this.roundNameContainer.rect
+    this.nameData = this.roundNames.map(item => item.getData(containerRect.left))
 
     // Calculate space between names
     if (this.nameData!.length < 2) {
@@ -138,21 +96,23 @@ export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewInit {
       this.nameGap = name1.offset - name0.offset - name0.width
     }
 
-    // console.info('Name data updated', `Gap: ${this.nameGap}`, this.nameData)
+    this.trace('Name data updated', `Gap: ${this.nameGap}`, this.nameData)
+  }
+
+  private updateSelected(selected: number = this.round.current.value) {
+    this.roundNames?.forEach((item, index) => {
+      this.trace(`Name ${index} before: `, item.getData())
+      item.selected = index === selected
+      this.trace(`Name ${index} after: `, item.getData())
+    })
   }
 
   private update(
     {selected = this.round.current.value, times = UPDATE_TIMES}: {selected?: number, times?: number} = {}
   ) {
-    return interval(UPDATE_INTERVAL).pipe(
-      take(times),
-      observeOn(asyncScheduler),
-      tap(() => {
-        this.trace('Updating!')
-        this.updateOffset(selected || this.round.current.value)
-        this.updateData()
-      })
-    )
+    this.updateSelected(selected)
+    this.updateOffset(selected)
+    this.updateData()
   }
 
   private updateOffset(selected: number = this.round.current.value) {
@@ -166,7 +126,7 @@ export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     })
 
-    this._offset.next(this.pixels(-newOffset))
+    this.roundNameContainer.offset = newOffset
   }
 
   private dataFor(index: number, selected: number = this.round.current.value) {

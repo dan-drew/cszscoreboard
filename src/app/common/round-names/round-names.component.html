@@ -1,13 +1,8 @@
 <div class="round-container-center">
-  <div #roundNameContainer class="round-name-container d-flex-row" [style.margin-left]="offset | async">
+  <div roundNames>
     <ng-container *ngIf="{ round: round.current | async } as $current">
       <ng-container *ngFor="let $round of round.names; index as $i">
-        <div
-          roundName
-          class="round-name csz-bold-text clickable"
-          [class.selected]="$i === $current.round"
-          (click)="round.setCurrent($i)"
-        >
+        <div roundName (click)="round.setCurrent($i)">
           <span class="unselected">{{$round}}</span>
           <span class="selected">{{$round}}</span>
         </div>
@@ -17,14 +12,14 @@
 
   <ng-container *ngIf="DEBUG">
     <!-- DISPLAY RECTANGLES FOR DEBUGGING SIZE CALCULATIONS -->
-    <div class="position-absolute d-flex-row top-0 start-0 h-100" [style.margin-left]="offset | async">
+    <div class="position-absolute d-flex-row top-0 start-0 h-100">
       <div *ngFor="let data of nameData"
            class="border border-danger border-1 position-absolute h-100 top-0"
            [style.left]="pixels(data.selected.offset)"
            [style.width]="pixels(data.selected.width)"
       ></div>
     </div>
-    <div class="position-absolute d-flex-row top-0 start-0 h-100" [style.margin-left]="offset | async">
+    <div class="position-absolute d-flex-row top-0 start-0 h-100">
       <div *ngFor="let data of nameData"
            class="border border-success border-1 position-absolute h-100 top-0"
            [style.left]="pixels(data.unselected.offset)"
