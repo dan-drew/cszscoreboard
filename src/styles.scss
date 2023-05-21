@@ -22,6 +22,7 @@ body {
   font-family: var(--main-font-family);
   padding: 0;
   margin: 0;
+  user-select: none;
 
   --size-base: 1vh;
 
@@ -33,6 +34,10 @@ body {
   --csz-blue: rgb(var(--csz-blue-rgb));
   --csz-red-rgb: 154, 27, 32; // #9a1b20
   --csz-red: rgb(var(--csz-red-rgb));
+
+  input[type=text], input[type=password], textarea {
+    user-select: auto;
+  }
 }
 
 @each $step in $size-steps {

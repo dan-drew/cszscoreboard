@@ -1,13 +1,15 @@
 .view {
+  transition: opacity 1s, visibility 0s linear 1s;
+
   &:not(.active) {
-    display: none;
-    visibility: hidden !important;
+    opacity: 0;
+    //visibility: hidden !important;
   }
 }
 
 .fullscreen-button {
   position: fixed;
-  top: var(--size-5);
-  right: var(--size-5);
+  top: 0;
+  right: 0;
   font-size: var(--size-5);
 }
