@@ -1,6 +1,7 @@
 import {
   AfterViewChecked,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
@@ -10,18 +11,7 @@ import {
 } from '@angular/core';
 import {Match} from "../../config/match";
 import {RoundNameData, RoundNameDirective} from "../round-name.directive";
-import {
-  asyncScheduler,
-  fromEvent,
-  interval,
-  observeOn,
-  of,
-  Subscription,
-  switchMap,
-  take,
-  tap,
-  throttleTime
-} from "rxjs";
+import {asyncScheduler, fromEvent, Subscription, tap, throttleTime} from "rxjs";
 import {RoundNamesDirective} from "../round-names.directive";
 
 const UPDATE_INTERVAL = 50
@@ -49,13 +39,17 @@ export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewChecked 
   resizeEvent?: Subscription
 
   constructor(
-    public readonly match: Match
+    public readonly match: Match,
+    private readonly changeDetectorRef: ChangeDetectorRef
   ) {
   }
 
   ngOnInit() {
     // Update position info if round names change
-    this.nameChange = this.round.namesChange.subscribe(() => this.update())
+    this.nameChange = this.round.namesChange.subscribe(() => {
+      this.trace('Round names changed')
+      this.changeDetectorRef.markForCheck()
+    })
 
     // Update display if current round changes
     this.selectChange = this.round.current.pipe(
@@ -116,9 +110,11 @@ export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewChecked 
   }
 
   private updateOffset(selected: number = this.round.current.value) {
+    if (!this.roundNameContainer) return
+
     let newOffset = 0
 
-    this.nameData!.forEach((data, index) => {
+    this.nameData?.forEach((data, index) => {
       if (index === selected) {
         newOffset += data.selected.width / 2
       } else if (index < selected) {
