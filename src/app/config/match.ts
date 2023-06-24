@@ -18,6 +18,7 @@ export class Match {
 
   private currentProfile!: Profile
   logo!: string
+  social!: string
   round!: Rounds
   teams!: Teams
   guesses!: Guesses
@@ -99,6 +100,7 @@ export class Match {
 
   reset(options: CacheOptions = {}) {
     this.logo = this.currentProfile.logo
+    this.social = this.currentProfile.social || ''
     this.round = new Rounds(this.currentProfile)
     this.teams = new Teams(this.currentProfile, options)
     this.guesses = new Guesses(options)
@@ -110,6 +112,7 @@ export class Match {
       id: from?.id || window.crypto.randomUUID(),
       name: name || from!.name,
       logo: this.logo,
+      social: this.social,
       rounds: Array.from(this.round.names),
       teams: {
         blue: this.teams.blue.name,

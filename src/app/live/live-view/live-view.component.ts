@@ -1,8 +1,17 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import {Match} from "../../config/match";
 import {FullScreenTargetDirective} from "../../full-screen-target.directive";
 import {interval, Subscription} from "rxjs";
 import {Title} from "@angular/platform-browser";
+
+const POLL_INTERVAL = 250
 
 @Component({
   selector: 'app-live-view',
@@ -27,13 +36,14 @@ export class LiveViewComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.title.setTitle('TV - ComedySports Scoreboard')
-    this.timer = interval(1000).subscribe(() => this.poll())
+    this.timer = interval(POLL_INTERVAL).subscribe(() => this.poll())
   }
 
   ngOnDestroy() {
     this.timer?.unsubscribe()
   }
 
+  @HostListener('dblclick')
   enterFullScreen() {
     this.fullScreen.enter().catch(err => {
       console.error('Failed to enter fullscreen', err)

@@ -25,6 +25,7 @@ import { GuessAnswersFormComponent } from './booth/guess-answers-form/guess-answ
 import {Match} from "./config/match";
 import { InputModalComponent } from './common/input-modal/input-modal.component';
 import { OptionalTeamEditorComponent } from './booth/optional-team-editor/optional-team-editor.component';
+import { SocialInfoComponent } from './live/social-info/social-info.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { OptionalTeamEditorComponent } from './booth/optional-team-editor/option
     LiveGuessesComponent,
     GuessAnswersFormComponent,
     InputModalComponent,
-    OptionalTeamEditorComponent
+    OptionalTeamEditorComponent,
+    SocialInfoComponent
   ],
   imports: [
     BrowserModule,

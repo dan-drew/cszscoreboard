@@ -16,6 +16,7 @@ export class Profiles {
       id: 'csz-main',
       name: 'ComedySportz',
       logo: 'comedysportz.png',
+      social: '(FB)(IG)(TW) @cszsanjose',
       rounds: Rounds.default,
       teams: {
         blue: 'Laughletics',
@@ -27,6 +28,7 @@ export class Profiles {
       id: 'csz-minorleague',
       name: 'Minor League',
       logo: 'minorleague.png',
+      social: '(FB)(IG) @cszminorleaguesj',
       rounds: Rounds.default,
       teams: {
         blue: 'Snortyniners',

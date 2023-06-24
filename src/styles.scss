@@ -4,7 +4,7 @@
 //  - Roboto Condensed (Standard text)
 //  - Oswald (CSz style text)
 //  - Just+Me+Again+Down+Here (Optional team post-it text)
-@import url('https://fonts.googleapis.com/css2?family=Just+Me+Again+Down+Here&family=Roboto+Condensed:wght@700&family=Oswald:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Just+Me+Again+Down+Here&family=Caveat+Brush&family=Roboto+Condensed:wght@700&family=Oswald:wght@400;700&display=swap');
 
 $size-steps: 1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 33, 35, 40, 45, 50, 60, 65, 70, 75, 80, 85, 90, 100;
 
@@ -13,7 +13,7 @@ $size-steps: 1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 33, 35, 40, 45, 50, 60, 65, 70, 
 
   --main-font-family: 'Roboto Light', sans-serif;
   --csz-font-family: 'Oswald', sans-serif;
-  --postit-font-family: 'Just Me Again Down Here', fantasy;
+  --postit-font-family: 'Caveat Brush', 'Just Me Again Down Here', fantasy;
 }
 
 body {

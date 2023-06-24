@@ -73,6 +73,11 @@ export const guessingGames: GuessingGame[] = [
     {style: 'list'}
   ),
   new GuessingGame(
+    'Good Cop, Bad Cop',
+    [{label: 'Cops', lines: 12, multiline: true}],
+    {style: 'list'}
+  ),
+  new GuessingGame(
     'Hot Bell',
     [1, 20]
   )

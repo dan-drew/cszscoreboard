@@ -37,15 +37,15 @@
       </li>
     </ul>
 
-    <ng-container [ngSwitch]="activeTab">
+    <div [ngSwitch]="activeTab" class="d-flex-column gap-3">
       <!-- TEAM NAMES -->
       <ng-container *ngSwitchCase="'teams'">
-        <div class="mb-2">
+        <div>
           <label for="blueTeam" class="form-label">Blue Team</label>
           <input id="blueTeam" class="form-control" required [(ngModel)]="match.teams.blue.name">
         </div>
 
-        <div class="mb-2">
+        <div>
           <label for="redTeam" class="form-label">Red Team</label>
           <input id="redTeam" class="form-control" required [(ngModel)]="match.teams.red.name">
         </div>
@@ -54,38 +54,53 @@
 
       <!-- ROUNDS -->
       <ng-container *ngSwitchCase="'rounds'">
-        <div class="mb-3">
+        <div>
           <textarea id="rounds" class="form-control" required rows="10" [(ngModel)]="rounds"></textarea>
         </div>
       </ng-container>
 
       <ng-container *ngSwitchCase="'profile'">
-        <label class="form-label" for="profileLogo">Logo</label>
-        <div class="dropdown">
-          <button class="btn btn-light dropdown-toggle mb-5 form-control" type="button" id="profileLogo"
-                  data-bs-toggle="dropdown" aria-expanded="false">
-            <ng-container [ngTemplateOutlet]="logo" [ngTemplateOutletContext]="{$logo: match.logo}"></ng-container>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="profileLogo">
-            <li *ngFor="let $logo of profiles.logos">
-              <button class="dropdown-item" (click)="match.logo = $logo">
-                <ng-container [ngTemplateOutlet]="logo" [ngTemplateOutletContext]="{$logo}"></ng-container>
-              </button>
-            </li>
-          </ul>
+        <div>
+          <label class="form-label" for="profileLogo">Logo</label>
+          <div class="dropdown">
+            <button class="btn btn-light dropdown-toggle form-control" type="button" id="profileLogo"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              <ng-container [ngTemplateOutlet]="logo" [ngTemplateOutletContext]="{$logo: match.logo}"></ng-container>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="profileLogo">
+              <li *ngFor="let $logo of profiles.logos">
+                <button class="dropdown-item" (click)="match.logo = $logo">
+                  <ng-container [ngTemplateOutlet]="logo" [ngTemplateOutletContext]="{$logo}"></ng-container>
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <button class="btn btn-primary form-control mb-2" (click)="save()">
-          Save
-        </button>
-        <button class="btn btn-success form-control mb-2" (click)="saveAs()">
-          Save As...
-        </button>
-        <button class="btn btn-danger form-control mb-2" (click)="delete()" [disabled]="profiles.profiles.length === 1">
-          Delete
-        </button>
+        <div>
+          <label class="form-label" for="profileSocial">Social</label>
+          <input
+            id="profileSocial"
+            class="form-control"
+            [(ngModel)]="match.social"
+            placeholder="(FB)(IG) @account (TW) @account"
+            title="Enter text as you want it shown. Use (FB), (IG) and (TW) for social logos."
+          >
+        </div>
+
+        <div class="d-flex-column gap-1">
+          <button class="btn btn-primary form-control" (click)="save()">
+            Save
+          </button>
+          <button class="btn btn-success form-control" (click)="saveAs()">
+            Save As...
+          </button>
+          <button class="btn btn-danger form-control" (click)="delete()" [disabled]="profiles.profiles.length === 1">
+            Delete
+          </button>
+        </div>
       </ng-container>
-    </ng-container>
+    </div>
 
   </div>
 </div>
