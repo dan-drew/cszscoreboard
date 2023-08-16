@@ -1,0 +1,32 @@
+<ng-template #slideTemplate let-config>
+  <div class="slide d-flex-row gap-2 align-items-center">
+    <img class="thumbnail" [themeSlideBackground]="config" alt="background">
+    <input class="form-control" [(ngModel)]="config.title" placeholder="Enter slide title">
+    <button class="btn text-danger fs-4" title="Reset" (click)="deleteSlide(config)">
+      <i class="bi-trash3-fill"></i>
+    </button>
+  </div>
+</ng-template>
+
+<div class="dropdown">
+  <button class="btn btn-success dropdown-toggle mb-3 form-control" type="button" id="addSlide"
+          data-bs-toggle="dropdown" aria-expanded="false">
+    Add Slide
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="profileButton">
+    <li *ngFor="let $theme of themes">
+      <button class="dropdown-item" (click)="addSlide($theme)">
+        {{$theme.name}}
+      </button>
+    </li>
+  </ul>
+</div>
+
+<div class="d-flex-column gap-2">
+  <ng-container
+    *ngFor="let $implicit of match.themeSlides.slides"
+    [ngTemplateOutlet]="slideTemplate"
+    [ngTemplateOutletContext]="{$implicit}"
+    >
+  </ng-container>
+</div>

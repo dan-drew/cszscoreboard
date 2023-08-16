@@ -40,7 +40,10 @@ export class BoothViewComponent implements OnInit, OnDestroy {
   }
 
   viewAvailable(view: MatchView) {
-    if (view === 'guesses') return this.guessing.enabled
+    switch (view) {
+      case 'guesses': return this.guessing.enabled
+      case 'themes': return this.match.themeSlides.enabled
+    }
     return true
   }
 }

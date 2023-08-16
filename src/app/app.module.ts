@@ -26,6 +26,11 @@ import {Match} from "./config/match";
 import { InputModalComponent } from './common/input-modal/input-modal.component';
 import { OptionalTeamEditorComponent } from './booth/optional-team-editor/optional-team-editor.component';
 import { SocialInfoComponent } from './live/social-info/social-info.component';
+import { ThemeSlideEditorComponent } from './booth/theme-slide-editor/theme-slide-editor.component';
+import { ThemeSlideBackgroundDirective } from './common/theme-slide-background.directive';
+import { LiveThemesComponent } from './live/live-themes/live-themes.component';
+import { ThemeSlideTitleDirective } from './common/theme-slide-title.directive';
+import { ThemeSlideSelectorComponent } from './booth/theme-slide-selector/theme-slide-selector.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +55,12 @@ import { SocialInfoComponent } from './live/social-info/social-info.component';
     GuessAnswersFormComponent,
     InputModalComponent,
     OptionalTeamEditorComponent,
-    SocialInfoComponent
+    SocialInfoComponent,
+    ThemeSlideEditorComponent,
+    ThemeSlideBackgroundDirective,
+    LiveThemesComponent,
+    ThemeSlideTitleDirective,
+    ThemeSlideSelectorComponent
   ],
   imports: [
     BrowserModule,

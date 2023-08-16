@@ -1,0 +1,14 @@
+.slide {
+  --background-height: var(--size-5);
+  --background-width: calc(var(--background-height) * 4 / 3);
+
+  .thumbnail {
+    display: block;
+    min-width: var(--background-width);
+    min-height: var(--background-height);
+    max-width: var(--background-width);
+    max-height: var(--background-height);
+    overflow: hidden;
+    border-radius: 5px;
+  }
+}

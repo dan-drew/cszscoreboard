@@ -8,8 +8,13 @@
 }
 
 .fullscreen-button {
+  --font-size: calc(var(--size-1) * 3);
+
   position: fixed;
-  top: 0;
-  right: 0;
-  font-size: var(--size-5);
+  top: var(--size-2);
+  right: var(--size-2);
+  font-size: var(--font-size);
+  padding: 10px var(--font-size);
+  background: #00000088;
+  border-radius: var(--font-size) / 50%;
 }

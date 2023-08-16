@@ -5,8 +5,9 @@ import {Guesses} from "./guesses";
 import {Provider} from "@angular/core";
 import {Profiles} from "./profiles";
 import {Cache, CacheOptions} from "./cache";
+import {ThemeSlides} from "./theme-slides";
 
-export type MatchView = 'scoreboard' | 'slate' | 'guesses'
+export type MatchView = 'scoreboard' | 'slate' | 'guesses' | 'themes'
 
 interface MatchCache {
   profileId?: string
@@ -22,6 +23,7 @@ export class Match {
   round!: Rounds
   teams!: Teams
   guesses!: Guesses
+  themeSlides!: ThemeSlides
   activeView: MatchView = 'scoreboard'
 
   static get provider(): Provider {
@@ -104,6 +106,7 @@ export class Match {
     this.round = new Rounds(this.currentProfile)
     this.teams = new Teams(this.currentProfile, options)
     this.guesses = new Guesses(options)
+    this.themeSlides = new ThemeSlides(options)
     this.activeView = options.useCache && this.cached.activeView ||  'slate'
   }
 
@@ -129,5 +132,6 @@ export class Match {
     })
     this.teams.cache()
     this.guesses.cache()
+    this.themeSlides.cache()
   }
 }

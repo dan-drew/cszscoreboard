@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {Match} from "../../config/match";
 import {Cache} from "../../config/cache";
 
-type TabName = 'guesses' | 'settings' | 'optional'
+type TabName = 'guesses' | 'settings' | 'optional' | 'themes'
 
 interface TabDefParam {
     tab?: TabName
@@ -53,6 +53,7 @@ export class SidebarComponent {
     new TabDef({ name: 'Open Live View', icon: 'pip', action: () => this.openLive(), classes: ['green'] }),
     new TabDef({ tab: 'settings', icon: 'gear', selectedIcon: 'gear-fill' }),
     new TabDef({ tab: 'guesses', image: '/assets/guess.png' }),
+    new TabDef({ tab: 'themes', icon: 'card-image'}),
     new TabDef({ name: 'Optional Team', image: '/assets/postit.png', tab: 'optional' }),
     new TabDef({ name: 'Help', icon: 'info-circle-fill', action: () => this.help() })
   ]

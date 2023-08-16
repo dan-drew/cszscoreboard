@@ -1,0 +1,13 @@
+<app-button-group
+  *ngIf="slides.enabled"
+  title="Themes"
+  class="h-100 w-100"
+  [(selectedValue)]="slides.active"
+>
+  <button
+    *ngFor="let $slide of slides.slides; index as $index"
+    [buttonGroupItem]="$index"
+    class="slide-item csz-text fs-3"
+    [themeSlideBackground]="$slide"
+  >{{$slide.title}}</button>
+</app-button-group>

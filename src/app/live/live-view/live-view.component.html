@@ -2,15 +2,23 @@
   class="view"
   [class.active]="match.activeView === 'scoreboard'"
 ></app-live-scoreboard>
+
 <app-live-slate
   class="view"
   [class.active]="match.activeView === 'slate'"
 ></app-live-slate>
+
 <app-live-guesses
   *ngIf="match.guesses.game"
   class="view"
   [class.active]="match.activeView === 'guesses'"
 ></app-live-guesses>
+
+<app-live-themes
+  *ngIf="match.themeSlides.enabled"
+  class="view"
+  [class.active]="match.activeView === 'themes'"
+></app-live-themes>
 
 <!--
 FULL-SCREEN BUTTON
@@ -19,5 +27,5 @@ FULL-SCREEN BUTTON
         class="fullscreen-button btn text-light"
         (click)="enterFullScreen()"
 >
-  <i class="bi-fullscreen"></i>
+  <i class="bi-fullscreen"></i>&nbsp;&nbsp;Double-Click
 </button>

@@ -1,7 +1,8 @@
 import {GuessingGame} from "./guessing-game";
 import {GuessAnswers} from "./guess-answers";
-import {Cache, CacheOptions} from "./cache";
+import {CacheOptions} from "./cache";
 import {guessingGames} from "./guessing-games";
+import {Cacheable} from "./cacheable";
 
 interface GuessesCache {
   gameId?: string
@@ -11,7 +12,7 @@ interface GuessesCache {
   selected: number
 }
 
-export class Guesses {
+export class Guesses extends Cacheable<GuessesCache> {
   public selected: number = 0
   private _game?: GuessingGame
   private requiredAnswers: number = 0
@@ -20,8 +21,8 @@ export class Guesses {
   blue?: GuessAnswers
   red?: GuessAnswers
 
-  constructor({useCache = false}: CacheOptions = {}) {
-    if (useCache && this.cached) this.fromCache()
+  constructor(options: CacheOptions = {}) {
+    super('guesses', options)
   }
 
   get game() {
@@ -65,30 +66,29 @@ export class Guesses {
     this.game = undefined
   }
 
-  cache() {
-    Cache.set<GuessesCache>('guesses', {
+  protected override init(data?: any) {
+  }
+
+  protected override serialize(): GuessesCache {
+    return {
       gameId: this._game?.id,
       answers: this.answers?.value,
       blueAnswers: this.blue?.value,
       redAnswers: this.red?.value,
       selected: this.selected
-    })
-  }
-
-  private fromCache() {
-    if (this.cached.gameId) {
-      const game = guessingGames.find(g => g.id === this.cached.gameId)
-      if (game) {
-        this.game = game
-        this.selected = this.cached.selected
-        if (this.answers && this.cached.answers) this.answers.setAll(this.cached.answers)
-        if (this.blue && this.cached.blueAnswers) this.blue.setAll(this.cached.blueAnswers)
-        if (this.red && this.cached.redAnswers) this.red.setAll(this.cached.redAnswers)
-      }
     }
   }
 
-  private get cached(): GuessesCache {
-    return Cache.get<GuessesCache>('guesses', {selected: 0})
+  protected override deserialize(data: GuessesCache) {
+    if (data.gameId) {
+      const game = guessingGames.find(g => g.id === data.gameId)
+      if (game) {
+        this.game = game
+        this.selected = data.selected
+        if (this.answers && data.answers) this.answers.setAll(data.answers)
+        if (this.blue && data.blueAnswers) this.blue.setAll(data.blueAnswers)
+        if (this.red && data.redAnswers) this.red.setAll(data.redAnswers)
+      }
+    }
   }
 }

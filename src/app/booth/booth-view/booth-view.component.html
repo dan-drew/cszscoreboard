@@ -12,13 +12,19 @@
       <button buttonGroupItem="guesses" title="Guess" *ngIf="viewAvailable('guesses')">
         <img src="/assets/guess.png" class="w-100 h-100 image-fit p-2" alt="Guess">
       </button>
+      <button buttonGroupItem="themes" title="Themes" *ngIf="viewAvailable('themes')">
+        <i class="bi-card-image"></i>
+      </button>
     </app-button-group>
 
     <div class="flex-fill"></div>
   </div>
 
   <app-score [editable]="true"></app-score>
-  <app-guess-selector class="pb-2"></app-guess-selector>
+  <ng-container [ngSwitch]="match.activeView">
+    <app-theme-slide-selector *ngSwitchCase="'themes'"></app-theme-slide-selector>
+    <app-guess-selector *ngSwitchDefault></app-guess-selector>
+  </ng-container>
   <app-rounds [editable]="true"></app-rounds>
 </div>
 

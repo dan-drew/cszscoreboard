@@ -24,6 +24,7 @@
     <ng-container [ngSwitch]="selectedTab">
       <app-match-editor *ngSwitchCase="'settings'" class="bar-form flex-fill"></app-match-editor>
       <app-guess-editor *ngSwitchCase="'guesses'" class="bar-form flex-fill"></app-guess-editor>
+      <app-theme-slide-editor *ngSwitchCase="'themes'" class="bar-form flex-fill"></app-theme-slide-editor>
       <app-optional-team-editor *ngSwitchCase="'optional'" class="bar-form flex-fill"></app-optional-team-editor>
     </ng-container>
   </div>
