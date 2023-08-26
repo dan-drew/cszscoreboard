@@ -76,6 +76,22 @@ export class Match {
     return `/assets/logos/${this.logo}`
   }
 
+  get winningTeam() {
+    const result = this.teams.red.score - this.teams.blue.score
+
+    if (result > 0) {
+      return this.teams.red
+    } else if (result < 0) {
+      return this.teams.blue
+    } else {
+      return null
+    }
+  }
+
+  get hasScore(): boolean {
+    return this.teams.red.score > 0 || this.teams.blue.score > 0
+  }
+
   private get cached(): MatchCache {
     return Cache.get<MatchCache>('match', {})
   }

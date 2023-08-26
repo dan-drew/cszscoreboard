@@ -5,10 +5,6 @@
   </div>
 </ng-template>
 
-<ng-template #logo let-$logo="$logo">
-  <img class="profile-logo" src="/assets/logos/{{$logo}}" alt="logo">
-</ng-template>
-
 <div class="settings-form flex-fill">
   <div class="w-100 pe-1" style="max-height: 100px">
     <!-- PROFILE -->
@@ -37,69 +33,10 @@
       </li>
     </ul>
 
-    <div [ngSwitch]="activeTab" class="d-flex-column gap-3">
-      <!-- TEAM NAMES -->
-      <ng-container *ngSwitchCase="'teams'">
-        <div>
-          <label for="blueTeam" class="form-label">Blue Team</label>
-          <input id="blueTeam" class="form-control" required [(ngModel)]="match.teams.blue.name">
-        </div>
-
-        <div>
-          <label for="redTeam" class="form-label">Red Team</label>
-          <input id="redTeam" class="form-control" required [(ngModel)]="match.teams.red.name">
-        </div>
-
-      </ng-container>
-
-      <!-- ROUNDS -->
-      <ng-container *ngSwitchCase="'rounds'">
-        <div>
-          <textarea id="rounds" class="form-control" required rows="10" [(ngModel)]="rounds"></textarea>
-        </div>
-      </ng-container>
-
-      <ng-container *ngSwitchCase="'profile'">
-        <div>
-          <label class="form-label" for="profileLogo">Logo</label>
-          <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle form-control" type="button" id="profileLogo"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-              <ng-container [ngTemplateOutlet]="logo" [ngTemplateOutletContext]="{$logo: match.logo}"></ng-container>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="profileLogo">
-              <li *ngFor="let $logo of profiles.logos">
-                <button class="dropdown-item" (click)="match.logo = $logo">
-                  <ng-container [ngTemplateOutlet]="logo" [ngTemplateOutletContext]="{$logo}"></ng-container>
-                </button>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div>
-          <label class="form-label" for="profileSocial">Social</label>
-          <input
-            id="profileSocial"
-            class="form-control"
-            [(ngModel)]="match.social"
-            placeholder="(FB)(IG) @account (TW) @account"
-            title="Enter text as you want it shown. Use (FB), (IG) and (TW) for social logos."
-          >
-        </div>
-
-        <div class="d-flex-column gap-1">
-          <button class="btn btn-primary form-control" (click)="save()">
-            Save
-          </button>
-          <button class="btn btn-success form-control" (click)="saveAs()">
-            Save As...
-          </button>
-          <button class="btn btn-danger form-control" (click)="delete()" [disabled]="profiles.profiles.length === 1">
-            Delete
-          </button>
-        </div>
-      </ng-container>
+    <div [ngSwitch]="activeTab">
+      <app-match-teams-editor *ngSwitchCase="'teams'"></app-match-teams-editor>
+      <app-match-rounds-editor *ngSwitchCase="'rounds'"></app-match-rounds-editor>
+      <app-match-profile-editor *ngSwitchCase="'profile'"></app-match-profile-editor>
     </div>
 
   </div>

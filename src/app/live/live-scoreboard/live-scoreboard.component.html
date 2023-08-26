@@ -1,3 +1,7 @@
+<app-flyby #roundFlyby *ngIf="!match.profile.disableRoundFlyby">
+  <div class="round-flyby">{{match.round.currentName | async | uppercase}}</div>
+</app-flyby>
+
 <app-optional-score *ngIf="match.teams.optionalEnabled"></app-optional-score>
 <img class="logo" alt="logo" src="/assets/logos/{{match.logo}}">
 <app-score></app-score>

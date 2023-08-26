@@ -3,7 +3,7 @@
 
   &:not(.active) {
     opacity: 0;
-    //visibility: hidden !important;
+    //visibility: hidden;
   }
 }
 
@@ -17,4 +17,21 @@
   padding: 10px var(--font-size);
   background: #00000088;
   border-radius: var(--font-size) / 50%;
+}
+
+.team-name {
+  font-size: var(--size-80);
+  font-weight: bold;
+  font-family: var(--csz-font-family);
+  color: white;
+  text-transform: uppercase;
+  filter: drop-shadow(0 0 10px white);
+
+  &.team-red {
+    //color: var(--csz-red);
+  }
+
+  &.team-blue {
+    //color: var(--csz-blue);
+  }
 }

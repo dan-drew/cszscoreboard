@@ -1,15 +1,16 @@
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
+  Component, DoCheck,
   HostListener,
   OnDestroy,
-  OnInit
+  OnInit, ViewChild
 } from '@angular/core';
 import {Match} from "../../config/match";
 import {FullScreenTargetDirective} from "../../full-screen-target.directive";
 import {interval, Subscription} from "rxjs";
 import {Title} from "@angular/platform-browser";
+import {FlybyComponent} from "../../common/flyby/flyby.component";
 
 const POLL_INTERVAL = 250
 
@@ -23,8 +24,11 @@ const POLL_INTERVAL = 250
     class: 'position-relative'
   }
 })
-export class LiveViewComponent implements OnInit, OnDestroy {
+export class LiveViewComponent implements OnInit, OnDestroy, DoCheck {
   private timer?: Subscription
+  private showingScore = false
+
+  @ViewChild('teamFlyby') teamFlyby?: FlybyComponent
 
   constructor(
     readonly match: Match,
@@ -41,6 +45,17 @@ export class LiveViewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.timer?.unsubscribe()
+  }
+
+  ngDoCheck() {
+    if (this.match.activeView === 'scoreboard') {
+      if (!this.showingScore) {
+        this.showingScore = true
+        if (this.match.hasScore) this.teamFlyby?.fly()
+      }
+    } else if (this.showingScore) {
+      this.showingScore = false
+    }
   }
 
   @HostListener('dblclick')

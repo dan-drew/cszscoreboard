@@ -20,3 +20,11 @@ app-round-names {
 
   height: var(--round-height);
 }
+
+.round-flyby {
+  font-size: var(--size-80);
+  font-weight: bold;
+  font-family: var(--csz-font-family);
+  opacity: 90%;
+  color: white;
+}

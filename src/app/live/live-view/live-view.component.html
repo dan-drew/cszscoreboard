@@ -1,3 +1,12 @@
+<app-flyby #teamFlyby *ngIf="!match.profile.disableTeamFlyby">
+  <ng-container *ngIf="match.winningTeam as $team; else tiedScore">
+    <div class="team-name team-{{$team.type}}">{{$team.name}}</div>
+  </ng-container>
+  <ng-template #tiedScore>
+    <div class="team-name">Tied Score!!!</div>
+  </ng-template>
+</app-flyby>
+
 <app-live-scoreboard
   class="view"
   [class.active]="match.activeView === 'scoreboard'"

@@ -1,23 +1,25 @@
-.settings-form {
-  overflow-y: auto;
+app-match-editor {
 
-  .nav-tabs {
-    --bs-nav-tabs-link-active-bg: var(--bs-dark);
-    --bs-nav-tabs-link-active-border-color: var(--bs-dark);
-    --bs-nav-tabs-link-active-color: var(--bs-light);
-    --bs-nav-link-color: var(--bs-light);
-    --bs-nav-tabs-link-hover-border-color: transparent;
-    --bs-nav-tabs-border-color: var(--bs-dark);
+  .settings-form {
+    overflow-y: auto;
+
+    .nav-tabs {
+      --bs-nav-tabs-link-active-bg: var(--bs-dark);
+      --bs-nav-tabs-link-active-border-color: var(--bs-dark);
+      --bs-nav-tabs-link-active-color: var(--bs-light);
+      --bs-nav-link-color: var(--bs-light);
+      --bs-nav-tabs-link-hover-border-color: transparent;
+      --bs-nav-tabs-border-color: var(--bs-dark);
+    }
+
+    .profile-logo {
+      width: 5vh;
+      height: 5vh;
+      object-fit: contain;
+    }
   }
 
-  .profile-logo {
-    width: 5vh;
-    height: 5vh;
-    object-fit: contain;
+  .settings-buttons {
+    box-shadow: 0 -5px 5px #4448;
   }
-
-}
-
-.settings-buttons {
-  box-shadow: 0 -5px 5px #4448;
 }

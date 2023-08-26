@@ -9,4 +9,6 @@ export interface Profile {
     red: string
     optional: string
   }
+  disableRoundFlyby?: boolean
+  disableTeamFlyby?: boolean
 }

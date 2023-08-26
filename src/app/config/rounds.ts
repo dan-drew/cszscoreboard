@@ -1,6 +1,6 @@
 import {Profile} from "./profile";
 import {EventEmitter} from "@angular/core";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, map, mapTo, zip} from "rxjs";
 
 export class Rounds {
   static readonly default: string[] = [
@@ -18,6 +18,11 @@ export class Rounds {
   private _names: string[]
   readonly current = new BehaviorSubject<number>(0)
   readonly namesChange = new EventEmitter<void>()
+  readonly currentName = this.current.pipe(
+    map(value => {
+      return this._names[value]
+    })
+  )
 
   constructor(profile: Profile) {
     this._names = Array.from(profile.rounds)

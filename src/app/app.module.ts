@@ -31,6 +31,10 @@ import { ThemeSlideBackgroundDirective } from './common/theme-slide-background.d
 import { LiveThemesComponent } from './live/live-themes/live-themes.component';
 import { ThemeSlideTitleDirective } from './common/theme-slide-title.directive';
 import { ThemeSlideSelectorComponent } from './booth/theme-slide-selector/theme-slide-selector.component';
+import { FlybyComponent } from './common/flyby/flyby.component';
+import { MatchRoundsEditorComponent } from './booth/match-rounds-editor/match-rounds-editor.component';
+import { MatchTeamsEditorComponent } from './booth/match-teams-editor/match-teams-editor.component';
+import { MatchProfileEditorComponent } from './booth/match-profile-editor/match-profile-editor.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +64,11 @@ import { ThemeSlideSelectorComponent } from './booth/theme-slide-selector/theme-
     ThemeSlideBackgroundDirective,
     LiveThemesComponent,
     ThemeSlideTitleDirective,
-    ThemeSlideSelectorComponent
+    ThemeSlideSelectorComponent,
+    FlybyComponent,
+    MatchRoundsEditorComponent,
+    MatchTeamsEditorComponent,
+    MatchProfileEditorComponent
   ],
   imports: [
     BrowserModule,
