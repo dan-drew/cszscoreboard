@@ -16,7 +16,7 @@ export interface Guess extends GuessDef {
 
 interface GameOptions {
   style?: GameStyle,
-  vs?: GameVersus,
+  vs?: GameVersus | true,
   labelTemplate?: string,
   placeholderTemplate?: string,
   multiline?: boolean,
@@ -67,7 +67,7 @@ export class GuessingGame {
       this.name = name
       this.listName = listName || name
       this.id = name.toLowerCase().replaceAll(' ', '-').replaceAll(/[^A-Za-z0-9-]+/g, '')
-      this.vs = vs
+      this.vs = vs === true ? 'vs' : vs
       this.style = style
 
       if (typeof guesses === 'string') {

@@ -4,7 +4,7 @@
 
 import {GuessingGame} from "./guessing-game";
 
-const FIVETHING_PROMPT = 'Activity\nSomething is something else\nAnother thing is too'
+const FIVE_THING_PROMPT = 'Activity\nSomething is something else\nAnother thing is too'
 const SHOPPING_PROMPT = 'Product\nSomething is something else\nAnother thing is too'
 
 const homeShopping = new GuessingGame(
@@ -23,12 +23,17 @@ export const guessingGames: GuessingGame[] = [
   new GuessingGame(
     '5 Things',
     5,
-    {labelTemplate: '{{}} Thing', placeholderTemplate: FIVETHING_PROMPT, multiline: true}
+    {labelTemplate: '{{}} Thing', placeholderTemplate: FIVE_THING_PROMPT, multiline: true}
   ),
   new GuessingGame(
     '3 Things',
     3,
-    {labelTemplate: '{{}} Thing', placeholderTemplate: FIVETHING_PROMPT, multiline: true}
+    {labelTemplate: '{{}} Thing', placeholderTemplate: FIVE_THING_PROMPT, multiline: true}
+  ),
+  new GuessingGame(
+    '3 Things (VS)',
+    3,
+    {labelTemplate: '{{}} Thing', placeholderTemplate: FIVE_THING_PROMPT, multiline: true, vs: true}
   ),
   homeShopping,
   homeShopping.asVs('shared'),
