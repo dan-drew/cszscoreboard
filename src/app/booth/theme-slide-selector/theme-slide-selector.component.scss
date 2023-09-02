@@ -1,0 +1,18 @@
+button {
+  position: relative;
+  overflow: hidden;
+
+  .theme-background {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    border-radius: 5px;
+  }
+
+  .theme-title {
+    position: relative;
+    z-index: 1;
+  }
+}

@@ -35,6 +35,8 @@ import { FlybyComponent } from './common/flyby/flyby.component';
 import { MatchRoundsEditorComponent } from './booth/match-rounds-editor/match-rounds-editor.component';
 import { MatchTeamsEditorComponent } from './booth/match-teams-editor/match-teams-editor.component';
 import { MatchProfileEditorComponent } from './booth/match-profile-editor/match-profile-editor.component';
+import {NgOptimizedImage} from "@angular/common";
+import { ColoredImageComponent } from './common/colored-image/colored-image.component';
 
 @NgModule({
   declarations: [
@@ -68,13 +70,15 @@ import { MatchProfileEditorComponent } from './booth/match-profile-editor/match-
     FlybyComponent,
     MatchRoundsEditorComponent,
     MatchTeamsEditorComponent,
-    MatchProfileEditorComponent
+    MatchProfileEditorComponent,
+    ColoredImageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgOptimizedImage
   ],
   providers: [Match.provider],
   bootstrap: [AppComponent]

@@ -1,11 +1,15 @@
-<img class="fullscreen" [themeSlideBackground]="match.themeSlides.activeConfig" alt="background">
+<img class="fullscreen" [themeSlideBackground]="themeConfig" alt="background">
 <div class="fullscreen d-flex-column align-items-center justify-content-center">
   <div class="flex-fill"></div>
-  <div [themeSlideTitle]="match.themeSlides.activeConfig">
-    {{match.themeSlides.activeConfig.title}}
+  <div [themeSlideTitle]="themeConfig" [slide]="true">
+    {{themeConfig.title}}
   </div>
   <div class="flex-fill"></div>
-  <div class="py-5 d-flex-row fs-3">
+  <div *ngIf="movie" class="theme-movie py-5 d-flex-row fs-3 align-items-center" [ngStyle]="movieStyle">
+    <colored-image src="assets/themes/csz_sanjose_logo.svg" width="var(--size-20)" height="var(--size-10)"
+                   [color]="theme.title.color"></colored-image>
     <div>&copy; DIF PICTURES CORPORATION  MMXXIII</div>
+    <colored-image src="assets/themes/mpaa.png" width="var(--size-20)" height="var(--size-10)"
+                   [color]="theme.title.color"></colored-image>
   </div>
 </div>

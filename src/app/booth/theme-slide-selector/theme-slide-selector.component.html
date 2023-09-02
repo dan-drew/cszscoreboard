@@ -8,6 +8,8 @@
     *ngFor="let $slide of slides.slides; index as $index"
     [buttonGroupItem]="$index"
     class="slide-item csz-text fs-3"
-    [themeSlideBackground]="$slide"
-  >{{$slide.title}}</button>
+  >
+    <img class="theme-background" [themeSlideBackground]="$slide" alt="Theme Background">
+    <div class="theme-title" [themeSlideTitle]="$slide">{{$slide.title}}</div>
+  </button>
 </app-button-group>

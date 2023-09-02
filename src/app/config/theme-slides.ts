@@ -1,4 +1,4 @@
-import {ThemeSlide} from "./theme-slide";
+import {ThemeSlide, ThemeSlideType} from "./theme-slide";
 import {Cacheable} from "./cacheable";
 import {CacheOptions} from "./cache";
 import {ThemeSlideConfig} from "./theme-slide-config";
@@ -16,10 +16,12 @@ export class ThemeSlides extends Cacheable<ThemeSlidesCache> implements ThemeSli
     new ThemeSlide('Horror', 'horror.jpg'),
     new ThemeSlide('Sci-Fi', 'scifi.jpg'),
     new ThemeSlide('Western', {
+      type: ThemeSlideType.Movie,
       background: {image: 'western.jpg'},
       title: { color: '#560706' }
     }),
     new ThemeSlide('Holiday', 'holiday.jpg'),
+    new ThemeSlide('Generic', 'generic.png', ThemeSlideType.Generic)
   ])
   private static readonly themeMap = new Map<string, ThemeSlide>(ThemeSlides.Themes.map(t => [t.name, t]))
 

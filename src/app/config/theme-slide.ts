@@ -1,3 +1,8 @@
+export enum ThemeSlideType {
+  Generic,
+  Movie
+}
+
 interface ThemeSlideBackground {
   image: string
   style?: 'cover' | 'fill'
@@ -14,22 +19,29 @@ interface ThemeSlideTitle {
     size?: number
     italic?: boolean
     bold?: boolean
-    color?: string
+    color: string
     rotation?: number
 }
 
+const DefaultSlideTitle: Partial<ThemeSlideTitle> = Object.freeze({
+  color: 'white'
+})
+
 export interface ThemeSlideOptions {
+  readonly type: ThemeSlideType
   readonly background: ThemeSlideBackground
   readonly title: ThemeSlideTitle
 }
 
 export class ThemeSlide implements ThemeSlideOptions {
+  readonly type: ThemeSlideType
   readonly background: ThemeSlideBackground
   readonly title: ThemeSlideTitle
 
   constructor(
     name: string,
-    background: string
+    background: string,
+    type?: ThemeSlideType
   )
   constructor(
     name: string,
@@ -37,7 +49,8 @@ export class ThemeSlide implements ThemeSlideOptions {
   )
   constructor(
     public readonly name: string,
-    optionsOrBackground: string | Partial<ThemeSlideOptions>
+    optionsOrBackground: string | Partial<ThemeSlideOptions>,
+    type: ThemeSlideType = ThemeSlideType.Movie
   ) {
     if (typeof optionsOrBackground === 'string') {
       this.background = Object.assign(
@@ -45,8 +58,10 @@ export class ThemeSlide implements ThemeSlideOptions {
         DefaultSlideBackground,
         { image: optionsOrBackground }
       )
-      this.title = {}
+      this.title = Object.assign({}, DefaultSlideTitle) as ThemeSlideTitle
+      this.type = type
     } else {
+      this.type = optionsOrBackground.type || ThemeSlideType.Movie
       this.background = Object.assign(
         {},
         DefaultSlideBackground,
@@ -54,6 +69,7 @@ export class ThemeSlide implements ThemeSlideOptions {
       )
       this.title = Object.assign(
         {},
+        DefaultSlideTitle,
         optionsOrBackground.title
       )
     }

@@ -10,6 +10,7 @@ locals {
     js   = "text/javascript"
     css  = "text/css"
     png  = "image/png"
+    svg  = "image/svg+xml"
   }
 }
 

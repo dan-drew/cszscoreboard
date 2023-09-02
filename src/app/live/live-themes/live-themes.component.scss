@@ -1,0 +1,5 @@
+.theme-movie {
+  & > div {
+    padding: 0 var(--size-10);
+  }
+}
