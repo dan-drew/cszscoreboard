@@ -1,23 +1,26 @@
 import {GuessingGame} from "./guessing-game";
+import {Cacheable} from "./cacheable";
+import {CacheOptions} from "./cache";
 
-export class GuessAnswers {
-  private readonly answers: string[] = []
-  private readonly required: number
+type GuessAnswerType = 'blue' | 'red' | 'all'
+
+interface GuessAnswerCache {
+  answers: string[]
+}
+
+export class GuessAnswers extends Cacheable<GuessAnswerCache, GuessingGame>{
+  private answers!: string[]
+  private required!: number
+  private game!: GuessingGame
   private _changed: number = Date.now()
   private _normalized: string[] = []
   private _used: number = 0
 
-  constructor(private readonly game: GuessingGame) {
-    this.required = this.game.required
-
-    for (let i = 0; i < this.game.guesses.length; i++) {
-      this.answers.push('')
-    }
-
-    this.normalize()
+  constructor(name: GuessAnswerType, game: GuessingGame, options?: CacheOptions) {
+    super(`guess-${name}`, options, game)
   }
 
-  get changed() {
+  get guessesChanged() {
     return this._changed
   }
 
@@ -63,5 +66,30 @@ export class GuessAnswers {
       return index < this.required
     })
     this._used = used
+    this.cache()
+  }
+
+  protected override construct(game: GuessingGame) {
+    this.game = game
+    this.required = this.game.required
+    this.answers = []
+
+    for (let i = 0; i < this.game.guesses.length; i++) {
+      this.answers.push('')
+    }
+  }
+
+  protected override init(data?: GuessingGame) {
+    this.normalize()
+  }
+
+  protected override serialize(): GuessAnswerCache {
+    return {
+      answers: this._normalized
+    }
+  }
+
+  protected override deserialize(data: GuessAnswerCache) {
+    this.setAll(data.answers)
   }
 }

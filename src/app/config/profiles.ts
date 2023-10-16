@@ -43,6 +43,10 @@ export class Profiles {
     this.loadAll()
   }
 
+  find(id: string) {
+    return this.profiles.find(p => p.id === id)
+  }
+
   update(profile: Profile): Profile {
     const index = this.profiles.findIndex(p => p.id === profile.id)
     if (index < 0) {

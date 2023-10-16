@@ -25,7 +25,7 @@ export class ThemeSlides extends Cacheable<ThemeSlidesCache> implements ThemeSli
   ])
   private static readonly themeMap = new Map<string, ThemeSlide>(ThemeSlides.Themes.map(t => [t.name, t]))
 
-  active!: number
+  private _active!: number
   slides!: ThemeSlideConfig[]
 
   constructor(options?: CacheOptions) {
@@ -45,6 +45,15 @@ export class ThemeSlides extends Cacheable<ThemeSlidesCache> implements ThemeSli
     return this.slides[this.active]
   }
 
+  get active() {
+    return this._active
+  }
+
+  set active(val: number) {
+    this._active = val
+    this.cache()
+  }
+
   get activeTheme() {
     return ThemeSlides.byName(this.activeConfig.name)
   }
@@ -59,13 +68,16 @@ export class ThemeSlides extends Cacheable<ThemeSlidesCache> implements ThemeSli
 
   add(theme: ThemeSlide): void {
     this.slides.push({ name: theme.name, title: '' })
+    this.cache()
   }
 
   remove(slide: ThemeSlideConfig): void {
     const i = this.slides.indexOf(slide)
     if (i >= 0) {
-      this.slides.splice(i, 1)
-      if (this.active >= this.slides.length) this.active = this.slides.length - 1;
+      this.cache(() => {
+        this.slides.splice(i, 1)
+        if (this.active >= this.slides.length) this.active = this.slides.length - 1
+      })
     }
   }
 
@@ -74,13 +86,16 @@ export class ThemeSlides extends Cacheable<ThemeSlidesCache> implements ThemeSli
     this.slides.length = 0
   }
 
-  protected override init(data?: any) {
+  protected override init(_data?: any) {
     this.active = 0
     this.slides = []
   }
 
   protected override serialize(): ThemeSlidesCache {
-    return this
+    return {
+      active: this.active,
+      slides: this.slides
+    }
   }
 
   protected override deserialize(data: ThemeSlidesCache) {

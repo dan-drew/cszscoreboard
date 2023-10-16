@@ -11,14 +11,12 @@ import {FullScreenTargetDirective} from "../../full-screen-target.directive";
 import {interval, Subscription} from "rxjs";
 import {Title} from "@angular/platform-browser";
 import {FlybyComponent} from "../../common/flyby/flyby.component";
-
-const POLL_INTERVAL = 250
+import {HeartbeatService} from "../../common/heartbeat.service";
 
 @Component({
   selector: 'app-live-view',
   templateUrl: './live-view.component.html',
   styleUrls: ['./live-view.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [FullScreenTargetDirective],
   host: {
     class: 'position-relative'
@@ -33,14 +31,18 @@ export class LiveViewComponent implements OnInit, OnDestroy, DoCheck {
   constructor(
     readonly match: Match,
     readonly fullScreen: FullScreenTargetDirective,
-    private readonly changeDetector: ChangeDetectorRef,
-    private readonly title: Title
+    private readonly title: Title,
+    private readonly heartbeat: HeartbeatService
   ) {
   }
 
   ngOnInit() {
     this.title.setTitle('TV - ComedySports Scoreboard')
-    this.timer = interval(POLL_INTERVAL).subscribe(() => this.poll())
+
+    // Close if booth heartbeat gets old, meaning it was closed
+    this.timer = this.heartbeat.stale().subscribe(() => {
+      window.close()
+    })
   }
 
   ngOnDestroy() {
@@ -63,17 +65,5 @@ export class LiveViewComponent implements OnInit, OnDestroy, DoCheck {
     this.fullScreen.enter().catch(err => {
       console.error('Failed to enter fullscreen', err)
     })
-  }
-
-  private poll() {
-    if (this.boothClosed) {
-      window.close()
-    } else {
-      this.changeDetector.detectChanges()
-    }
-  }
-
-  private get boothClosed() {
-    return !window.opener || (window.opener as Window).closed
   }
 }

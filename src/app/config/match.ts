@@ -4,19 +4,19 @@ import {Rounds} from "./rounds";
 import {Guesses} from "./guesses";
 import {Provider} from "@angular/core";
 import {Profiles} from "./profiles";
-import {Cache, CacheOptions} from "./cache";
+import {CacheOptions} from "./cache";
 import {ThemeSlides} from "./theme-slides";
+import {Cacheable} from "./cacheable";
 
 export type MatchView = 'scoreboard' | 'slate' | 'guesses' | 'themes'
 
 interface MatchCache {
-  profileId?: string
-  activeView?: MatchView
+  profileId: string
+  activeView: MatchView
 }
 
-export class Match {
-  static _current?: Match
-
+export class Match extends Cacheable<MatchCache, Profiles> {
+  private _profiles!: Profiles
   private currentProfile!: Profile
   logo!: string
   social!: string
@@ -24,43 +24,22 @@ export class Match {
   teams!: Teams
   guesses!: Guesses
   themeSlides!: ThemeSlides
-  activeView: MatchView = 'scoreboard'
+  private _activeView: MatchView = 'scoreboard'
 
   static get provider(): Provider {
     return {
       provide: Match,
-      useFactory: (profiles: Profiles) => Match.current(profiles),
+      useFactory: (profiles: Profiles) => new Match(profiles, {useCache: true}),
       deps: [Profiles]
     }
   }
 
-  static current(profiles: Profiles): Match {
-    if (!this._current) {
-      // If there's a shared match then we're the TV instance. Otherwise
-      // we're the Booth instance and should create the match and shared it.
-      if (!(this._current = this.shared)) {
-        this._current = new Match(profiles)
-        this.shared = this._current
-      }
-    }
-
-    return this._current!
+  constructor(profiles: Profiles, options?: CacheOptions) {
+    super('match', options, profiles)
   }
 
-  // Get match shared by the Booth instance
-  static get shared(): Match | undefined {
-    return window.opener?.cszMatch
-  }
-
-  // Set match to be shared to the TV instance
-  static set shared(match: Match | undefined) {
-    // @ts-ignore
-    window.cszMatch = match
-  }
-
-  constructor(readonly profiles: Profiles) {
-    const profile = this.cached.profileId ? profiles.profiles.find(p => p.id === this.cached.profileId) : null
-    this.setProfile(profile || profiles.profiles[0], {useCache: true})
+  get profiles() {
+    return this._profiles
   }
 
   get profile() {
@@ -70,6 +49,17 @@ export class Match {
   set profile(val: Profile) {
     this.currentProfile = val
     this.reset()
+  }
+
+  get activeView() {
+    return this._activeView
+  }
+
+  set activeView(value: MatchView) {
+    if (value !== this._activeView) {
+      this._activeView = value
+      this.cache()
+    }
   }
 
   get logoUrl() {
@@ -92,9 +82,9 @@ export class Match {
     return this.teams.red.score > 0 || this.teams.blue.score > 0
   }
 
-  private get cached(): MatchCache {
-    return Cache.get<MatchCache>('match', {})
-  }
+  // private get cached(): MatchCache {
+  //   return Cache.get<MatchCache>('match', {})
+  // }
 
   setProfile(val: Profile, options: CacheOptions = {}) {
     this.currentProfile = val
@@ -119,11 +109,18 @@ export class Match {
   reset(options: CacheOptions = {}) {
     this.logo = this.currentProfile.logo
     this.social = this.currentProfile.social || ''
-    this.round = new Rounds(this.currentProfile)
+    this.round?.destroy()
+    this.round = new Rounds(this.currentProfile, options)
+    this.teams?.destroy()
     this.teams = new Teams(this.currentProfile, options)
+    this.guesses?.destroy()
     this.guesses = new Guesses(options)
+    this.themeSlides?.destroy()
     this.themeSlides = new ThemeSlides(options)
-    this.activeView = options.useCache && this.cached.activeView ||  'slate'
+
+    if (!options.useCache) {
+      this.activeView = 'slate'
+    }
   }
 
   toProfile({from, name}: { from?: Profile, name?: string }): Profile {
@@ -141,13 +138,27 @@ export class Match {
     }
   }
 
-  cache() {
-    Cache.set<MatchCache>('match', {
+  protected override construct(profiles: Profiles) {
+    this._profiles = profiles
+  }
+
+  protected override init() {
+    this.setProfile(this.profiles.profiles[0], {useCache: false})
+  }
+
+  protected override serialize(): MatchCache {
+    return {
       profileId: this.profile.id,
       activeView: this.activeView
-    })
-    this.teams.cache()
-    this.guesses.cache()
-    this.themeSlides.cache()
+    }
+  }
+
+  protected override deserialize(data: MatchCache) {
+    if (data.profileId !== this.profile?.id) {
+      const profile = data.profileId ? this.profiles.find(data.profileId) : null
+      this.setProfile(profile || this.profiles.profiles[0], {useCache: true})
+    }
+
+    this.activeView = data.activeView
   }
 }

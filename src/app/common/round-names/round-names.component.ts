@@ -14,10 +14,6 @@ import {RoundNameData, RoundNameDirective} from "../round-name.directive";
 import {asyncScheduler, fromEvent, Subscription, tap, throttleTime} from "rxjs";
 import {RoundNamesDirective} from "../round-names.directive";
 
-const UPDATE_INTERVAL = 50
-const UPDATE_PERIOD = 500
-const UPDATE_TIMES = UPDATE_PERIOD / UPDATE_INTERVAL
-
 @Component({
   selector: 'app-round-names',
   templateUrl: './round-names.component.html',
@@ -25,9 +21,7 @@ const UPDATE_TIMES = UPDATE_PERIOD / UPDATE_INTERVAL
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewChecked {
-
   readonly DEBUG = false
-  readonly round = this.match.round
 
   @ViewChild(RoundNamesDirective) private roundNameContainer!: RoundNamesDirective
   @ViewChildren(RoundNameDirective) roundNames?: QueryList<RoundNameDirective>
@@ -42,6 +36,10 @@ export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewChecked 
     public readonly match: Match,
     private readonly changeDetectorRef: ChangeDetectorRef
   ) {
+  }
+
+  get round() {
+    return this.match.round
   }
 
   ngOnInit() {
@@ -93,7 +91,7 @@ export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewChecked 
     this.trace('Name data updated', `Gap: ${this.nameGap}`, this.nameData)
   }
 
-  private updateSelected(selected: number = this.round.current.value) {
+  private updateSelected(selected: number = this.round.currentValue) {
     this.roundNames?.forEach((item, index) => {
       this.trace(`Name ${index} before: `, item.getData())
       item.selected = index === selected
@@ -102,14 +100,14 @@ export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewChecked 
   }
 
   private update(
-    {selected = this.round.current.value, times = UPDATE_TIMES}: {selected?: number, times?: number} = {}
+    {selected = this.round.currentValue}: {selected?: number} = {}
   ) {
     this.updateSelected(selected)
     this.updateOffset(selected)
     this.updateData()
   }
 
-  private updateOffset(selected: number = this.round.current.value) {
+  private updateOffset(selected: number = this.round.currentValue) {
     if (!this.roundNameContainer) return
 
     let newOffset = 0
@@ -125,7 +123,7 @@ export class RoundNamesComponent implements OnInit, OnDestroy, AfterViewChecked 
     this.roundNameContainer.offset = newOffset
   }
 
-  private dataFor(index: number, selected: number = this.round.current.value) {
+  private dataFor(index: number, selected: number = this.round.currentValue) {
     const data = this.nameData!.at(index)!
     if (index === selected) {
       return data.selected

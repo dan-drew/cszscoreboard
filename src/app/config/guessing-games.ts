@@ -1,5 +1,5 @@
 /**
- * See docs/GUESSING.md
+ * See docs/Guessing-Games.md
  */
 
 import {GuessingGame} from "./guessing-game";
@@ -19,7 +19,7 @@ const homeShopping = new GuessingGame(
   }
 )
 
-export const guessingGames: GuessingGame[] = [
+export const guessingGames: GuessingGame[] = Object.seal([
   new GuessingGame(
     '5 Things',
     5,
@@ -80,5 +80,10 @@ export const guessingGames: GuessingGame[] = [
   new GuessingGame(
     'Hot Bell',
     [1, 20]
+  ),
+  new GuessingGame(
+    'Press Conference',
+    [{label: 'What'}, {label: 'Why'}, {label: 'With'}],
+    {style: 'labeled'}
   )
-].sort((x, y) => x.name.localeCompare(y.name))
+].sort((x, y) => x.name.localeCompare(y.name)))

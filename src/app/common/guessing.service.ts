@@ -79,10 +79,10 @@ export class GuessingService {
   }
 
   private generate() {
-    if (this.generated < this.guesses.changed) {
+    if (this.generated < this.guesses.guessesChanged) {
       this._slides = this.generateSlides()
       this._previews = this.generatePreviews()
-      this.generated = this.guesses.changed
+      this.generated = this.guesses.guessesChanged
     }
   }
 
