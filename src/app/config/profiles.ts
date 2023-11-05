@@ -35,8 +35,19 @@ export class Profiles {
         red: 'Mirthquakes',
         optional: 'George'
       }
+    },
+    {
+      id: 'csz-recleague',
+      name: 'Rec League',
+      logo: 'recleague.png',
+      social: '(FB)(IG) @cszminorleaguesj',
+      rounds: Rounds.default,
+      teams: {
+        blue: 'Snortyniners',
+        red: 'Mirthquakes',
+        optional: 'George'
+      }
     }
-
   ]
 
   constructor() {
