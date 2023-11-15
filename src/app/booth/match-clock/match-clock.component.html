@@ -1,0 +1,34 @@
+<ng-container *ngIf="timeInfo | async as $info">
+  <ng-container *ngIf="$info.timer; else showTime">
+    <div class="timer" [ngClass]="timerClass">
+      {{div($info.timer, 60) | number : '2.0-0' }}:{{$info.timer % 60 | number : '2.0-0' }}
+    </div>
+    <button
+      type="button"
+      class="btn btn-outline-danger flex-fill"
+      (click)="resetTimeInfo()"
+    ><i class="bi-x-lg"></i></button>
+  </ng-container>
+  <ng-template #showTime>
+    <div class="timer">
+      {{$info.clock!.getHours() % 12 || 12 | number : '2.0-0' }}:{{$info.clock!.getMinutes() | number : '2.0-0' }}
+    </div>
+  </ng-template>
+</ng-container>
+
+<div class="d-flex-column gap-2">
+  <button
+    type="button"
+    class="btn btn-outline-secondary flex-fill"
+    (click)="addTimer(30)"
+  >
+    30s
+  </button>
+  <button
+    type="button"
+    class="btn btn-outline-secondary flex-fill"
+    (click)="addTimer(60)"
+  >
+    1m
+  </button>
+</div>

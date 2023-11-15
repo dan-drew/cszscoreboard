@@ -19,6 +19,7 @@ resource "aws_cloudfront_distribution" "csz" {
     compress               = true
     target_origin_id       = "default"
     viewer_protocol_policy = "redirect-to-https"
+    default_ttl            = 900
 
     forwarded_values {
       cookies {

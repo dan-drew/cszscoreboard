@@ -37,6 +37,7 @@ import { MatchTeamsEditorComponent } from './booth/match-teams-editor/match-team
 import { MatchProfileEditorComponent } from './booth/match-profile-editor/match-profile-editor.component';
 import {NgOptimizedImage} from "@angular/common";
 import { ColoredImageComponent } from './common/colored-image/colored-image.component';
+import { MatchClockComponent } from './booth/match-clock/match-clock.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { ColoredImageComponent } from './common/colored-image/colored-image.comp
     MatchRoundsEditorComponent,
     MatchTeamsEditorComponent,
     MatchProfileEditorComponent,
-    ColoredImageComponent
+    ColoredImageComponent,
+    MatchClockComponent
   ],
   imports: [
     BrowserModule,

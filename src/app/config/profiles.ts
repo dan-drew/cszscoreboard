@@ -8,7 +8,8 @@ export class Profiles {
 
   readonly logos: string[] = [
     'comedysportz.png',
-    'minorleague.png'
+    'minorleague.png',
+    'recleague.png'
   ]
 
   private readonly default: Profile[] = [
