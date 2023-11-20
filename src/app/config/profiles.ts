@@ -1,52 +1,62 @@
 import {Injectable} from "@angular/core";
-import {Profile} from "./profile";
+import {Profile, ProfileLogo, TeamLogo} from "./profile";
 import {Rounds} from "./rounds";
 
 @Injectable({providedIn: 'root'})
 export class Profiles {
   profiles!: Profile[]
 
-  readonly logos: string[] = [
-    'comedysportz.png',
-    'minorleague.png',
-    'recleague.png'
+  readonly logos: ProfileLogo[] = [
+    ProfileLogo.ComedySportz,
+    ProfileLogo.MinorLeague,
+    ProfileLogo.RecLeague
   ]
 
-  private readonly default: Profile[] = [
+  readonly teamLogos: TeamLogo[] = [
+    TeamLogo.Mirthquakes,
+    TeamLogo.Snortyniners
+  ]
+
+  private readonly builtin: Profile[] = [
     {
       id: 'csz-main',
       name: 'ComedySportz',
-      logo: 'comedysportz.png',
+      builtin: true,
+      logo: ProfileLogo.ComedySportz,
       social: '(FB)(IG)(TW) @cszsanjose',
       rounds: Rounds.default,
       teams: {
-        blue: 'Laughletics',
-        red: 'San Jose Snarks',
+        blue: 'Snarks',
+        red: 'Laughletics',
         optional: 'Alyssa'
       }
     },
     {
       id: 'csz-minorleague',
       name: 'Minor League',
-      logo: 'minorleague.png',
+      builtin: true,
+      logo: ProfileLogo.MinorLeague,
       social: '(FB)(IG) @cszminorleaguesj',
       rounds: Rounds.default,
       teams: {
         blue: 'Snortyniners',
+        blueLogp: TeamLogo.Snortyniners,
         red: 'Mirthquakes',
+        redLogo: TeamLogo.Mirthquakes,
         optional: 'George'
       }
     },
     {
       id: 'csz-recleague',
       name: 'Rec League',
-      logo: 'recleague.png',
-      social: '(FB)(IG) @cszminorleaguesj',
+      builtin: true,
+      logo: ProfileLogo.RecLeague,
+      // social: '(FB)(IG) @cszminorleaguesj',
       rounds: Rounds.default,
       teams: {
-        blue: 'Snortyniners',
-        red: 'Mirthquakes',
-        optional: 'George'
+        blue: 'Blue',
+        red: 'Red',
+        optional: 'Name'
       }
     }
   ]
@@ -79,16 +89,27 @@ export class Profiles {
   }
 
   private loadAll() {
+    const sources: string[] = [JSON.stringify(this.builtin)]
     let loaded = this.storage.getItem('profiles')
-    if (!loaded) {
-      // Make a copy via JSON
-      loaded = JSON.stringify(this.default)
+
+    if (loaded) {
+      sources.push(loaded)
     }
-    this.profiles = JSON.parse(loaded)
+
+    // Merge built-in profiles and custom profiles, trash any legacy saved profiles
+    // that duplicate built-in profiles.
+    const usedIds = new Set<string>()
+    this.profiles = sources.map(s => {
+      return (JSON.parse(s) as Profile[]).filter(p => {
+        if (usedIds.has(p.id)) return false
+        usedIds.add(p.id)
+        return true
+      })
+    }).flat()
   }
 
   private saveAll() {
-    this.storage.setItem('profiles', JSON.stringify(this.profiles))
+    this.storage.setItem('profiles', JSON.stringify(this.profiles.filter(p => !p.builtin)))
   }
 
   private get storage() {

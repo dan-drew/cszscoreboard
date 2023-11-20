@@ -35,8 +35,14 @@
                 "input": "node_modules/bootstrap/dist/css/bootstrap.css",
                 "bundleName": "bootstrap"
               },
+              {
+                "input": "node_modules/bootstrap-icons/font/bootstrap-icons.min.css",
+                "bundleName": "bootstrap"
+              },
               "src/styles.scss"
-            ]
+            ],
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json"
           },
           "configurations": {
             "production": {

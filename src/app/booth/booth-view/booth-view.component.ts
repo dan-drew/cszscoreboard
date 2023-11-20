@@ -1,9 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Match, MatchView} from "../../config/match";
 import {GuessingService} from "../../common/guessing.service";
 import {Title} from "@angular/platform-browser";
-import {interval, Subscription} from "rxjs";
 import {HeartbeatService} from "../../common/heartbeat.service";
+import {PlatformService} from "../../common/platform.service";
 
 @Component({
   selector: 'app-booth-view',
@@ -16,6 +16,7 @@ import {HeartbeatService} from "../../common/heartbeat.service";
 export class BoothViewComponent implements OnInit {
   constructor(
     readonly match: Match,
+    private readonly platform: PlatformService,
     private readonly guessing: GuessingService,
     private readonly title: Title,
     private readonly heartbeat: HeartbeatService
@@ -29,7 +30,9 @@ export class BoothViewComponent implements OnInit {
   }
 
   openLive() {
-    window.open('/live', 'cszScoreboardLive', 'popup,noopener')
+    if (this.platform.isWeb) {
+      window.open('/live', 'cszScoreboardLive', 'popup,noopener')
+    }
   }
 
   viewAvailable(view: MatchView) {

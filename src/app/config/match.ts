@@ -1,4 +1,4 @@
-import {Profile} from "./profile";
+import {Profile, ProfileLogo} from "./profile";
 import {Teams} from "./teams";
 import {Rounds} from "./rounds";
 import {Guesses} from "./guesses";
@@ -18,13 +18,13 @@ interface MatchCache {
 export class Match extends Cacheable<MatchCache, Profiles> {
   private _profiles!: Profiles
   private currentProfile!: Profile
-  logo!: string
+  logo!: ProfileLogo
   social!: string
   round!: Rounds
   teams!: Teams
   guesses!: Guesses
   themeSlides!: ThemeSlides
-  private _activeView: MatchView = 'scoreboard'
+  private _activeView: MatchView = 'slate'
 
   static get provider(): Provider {
     return {

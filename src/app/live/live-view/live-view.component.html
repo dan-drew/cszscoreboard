@@ -1,6 +1,9 @@
-<app-flyby #teamFlyby *ngIf="!match.profile.disableTeamFlyby">
+<app-flyby #teamFlyby *ngIf="!match.profile.disableTeamFlyby" [direction]="teamDirection">
   <ng-container *ngIf="match.winningTeam as $team; else tiedScore">
-    <div class="team-name team-{{$team.type}}">{{$team.name}}</div>
+    <img *ngIf="$team.hasLogo; else teamName" class="team-name" [src]="$team.logoPath" [alt]="$team.name">
+    <ng-template #teamName>
+      <div class="team-name team-{{$team.type}}">{{$team.name}}</div>
+    </ng-template>
   </ng-container>
   <ng-template #tiedScore>
     <div class="team-name">Tied Score!!!</div>

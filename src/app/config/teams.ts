@@ -18,9 +18,9 @@ export class Teams {
   readonly optional!: Team
 
   constructor(profile: Profile, options: CacheOptions) {
-    this.blue = new Team(profile.teams.blue, 'blue', options)
-    this.red = new Team(profile.teams.red, 'red', options)
-    this.optional = new Team(profile.teams.optional, 'optional', options)
+    this.blue = new Team({name: profile.teams.blue, type: 'blue', logo: profile.teams.blueLogp}, options)
+    this.red = new Team({name: profile.teams.red, type: 'red', logo: profile.teams.redLogo}, options)
+    this.optional = new Team({name: profile.teams.optional, type: 'optional'}, options)
   }
 
   get optionalEnabled() {

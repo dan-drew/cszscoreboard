@@ -5,28 +5,31 @@
     </div>
     <button
       type="button"
-      class="btn btn-outline-danger flex-fill"
+      class="btn text-danger fs-3"
       (click)="resetTimeInfo()"
     ><i class="bi-x-lg"></i></button>
   </ng-container>
   <ng-template #showTime>
-    <div class="timer">
-      {{$info.clock!.getHours() % 12 || 12 | number : '2.0-0' }}:{{$info.clock!.getMinutes() | number : '2.0-0' }}
+    <div class="timer me-3">
+      <span>{{$info.clock!.getHours() % 12 || 12 | number : '1.0-0' }}:{{$info.clock!.getMinutes() | number : '2.0-0' }}</span>
+      <span class="timer-ampm d-inline-block pt-3">{{$info.clock!.getHours() >= 12 ? 'PM' : 'AM'}}</span>
     </div>
   </ng-template>
 </ng-container>
 
-<div class="d-flex-column gap-2">
+<div class="d-flex-column">
   <button
     type="button"
-    class="btn btn-outline-secondary flex-fill"
+    class="btn btn-outline-secondary flex-fill rounded-bottom-0 border-bottom-0"
+    title="+30s timer"
     (click)="addTimer(30)"
   >
     30s
   </button>
   <button
     type="button"
-    class="btn btn-outline-secondary flex-fill"
+    class="btn btn-outline-secondary flex-fill rounded-top-0"
+    title="+1m timer"
     (click)="addTimer(60)"
   >
     1m

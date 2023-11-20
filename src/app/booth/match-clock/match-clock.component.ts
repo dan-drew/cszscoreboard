@@ -11,7 +11,7 @@ interface TimeInfo {
   templateUrl: './match-clock.component.html',
   styleUrls: ['./match-clock.component.scss'],
   host: {
-    class: 'd-flex-row gap-3 text-nowrap'
+    class: 'd-flex-row gap-2 text-nowrap'
   }
 })
 export class MatchClockComponent implements OnInit, OnDestroy {

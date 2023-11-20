@@ -66,4 +66,8 @@ export class LiveViewComponent implements OnInit, OnDestroy, DoCheck {
       console.error('Failed to enter fullscreen', err)
     })
   }
+
+  get teamDirection() {
+    return this.match.winningTeam?.type === 'red' ? 'right' : 'left'
+  }
 }

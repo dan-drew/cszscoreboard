@@ -1,19 +1,26 @@
-@use "bootstrap-icons/font/bootstrap-icons";
+@font-face {
+  font-family: 'csz-font';
+  src: url('assets/fonts/Oswald.ttf') format("truetype");
+}
 
-// Get Google Fonts
-//  - Roboto Condensed (Standard text)
-//  - Oswald (CSz style text)
-//  - Just+Me+Again+Down+Here (Optional team post-it text)
-@import url('https://fonts.googleapis.com/css2?family=Just+Me+Again+Down+Here&family=Caveat+Brush&family=Roboto+Condensed:wght@700&family=Oswald:wght@400;700&display=swap');
+@font-face {
+  font-family: 'main-font';
+  src: url('assets/fonts/RobotoCondensed-Regular.ttf') format("truetype");
+}
+
+@font-face {
+  font-family: 'postit-font';
+  src: url('assets/fonts/CaveatBrush-Regular.ttf') format("truetype");
+}
 
 $size-steps: 1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 33, 35, 40, 45, 50, 60, 65, 70, 75, 80, 85, 90, 100;
 
 :root {
   --bs-body-line-height: 1; // Bootstrap defaults to 2 which isn't helpful here
 
-  --main-font-family: 'Roboto Light', sans-serif;
-  --csz-font-family: 'Oswald', sans-serif;
-  --postit-font-family: 'Caveat Brush', 'Just Me Again Down Here', fantasy;
+  --main-font-family: 'main-font';
+  --csz-font-family: 'csz-font';
+  --postit-font-family: 'postit-font';
 }
 
 body {

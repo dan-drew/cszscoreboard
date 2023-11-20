@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-flyby',
@@ -10,6 +10,10 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
   }
 })
 export class FlybyComponent {
+  private readonly animationDuration = 2000
+
+  @Input() direction: 'left' | 'right' = 'left'
+
   @ViewChild('content') private content?: ElementRef<HTMLDivElement>
 
   constructor(
@@ -22,10 +26,10 @@ export class FlybyComponent {
     const contentRect = content.getBoundingClientRect()
     const parent = this.el.nativeElement
     const parentRect = parent.getBoundingClientRect()
+    const keyframes: Keyframe[] = []
 
-    content.style.top = `${(parentRect.height - contentRect.height) / 2}px`
-    content.animate(
-      [
+    if (this.direction === 'left') {
+      keyframes.push(
         {
           visibility: 'visible',
           left: `${parentRect.width}px`,
@@ -41,9 +45,30 @@ export class FlybyComponent {
           left: `-${contentRect.width}px`,
           opacity: '0%',
           easing: 'ease-in'
+        }
+      )
+    } else {
+      keyframes.push(
+        {
+          visibility: 'visible',
+          left: `-${contentRect.width}px`,
+          easing: 'ease-out'
         },
-      ],
-      2000
-    )
+        {
+          visibility: 'visible',
+          opacity: '100%',
+          left: `${(parentRect.width - contentRect.width) / 2}px`
+        },
+        {
+          visibility: 'hidden',
+          left: `${parentRect.width}px`,
+          opacity: '0%',
+          easing: 'ease-in'
+        }
+      )
+    }
+
+    content.style.top = `${(parentRect.height - contentRect.height) / 2}px`
+    content.animate(keyframes, this.animationDuration)
   }
 }

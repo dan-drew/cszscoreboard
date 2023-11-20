@@ -1,22 +1,6 @@
-<ng-template #logo let-$logo="$logo">
-  <img class="profile-logo" src="/assets/logos/{{$logo}}" alt="logo">
-</ng-template>
-
 <div>
-  <label class="form-label" for="profileLogo">Logo</label>
-  <div class="dropdown">
-    <button class="btn btn-light dropdown-toggle form-control" type="button" id="profileLogo"
-            data-bs-toggle="dropdown" aria-expanded="false">
-      <ng-container [ngTemplateOutlet]="logo" [ngTemplateOutletContext]="{$logo: match.logo}"></ng-container>
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="profileLogo">
-      <li *ngFor="let $logo of profiles.logos">
-        <button class="dropdown-item" (click)="match.logo = $logo">
-          <ng-container [ngTemplateOutlet]="logo" [ngTemplateOutletContext]="{$logo}"></ng-container>
-        </button>
-      </li>
-    </ul>
-  </div>
+  <label class="form-label">Logo</label>
+  <app-icon-selector [icons]="profiles.logos" [(selectedIcon)]="profileLogo"></app-icon-selector>
 </div>
 
 <div class="d-none">
@@ -45,7 +29,7 @@
 </div>
 
 <div class="d-flex-column gap-1">
-  <button class="btn btn-primary form-control" (click)="save()">
+  <button class="btn btn-primary form-control" (click)="save()" *ngIf="!match.profile.builtin">
     Save
   </button>
   <button class="btn btn-success form-control" (click)="saveAs()">
@@ -54,4 +38,8 @@
   <button class="btn btn-danger form-control" (click)="delete()" [disabled]="profiles.profiles.length === 1">
     Delete
   </button>
+</div>
+
+<div class="text-secondary bg-dark rounded p-2">
+  Build: {{buildInfo.buildTime | date : 'MMM d yyyy, h:mmaa' }}
 </div>

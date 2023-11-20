@@ -1,9 +1,11 @@
-<div>
+<div class="d-flex-column gap-2">
   <label for="blueTeam" class="form-label">Blue Team</label>
   <input id="blueTeam" class="form-control" required [(ngModel)]="match.teams.blue.name">
+  <app-icon-selector [icons]="profiles.teamLogos" [(selectedIcon)]="match.teams.blue.logo"></app-icon-selector>
 </div>
 
-<div>
+<div class="d-flex-column gap-2">
   <label for="redTeam" class="form-label">Red Team</label>
   <input id="redTeam" class="form-control" required [(ngModel)]="match.teams.red.name">
+  <app-icon-selector [icons]="profiles.teamLogos" [(selectedIcon)]="match.teams.red.logo"></app-icon-selector>
 </div>

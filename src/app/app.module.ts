@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -38,6 +38,9 @@ import { MatchProfileEditorComponent } from './booth/match-profile-editor/match-
 import {NgOptimizedImage} from "@angular/common";
 import { ColoredImageComponent } from './common/colored-image/colored-image.component';
 import { MatchClockComponent } from './booth/match-clock/match-clock.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { IconSelectorComponent } from './common/icon-selector/icon-selector.component';
+import { DebugInfoComponent } from './common/debug-info/debug-info.component';
 
 @NgModule({
   declarations: [
@@ -73,14 +76,22 @@ import { MatchClockComponent } from './booth/match-clock/match-clock.component';
     MatchTeamsEditorComponent,
     MatchProfileEditorComponent,
     ColoredImageComponent,
-    MatchClockComponent
+    MatchClockComponent,
+    IconSelectorComponent,
+    DebugInfoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerImmediately'
+    })
   ],
   providers: [Match.provider],
   bootstrap: [AppComponent]

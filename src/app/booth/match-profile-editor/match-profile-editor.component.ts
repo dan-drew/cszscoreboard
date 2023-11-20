@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {Match} from "../../config/match";
 import {Profiles} from "../../config/profiles";
+import {ProfileLogo} from "../../config/profile";
+import {BuildInfo} from "../../build-info";
 
 @Component({
   selector: 'app-match-profile-editor',
@@ -12,8 +14,17 @@ import {Profiles} from "../../config/profiles";
 export class MatchProfileEditorComponent {
   constructor(
     readonly match: Match,
-    readonly profiles: Profiles
+    readonly profiles: Profiles,
+    readonly buildInfo: BuildInfo
   ) {
+  }
+
+  get profileLogo(): string {
+    return this.match.profile.logo
+  }
+
+  set profileLogo(value: string) {
+    this.match.profile.logo = value as ProfileLogo
   }
 
   save() {

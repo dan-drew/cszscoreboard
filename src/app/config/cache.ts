@@ -63,6 +63,10 @@ class CacheClass {
       })
   }
 
+  remove(key: string) {
+    this.store.removeItem(this.keyFor(key))
+  }
+
   reset() {
     for (let key in this.store) {
       if (key.startsWith(CACHE_KEY_PREFIX)) {

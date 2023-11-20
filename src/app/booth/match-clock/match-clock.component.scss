@@ -1,5 +1,6 @@
 .timer {
-  font-size: var(--size-10);
+  --timer-size: var(--size-10);
+  font-size: var(--timer-size);
   align-self: center;
 
   @keyframes fade {
@@ -16,5 +17,10 @@
 
   &.text-danger {
     animation: 1.5s linear fade infinite;
+  }
+
+  .timer-ampm {
+    font-size: calc(var(--timer-size) / 4);
+    vertical-align: text-top;
   }
 }

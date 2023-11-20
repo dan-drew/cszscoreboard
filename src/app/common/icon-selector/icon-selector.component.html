@@ -1,0 +1,25 @@
+<ng-template #logo let-$logo="$logo">
+  <img class="profile-logo" src="/assets/logos/{{$logo}}" alt="logo">
+  {{$logo | titlecase}}
+</ng-template>
+
+<div class="dropdown">
+  <button class="btn btn-light dropdown-toggle form-control" type="button" id="profileLogo"
+          data-bs-toggle="dropdown" aria-expanded="false">
+    <ng-container
+      *ngIf="selectedIcon; else noIcon"
+      [ngTemplateOutlet]="logo"
+      [ngTemplateOutletContext]="{$logo: selectedIcon}"
+    ></ng-container>
+    <ng-template #noIcon>
+      None
+    </ng-template>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="profileLogo">
+    <li *ngFor="let $logo of icons">
+      <button class="dropdown-item" (click)="setIcon($logo)">
+        <ng-container [ngTemplateOutlet]="logo" [ngTemplateOutletContext]="{$logo}"></ng-container>
+      </button>
+    </li>
+  </ul>
+</div>
