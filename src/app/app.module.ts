@@ -1,4 +1,4 @@
-import { NgModule, isDevMode } from '@angular/core';
+import {NgModule, isDevMode, ErrorHandler} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -41,6 +41,7 @@ import { MatchClockComponent } from './booth/match-clock/match-clock.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { IconSelectorComponent } from './common/icon-selector/icon-selector.component';
 import { DebugInfoComponent } from './common/debug-info/debug-info.component';
+import {DiagnosticService} from "./diagnostic.service";
 
 @NgModule({
   declarations: [
@@ -93,7 +94,10 @@ import { DebugInfoComponent } from './common/debug-info/debug-info.component';
       registrationStrategy: 'registerImmediately'
     })
   ],
-  providers: [Match.provider],
+  providers: [
+    Match.provider,
+    { provide: ErrorHandler, useExisting: DiagnosticService }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

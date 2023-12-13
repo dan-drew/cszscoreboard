@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {BehaviorSubject, interval, Subscription} from "rxjs";
+import {BehaviorSubject, interval, retry, Subscription} from "rxjs";
 
 interface TimeInfo {
   clock?: Date
@@ -29,7 +29,9 @@ export class MatchClockComponent implements OnInit, OnDestroy {
 
   private startUpdates() {
     this.updateTimer?.unsubscribe()
-    this.updateTimer = interval(1000).subscribe(() => this.onUpdate())
+    this.updateTimer = interval(1000)
+      .pipe(retry({delay: 2000}))
+      .subscribe(() => this.onUpdate())
   }
 
   private get timerValue() {

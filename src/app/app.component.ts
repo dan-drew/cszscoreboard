@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import {Match} from "./config/match";
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 
-const BUILD_TIME = "2023-11-26T10:59:01-08:00"
+const BUILD_TIME = "2023-12-13T15:56:32-08:00"
 
 @Injectable({providedIn: "root"})
 export class BuildInfo {

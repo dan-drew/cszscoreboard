@@ -1,6 +1,6 @@
 <ng-template #team let-$team let-$edit="edit">
   <div class="team csz-bg-{{$team.type}}">
-    <div class="score">
+    <div class="score w-100">
       <ng-container *ngIf="editable">
         <!-- DECREMENT SCORE -->
         <button class="score-button btn hover-highlight" (click)="$team.score = $team.score - 1">

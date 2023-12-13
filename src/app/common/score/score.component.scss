@@ -28,7 +28,7 @@
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   gap: var(--size-1);
   overflow: hidden;
   padding: var(--size-1);
@@ -42,9 +42,9 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--button-gap);
+    //gap: var(--button-gap);
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
 
     .score-button {
       color: white;

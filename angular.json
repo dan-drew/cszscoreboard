@@ -85,7 +85,8 @@
               "browserTarget": "cszscoreboard:build:production"
             },
             "development": {
-                "browserTarget": "cszscoreboard:build:development"
+              "browserTarget": "cszscoreboard:build:development",
+              "host": "0.0.0.0"
             }
           },
           "defaultConfiguration": "development"
