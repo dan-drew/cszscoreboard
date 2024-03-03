@@ -3,6 +3,7 @@ import {GuessAnswers} from "./guess-answers";
 import {CacheOptions} from "./cache";
 import {guessingGames} from "./guessing-games";
 import {Cacheable} from "./cacheable";
+import {EventEmitter} from "@angular/core";
 
 interface GuessesCache {
   gameId?: string
@@ -12,6 +13,8 @@ interface GuessesCache {
 export class Guesses extends Cacheable<GuessesCache> {
   private _selected: number = 0
   private _game?: GuessingGame
+  private readonly gameChangedEvent = new EventEmitter<GuessingGame | undefined>()
+  readonly gameChanged = this.gameChangedEvent.asObservable()
 
   answers?: GuessAnswers
   blue?: GuessAnswers
@@ -55,6 +58,7 @@ export class Guesses extends Cacheable<GuessesCache> {
       }
 
       this.cache()
+      this.gameChangedEvent.emit(val)
     }
   }
 
@@ -72,7 +76,6 @@ export class Guesses extends Cacheable<GuessesCache> {
 
   reset() {
     this.game = undefined
-    this.cache()
   }
 
   protected override init(data?: any) {

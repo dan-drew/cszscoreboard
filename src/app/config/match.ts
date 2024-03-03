@@ -7,6 +7,8 @@ import {Profiles} from "./profiles";
 import {CacheOptions} from "./cache";
 import {ThemeSlides} from "./theme-slides";
 import {Cacheable} from "./cacheable";
+import {Subscription} from "rxjs";
+import {GuessingGame} from "./guessing-game";
 
 export type MatchView = 'scoreboard' | 'slate' | 'guesses' | 'themes'
 
@@ -25,6 +27,7 @@ export class Match extends Cacheable<MatchCache, Profiles> {
   guesses!: Guesses
   themeSlides!: ThemeSlides
   private _activeView: MatchView = 'slate'
+  private guessesSubscription?: Subscription
 
   static get provider(): Provider {
     return {
@@ -113,8 +116,10 @@ export class Match extends Cacheable<MatchCache, Profiles> {
     this.round = new Rounds(this.currentProfile, options)
     this.teams?.destroy()
     this.teams = new Teams(this.currentProfile, options)
+    this.guessesSubscription?.unsubscribe()
     this.guesses?.destroy()
     this.guesses = new Guesses(options)
+    this.guessesSubscription = this.guesses.gameChanged.subscribe(game => this.onGuessesGameChanged(game))
     this.themeSlides?.destroy()
     this.themeSlides = new ThemeSlides(options)
 
@@ -160,5 +165,11 @@ export class Match extends Cacheable<MatchCache, Profiles> {
     }
 
     this.activeView = data.activeView
+  }
+
+  private onGuessesGameChanged(game: GuessingGame | undefined) {
+    if (!game && this.activeView === 'guesses') {
+      this.activeView = 'slate'
+    }
   }
 }

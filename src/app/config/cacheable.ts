@@ -2,6 +2,14 @@ import {Cache, CacheOptions} from "./cache";
 import {EventEmitter} from "@angular/core";
 import {Subscription} from "rxjs";
 
+/**
+ * Base class for cacheable data classes
+ *
+ * IMPORTANT!!!!
+ * Do NOT initialize instance variables in the class definition as they run AFTER
+ * the base constructor and will override any values set in `init()` or `construct()`.
+ * Instead, do all default initialization in the derived `init()` method.
+ */
 export abstract class Cacheable<CacheType, InitDataType = any> {
   readonly changed = new EventEmitter<void>(true)
   private watcher?: Subscription

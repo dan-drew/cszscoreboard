@@ -13,8 +13,8 @@ export class GuessAnswers extends Cacheable<GuessAnswerCache, GuessingGame>{
   private required!: number
   private game!: GuessingGame
   private _changed: number = Date.now()
-  private _normalized: string[] = []
-  private _used: number = 0
+  private _normalized!: string[]
+  private _used!: number
 
   constructor(name: GuessAnswerType, game: GuessingGame, options?: CacheOptions) {
     super(`guess-${name}`, options, game)

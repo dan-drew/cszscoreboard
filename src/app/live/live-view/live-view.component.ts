@@ -12,6 +12,7 @@ import {interval, Subscription} from "rxjs";
 import {Title} from "@angular/platform-browser";
 import {FlybyComponent} from "../../common/flyby/flyby.component";
 import {HeartbeatService} from "../../common/heartbeat.service";
+import {GuessingService} from "../../common/guessing.service";
 
 @Component({
   selector: 'app-live-view',
@@ -32,7 +33,8 @@ export class LiveViewComponent implements OnInit, OnDestroy, DoCheck {
     readonly match: Match,
     readonly fullScreen: FullScreenTargetDirective,
     private readonly title: Title,
-    private readonly heartbeat: HeartbeatService
+    private readonly heartbeat: HeartbeatService,
+    private readonly guessing: GuessingService
   ) {
   }
 
@@ -58,6 +60,22 @@ export class LiveViewComponent implements OnInit, OnDestroy, DoCheck {
     } else if (this.showingScore) {
       this.showingScore = false
     }
+  }
+
+  get showScore() {
+    return this.match.activeView === 'scoreboard'
+  }
+
+  get showGuesses() {
+    return this.match.activeView === 'guesses' && this.guessing.enabled
+  }
+
+  get showThemes() {
+    return this.match.activeView === 'themes' && this.match.themeSlides.enabled
+  }
+
+  get showSlate() {
+    return !(this.showScore || this.showGuesses || this.showThemes)
   }
 
   @HostListener('dblclick')

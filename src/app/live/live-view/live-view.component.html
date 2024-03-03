@@ -12,24 +12,24 @@
 
 <app-live-scoreboard
   class="view"
-  [class.active]="match.activeView === 'scoreboard'"
+  [class.active]="showScore"
 ></app-live-scoreboard>
 
 <app-live-slate
   class="view"
-  [class.active]="match.activeView === 'slate'"
+  [class.active]="showSlate"
 ></app-live-slate>
 
 <app-live-guesses
   *ngIf="match.guesses.game"
   class="view"
-  [class.active]="match.activeView === 'guesses'"
+  [class.active]="showGuesses"
 ></app-live-guesses>
 
 <app-live-themes
   *ngIf="match.themeSlides.enabled"
   class="view"
-  [class.active]="match.activeView === 'themes'"
+  [class.active]="showThemes"
 ></app-live-themes>
 
 <!--
