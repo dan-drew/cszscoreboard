@@ -3,7 +3,6 @@ import {Match, MatchView} from "../../config/match";
 import {GuessingService} from "../../common/guessing.service";
 import {Title} from "@angular/platform-browser";
 import {HeartbeatService} from "../../common/heartbeat.service";
-import {PlatformService} from "../../common/platform.service";
 
 @Component({
   selector: 'app-booth-view',
@@ -16,7 +15,6 @@ import {PlatformService} from "../../common/platform.service";
 export class BoothViewComponent implements OnInit {
   constructor(
     readonly match: Match,
-    private readonly platform: PlatformService,
     private readonly guessing: GuessingService,
     private readonly title: Title,
     private readonly heartbeat: HeartbeatService
@@ -26,13 +24,6 @@ export class BoothViewComponent implements OnInit {
   ngOnInit() {
     this.title.setTitle('Booth - ComedySports Scoreboard')
     this.heartbeat.start()
-    this.openLive()
-  }
-
-  openLive() {
-    if (this.platform.isWeb) {
-      window.open('/live', 'cszScoreboardLive', 'popup,noopener')
-    }
   }
 
   viewAvailable(view: MatchView) {

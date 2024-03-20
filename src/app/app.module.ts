@@ -42,6 +42,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { IconSelectorComponent } from './common/icon-selector/icon-selector.component';
 import { DebugInfoComponent } from './common/debug-info/debug-info.component';
 import {DiagnosticService} from "./diagnostic.service";
+import { ProfilePickerComponent } from './booth/profile-picker/profile-picker.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import {DiagnosticService} from "./diagnostic.service";
     ColoredImageComponent,
     MatchClockComponent,
     IconSelectorComponent,
-    DebugInfoComponent
+    DebugInfoComponent,
+    ProfilePickerComponent
   ],
   imports: [
     BrowserModule,

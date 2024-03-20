@@ -26,8 +26,18 @@ export const guessingGames: GuessingGame[] = Object.seal([
     {labelTemplate: '{{}} Thing', placeholderTemplate: FIVETHING_PROMPT, multiline: true}
   ),
   new GuessingGame(
+    '4 Things',
+    4,
+    {labelTemplate: '{{}} Thing', placeholderTemplate: FIVETHING_PROMPT, multiline: true}
+  ),
+  new GuessingGame(
     '3 Things',
     3,
+    {labelTemplate: '{{}} Thing', placeholderTemplate: FIVETHING_PROMPT, multiline: true}
+  ),
+  new GuessingGame(
+    '6 Things',
+    6,
     {labelTemplate: '{{}} Thing', placeholderTemplate: FIVETHING_PROMPT, multiline: true}
   ),
   homeShopping,

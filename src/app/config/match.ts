@@ -26,6 +26,7 @@ export class Match extends Cacheable<MatchCache, Profiles> {
   teams!: Teams
   guesses!: Guesses
   themeSlides!: ThemeSlides
+  profileSelected!: boolean
   private _activeView: MatchView = 'slate'
   private guessesSubscription?: Subscription
 
@@ -126,6 +127,8 @@ export class Match extends Cacheable<MatchCache, Profiles> {
     if (!options.useCache) {
       this.activeView = 'slate'
     }
+
+    this.cache()
   }
 
   toProfile({from, name}: { from?: Profile, name?: string }): Profile {
@@ -148,6 +151,7 @@ export class Match extends Cacheable<MatchCache, Profiles> {
   }
 
   protected override init() {
+    this.profileSelected = false
     this.setProfile(this.profiles.profiles[0], {useCache: false})
   }
 
@@ -159,6 +163,9 @@ export class Match extends Cacheable<MatchCache, Profiles> {
   }
 
   protected override deserialize(data: MatchCache) {
+    // If we had cached, non-stale config then don't prompt user to confirm profile
+    this.profileSelected = true
+
     if (data.profileId !== this.profile?.id) {
       const profile = data.profileId ? this.profiles.find(data.profileId) : null
       this.setProfile(profile || this.profiles.profiles[0], {useCache: true})

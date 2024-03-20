@@ -1,0 +1,16 @@
+<div
+  class="rounded rounded-3 bg-black border border-1 border-light p-5 top-50 start-50
+  translate-middle position-absolute shadow d-flex-column gap-3"
+>
+  <div class="fs-3 csz-bold-text text-center mb-3">Select Profile</div>
+
+  <button
+    *ngFor="let $profile of match.profiles.profiles"
+    type="button"
+    class="btn btn-dark btn-lg text-start border border-light d-flex-row gap-3 px-5 align-items-center"
+    (click)="setProfile($profile)"
+  >
+    <img class="profile-logo" src="/assets/logos/{{$profile.logo}}" alt="logo">
+    <span>{{$profile.name}}</span>
+  </button>
+</div>
