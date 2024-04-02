@@ -1,9 +1,29 @@
 import {guessingGames} from "./guessing-games";
 import {Guesses} from "./guesses";
 import {GuessAnswers} from "./guess-answers";
+import {Cache} from "./cache";
 
 describe('guesses', function () {
   let $guesses = new Guesses({useCache: false})
+
+  beforeEach(() => {
+    Cache.reset()
+  })
+
+  afterEach(() => {
+    Cache.reset()
+  })
+
+  describe('deserialize', () => {
+    it('should load cached game', () => {
+      const game = guessingGames.at(1)!
+
+      Cache.set('guesses', { gameId: game.id, selected: 0 })
+      $guesses = new Guesses({useCache: true})
+
+      expect($guesses.game).toBe(game)
+    })
+  })
 
   guessingGames.forEach($game => {
     describe($game.name, () => {

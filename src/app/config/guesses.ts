@@ -11,10 +11,9 @@ interface GuessesCache {
 }
 
 export class Guesses extends Cacheable<GuessesCache> {
-  private _selected: number = 0
+  private _selected!: number
   private _game?: GuessingGame
-  private readonly gameChangedEvent = new EventEmitter<GuessingGame | undefined>()
-  readonly gameChanged = this.gameChangedEvent.asObservable()
+  private gameChangedEvent!: EventEmitter<GuessingGame | undefined>
 
   answers?: GuessAnswers
   blue?: GuessAnswers
@@ -74,11 +73,20 @@ export class Guesses extends Cacheable<GuessesCache> {
     )
   }
 
+  get gameChanged() {
+    return this.gameChangedEvent.asObservable()
+  }
+
   reset() {
     this.game = undefined
   }
 
-  protected override init(data?: any) {
+  protected override construct(_data?: any) {
+    this._selected = 0
+    this.gameChangedEvent = new EventEmitter<GuessingGame | undefined>()
+  }
+
+  protected override init(_data?: any) {
   }
 
   protected override serialize(): GuessesCache {
