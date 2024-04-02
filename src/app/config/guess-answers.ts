@@ -56,6 +56,10 @@ export class GuessAnswers extends Cacheable<GuessAnswerCache, GuessingGame>{
     return this._normalized[index]
   }
 
+  save() {
+    this.cache()
+  }
+
   private normalize() {
     let used = 0
     this._normalized = this.answers.filter((val, index) => {
@@ -79,7 +83,7 @@ export class GuessAnswers extends Cacheable<GuessAnswerCache, GuessingGame>{
     }
   }
 
-  protected override init(data?: GuessingGame) {
+  protected override init(_data?: GuessingGame) {
     this.normalize()
   }
 

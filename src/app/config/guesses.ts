@@ -37,28 +37,7 @@ export class Guesses extends Cacheable<GuessesCache> {
   }
 
   set game(val) {
-    if (val !== this._game) {
-      this._game = val
-      this._selected = 0
-
-      this.blue?.destroy()
-      this.red?.destroy()
-      this.answers?.destroy()
-
-      if (!val) {
-        delete this.answers
-        delete this.blue
-        delete this.red
-      } else if (val.vs === 'vs') {
-        this.blue = new GuessAnswers('blue', val)
-        this.red = new GuessAnswers('red', val)
-      } else {
-        this.answers = new GuessAnswers('all', val)
-      }
-
-      this.cache()
-      this.gameChangedEvent.emit(val)
-    }
+    this.setGame(val)
   }
 
   get maxAnswers() {
@@ -90,6 +69,10 @@ export class Guesses extends Cacheable<GuessesCache> {
   }
 
   protected override serialize(): GuessesCache {
+    this.answers?.save()
+    this.blue?.save()
+    this.red?.save()
+
     return {
       gameId: this._game?.id,
       selected: this._selected
@@ -100,9 +83,34 @@ export class Guesses extends Cacheable<GuessesCache> {
     if (data.gameId) {
       const game = guessingGames.find(g => g.id === data.gameId)
       if (game) {
-        this.game = game
+        this.setGame(game, { useCache: true })
         this._selected = data.selected
       }
+    }
+  }
+
+  private setGame(val: GuessingGame | undefined, options: CacheOptions = {}) {
+    if (val !== this._game) {
+      this._game = val
+      this._selected = 0
+
+      this.blue?.destroy()
+      this.red?.destroy()
+      this.answers?.destroy()
+
+      if (!val) {
+        delete this.answers
+        delete this.blue
+        delete this.red
+      } else if (val.vs === 'vs') {
+        this.blue = new GuessAnswers('blue', val, options)
+        this.red = new GuessAnswers('red', val, options)
+      } else {
+        this.answers = new GuessAnswers('all', val, options)
+      }
+
+      this.cache()
+      this.gameChangedEvent.emit(val)
     }
   }
 }

@@ -4,24 +4,43 @@ import {GuessAnswers} from "./guess-answers";
 import {Cache} from "./cache";
 
 describe('guesses', function () {
-  let $guesses = new Guesses({useCache: false})
+  const $game = guessingGames.find(game => game.name === 'Crime Story')!
+  let $guesses: Guesses
 
   beforeEach(() => {
     Cache.reset()
+    $guesses = new Guesses({useCache: false})
   })
 
   afterEach(() => {
     Cache.reset()
   })
 
-  describe('deserialize', () => {
-    it('should load cached game', () => {
-      const game = guessingGames.at(1)!
+  describe('serialize', () => {
+    it('saves to cache', () => {
+      $guesses.game = $game
+      $guesses.answers!.setAll(['one', 'two', 'three'])
 
-      Cache.set('guesses', { gameId: game.id, selected: 0 })
+      let data = Cache.get<any>('guesses')
+      expect(data).toEqual({gameId: $game.id, selected: 0})
+      data = Cache.get<any>('guess-all')
+      expect(data).toEqual({answers: ['one', 'two', 'three']})
+    })
+  })
+
+  describe('deserialize', () => {
+
+    it('should load cached game', () => {
+      Cache.set('guesses', {gameId: $game.id, selected: 0})
+      Cache.set('guess-all', {answers: ['one', 'two', 'three']})
+      Cache.dump()
+
       $guesses = new Guesses({useCache: true})
 
-      expect($guesses.game).toBe(game)
+      expect($guesses.game).toBe($game)
+      expect($guesses.answers?.at(0)).toEqual('one')
+      expect($guesses.answers?.at(1)).toEqual('two')
+      expect($guesses.answers?.at(2)).toEqual('three')
     })
   })
 

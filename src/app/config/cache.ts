@@ -68,11 +68,23 @@ class CacheClass {
   }
 
   reset() {
+    this.each(key => {
+      this.store.removeItem(key)
+    })
+  }
+
+  each(callback: (key: string, value: string | null) => void) {
     for (let key in this.store) {
       if (key.startsWith(CACHE_KEY_PREFIX)) {
-        this.store.removeItem(key)
+        callback(key, this.store.getItem(key))
       }
     }
+  }
+
+  dump() {
+    this.each((key, value) => {
+      console.debug(`Cached: ${key}: ${value}`)
+    })
   }
 
   private get store(): Storage {
