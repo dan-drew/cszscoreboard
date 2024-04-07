@@ -1,0 +1,43 @@
+<div class="p-3 fs-3 card text-bg-dark d-flex-column gap-3">
+  <div class="d-flex-row gap-2">
+    <button type="button"
+            class="btn btn-primary"
+            (click)="cacheReset()"
+    >Cache Reset</button>
+
+    <button type="button"
+            class="btn btn-danger"
+            (click)="fullReset()"
+    >Full Reset</button>
+
+    <button type="button"
+            class="btn btn-secondary"
+            (click)="retry()"
+    >Retry</button>
+  </div>
+
+  Please take a picture of this error information and send it to dan.drew@hotmail.com
+</div>
+
+<div *ngFor="let $error of errors" style="user-select: text !important;">
+  <table class="table table-bordered border-dark-subtle">
+    <tr>
+      <th>Time</th>
+      <td>{{ $error.time | date:'medium' }}</td>
+    </tr>
+    <tr>
+      <th>Message</th>
+      <td><pre>{{ $error.message }}</pre></td>
+    </tr>
+    <tr *ngIf="$error.file">
+      <th>Location</th>
+      <td>{{ $error.file }}<ng-container *ngIf="$error.line">:{{ $error.line }}</ng-container></td>
+    </tr>
+    <tr *ngIf="$error.stack">
+      <th>Stack</th>
+      <td>
+        <pre>{{ $error.stack.join("\n") }}</pre>
+      </td>
+    </tr>
+  </table>
+</div>

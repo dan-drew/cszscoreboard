@@ -42,7 +42,10 @@
               "src/styles.scss"
             ],
             "serviceWorker": true,
-            "ngswConfigPath": "ngsw-config.json"
+            "ngswConfigPath": "ngsw-config.json",
+            "allowedCommonJsDependencies": [
+              "@jridgewell/trace-mapping"
+            ]
           },
           "configurations": {
             "production": {
@@ -100,6 +103,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
+            "browsers": "ChromeHeadless",
             "polyfills": [
               "zone.js",
               "zone.js/testing"

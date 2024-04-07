@@ -43,6 +43,7 @@ import { IconSelectorComponent } from './common/icon-selector/icon-selector.comp
 import { DebugInfoComponent } from './common/debug-info/debug-info.component';
 import {DiagnosticService} from "./diagnostic.service";
 import { ProfilePickerComponent } from './booth/profile-picker/profile-picker.component';
+import { ErrorScreenComponent } from './error-screen/error-screen.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { ProfilePickerComponent } from './booth/profile-picker/profile-picker.co
     MatchClockComponent,
     IconSelectorComponent,
     DebugInfoComponent,
-    ProfilePickerComponent
+    ProfilePickerComponent,
+    ErrorScreenComponent
   ],
   imports: [
     BrowserModule,

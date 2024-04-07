@@ -38,7 +38,11 @@ describe('guess-answers', function() {
       'variable',
       [2, 10]
     )
-    const $answers = new GuessAnswers('all', $game, {useCache: false})
+    let $answers: GuessAnswers
+
+    beforeEach(() => {
+      $answers = new GuessAnswers('all', $game, {useCache: false})
+    })
 
     it('should initialize with minimum answers plus extra', function() {
       expect($answers.count).toEqual(2)

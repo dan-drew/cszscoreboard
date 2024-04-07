@@ -58,6 +58,11 @@ export const guessingGames: GuessingGame[] = Object.seal([
     {style: 'labeled'}
   ),
   new GuessingGame(
+    'Crystal Ball',
+    [{label: 'Secret'}, {label: 'Love'}, {label: 'Death'}],
+    {style: 'labeled'}
+  ),
+  new GuessingGame(
     'Dating Service',
     [{label: 'Adjective'}, {label: 'Noun'}, {label: 'Verb'}],
     {vs: 'vs', style: 'list'}
