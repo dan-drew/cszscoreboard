@@ -1,12 +1,14 @@
 <ng-container *ngIf="slide as $slide">
   <div class="heading csz-bold-text">{{$slide.title}}</div>
 
-  <div class="body flex-fill">
+  <div fitContainer class="body flex-fill">
     <div
       *ngFor="let $part of $slide.parts"
       [ngClass]="partClasses($part)"
     >
+      <fitParent>
       <div *ngFor="let $answer of $part.answers" class="guess" [innerHTML]="$answer"></div>
+        </fitParent>
     </div>
   </div>
 </ng-container>

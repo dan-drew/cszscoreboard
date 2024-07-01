@@ -44,6 +44,7 @@ import { DebugInfoComponent } from './common/debug-info/debug-info.component';
 import {DiagnosticService} from "./diagnostic.service";
 import { ProfilePickerComponent } from './booth/profile-picker/profile-picker.component';
 import { ErrorScreenComponent } from './error-screen/error-screen.component';
+import {FitContainerDirective, FitParentDirective} from './common/fit-parent.directive';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,9 @@ import { ErrorScreenComponent } from './error-screen/error-screen.component';
     IconSelectorComponent,
     DebugInfoComponent,
     ProfilePickerComponent,
-    ErrorScreenComponent
+    ErrorScreenComponent,
+    FitParentDirective,
+    FitContainerDirective
   ],
   imports: [
     BrowserModule,

@@ -44,6 +44,10 @@ app-live-guesses {
       max-height: 100%;
       padding: var(--size-2);
 
+      fitParent {
+        font-size: var(--font-size);
+      }
+
       &.guess-style-blue {
         background: var(--csz-blue);
       }
@@ -56,39 +60,40 @@ app-live-guesses {
         background: linear-gradient(to right, var(--csz-blue), var(--csz-blue) 50%, var(--csz-red) 50%, var(--csz-red));
       }
 
-      &.long {
-        row-gap: 1vh;
-
-        .guess {
-          font-size: var(--long-font-size) !important;
-          white-space: break-spaces;
-        }
-
-        &.longer {
-          justify-content: start;
-          align-items: start;
-
-          .guess {
-            font-size: var(--longer-font-size) !important;
-            max-width: 45%;
-            text-align: start;
-            text-indent: -1.5ch;
-            padding-left: 1.5ch;
-          }
-
-          &.longest {
-            .guess {
-              max-width: 30%;
-            }
-          }
-        }
-      }
+      //&.long {
+      //  row-gap: 1vh;
+      //
+      //  .guess {
+      //    //font-size: var(--long-font-size) !important;
+      //    white-space: break-spaces;
+      //  }
+      //
+      //  &.longer {
+      //    justify-content: start;
+      //    align-items: start;
+      //
+      //    .guess {
+      //      //font-size: var(--longer-font-size) !important;
+      //      max-width: 45%;
+      //      text-align: start;
+      //      text-indent: -1.5ch;
+      //      padding-left: 1.5ch;
+      //    }
+      //
+      //    &.longest {
+      //      .guess {
+      //        max-width: 30%;
+      //      }
+      //    }
+      //  }
+      //}
 
       .guess {
         color: var(--guess-text-color);
-        font-size: var(--font-size);
+        //font-size: var(--font-size);
         font-weight: bold;
         white-space: pre-line;
+        //line-height: 1.1;
 
         em {
           color: var(--label-text-color);

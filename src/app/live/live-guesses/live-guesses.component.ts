@@ -30,9 +30,9 @@ export class LiveGuessesComponent {
   partClasses(part: GuessSlidePart) {
     const classes: any = {
       part: true,
-      long: part.answers.length >= LiveGuessesComponent.LONG_LIST,
-      longer: part.answers.length >= LiveGuessesComponent.LONGER_LIST,
-      longest: part.answers.length >= LiveGuessesComponent.LONGEST_LIST
+      // long: part.answers.length >= LiveGuessesComponent.LONG_LIST,
+      // longer: part.answers.length >= LiveGuessesComponent.LONGER_LIST,
+      // longest: part.answers.length >= LiveGuessesComponent.LONGEST_LIST
     }
     classes[`guess-style-${part.style}`] = true
     return classes
