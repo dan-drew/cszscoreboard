@@ -27,13 +27,18 @@ export class Match extends Cacheable<MatchCache, Profiles> {
   guesses!: Guesses
   themeSlides!: ThemeSlides
   profileSelected!: boolean
-  private _activeView: MatchView = 'slate'
+  private _activeView!: MatchView
   private guessesSubscription?: Subscription
 
   static get provider(): Provider {
     return {
       provide: Match,
-      useFactory: (profiles: Profiles) => new Match(profiles, {useCache: true}),
+      useFactory: (profiles: Profiles) => {
+        const it = new Match(profiles, {useCache: true})
+        // @ts-ignore
+        window.cszMatch = it
+        return it
+      },
       deps: [Profiles]
     }
   }
@@ -148,6 +153,7 @@ export class Match extends Cacheable<MatchCache, Profiles> {
 
   protected override construct(profiles: Profiles) {
     this._profiles = profiles
+    this._activeView = 'slate'
   }
 
   protected override init() {

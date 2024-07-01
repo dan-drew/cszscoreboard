@@ -76,7 +76,7 @@ export class ThemeSlides extends Cacheable<ThemeSlidesCache> implements ThemeSli
     if (i >= 0) {
       this.cache(() => {
         this.slides.splice(i, 1)
-        if (this.active >= this.slides.length) this.active = this.slides.length - 1
+        if (this.active >= this.slides.length) this.active = Math.max(0, this.slides.length - 1)
       })
     }
   }

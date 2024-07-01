@@ -1,14 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component, DoCheck,
-  HostListener,
-  OnDestroy,
-  OnInit, ViewChild
-} from '@angular/core';
+import {ChangeDetectorRef, Component, DoCheck, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Match} from "../../config/match";
 import {FullScreenTargetDirective} from "../../full-screen-target.directive";
-import {interval, Subscription} from "rxjs";
+import {asyncScheduler, Subscription} from "rxjs";
 import {Title} from "@angular/platform-browser";
 import {FlybyComponent} from "../../common/flyby/flyby.component";
 import {HeartbeatService} from "../../common/heartbeat.service";
@@ -34,7 +27,8 @@ export class LiveViewComponent implements OnInit, OnDestroy, DoCheck {
     readonly fullScreen: FullScreenTargetDirective,
     private readonly title: Title,
     private readonly heartbeat: HeartbeatService,
-    private readonly guessing: GuessingService
+    private readonly guessing: GuessingService,
+    private readonly changeRef: ChangeDetectorRef
   ) {
   }
 
