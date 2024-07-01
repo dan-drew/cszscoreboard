@@ -41,7 +41,18 @@ export const guessingGames: GuessingGame[] = Object.seal([
     {labelTemplate: '{{}} Thing', placeholderTemplate: FIVETHING_PROMPT, multiline: true}
   ),
   homeShopping,
-  homeShopping.asVs('shared'),
+  new GuessingGame(
+    'Home Shopping Network (H2H)',
+    [3, 5],
+    {
+      style: 'list',
+      vs: 'shared',
+      labelTemplate: '{{}} Product',
+      placeholderTemplate: 'Product with something different',
+      multiline: false,
+      listName: 'Home Shopping (H2H)'
+    }
+  ),
   new GuessingGame(
     'Chain Murder',
     [{label: 'Location'}, {label: 'Occupation'}, {label: 'Weapon'}],

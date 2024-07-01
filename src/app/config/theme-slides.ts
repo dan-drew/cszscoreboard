@@ -50,6 +50,8 @@ export class ThemeSlides extends Cacheable<ThemeSlidesCache> implements ThemeSli
   }
 
   set active(val: number) {
+    if (val < 0) throw new Error('Invalid active theme index (less than zero)')
+    if (val >= this.slides.length && val !== 0) throw new Error(`Invalid active slide index (${val})`)
     this._active = val
     this.cache()
   }
@@ -76,7 +78,7 @@ export class ThemeSlides extends Cacheable<ThemeSlidesCache> implements ThemeSli
     if (i >= 0) {
       this.cache(() => {
         this.slides.splice(i, 1)
-        if (this.active >= this.slides.length) this.active = this.slides.length - 1
+        if (this.active >= this.slides.length) this.active = Math.max(0, this.slides.length - 1)
       })
     }
   }
@@ -87,8 +89,8 @@ export class ThemeSlides extends Cacheable<ThemeSlidesCache> implements ThemeSli
   }
 
   protected override init(_data?: any) {
-    this.active = 0
     this.slides = []
+    this.active = 0
   }
 
   protected override serialize(): ThemeSlidesCache {
@@ -99,7 +101,7 @@ export class ThemeSlides extends Cacheable<ThemeSlidesCache> implements ThemeSli
   }
 
   protected override deserialize(data: ThemeSlidesCache) {
-    this.active = data.active || 0
     this.slides = data.slides || []
+    this.active = data.active || 0
   }
 }
