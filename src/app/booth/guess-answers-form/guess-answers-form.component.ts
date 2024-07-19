@@ -42,7 +42,6 @@ export class GuessAnswersFormComponent implements OnInit, OnDestroy {
 
   reset() {
     this.form.reset()
-    this.guessing.guesses.reset()
   }
 
   private addGuess(value: string = ''): boolean {
