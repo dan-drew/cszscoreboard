@@ -14,7 +14,7 @@
         <ng-container [ngTemplateOutlet]="profile" [ngTemplateOutletContext]="{$profile: match.profile}" />
       </button>
       <ul class="dropdown-menu" aria-labelledby="profileButton">
-        @for ($profile of profiles.profiles; track $profile) {
+        @for ($profile of profiles.profiles(); track $profile) {
           <li>
             <button class="dropdown-item" (click)="match.profile = $profile">
               <ng-container [ngTemplateOutlet]="profile" [ngTemplateOutletContext]="{$profile}" />

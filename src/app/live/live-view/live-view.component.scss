@@ -22,18 +22,10 @@
 .team-name {
   font-size: var(--size-80);
   font-weight: bold;
-  font-family: var(--csz-font-family);
+  font-family: var(--heading-font-family), sans-serif;
   color: white;
   text-transform: uppercase;
   filter: drop-shadow(0 0 10px white);
-
-  &.team-red {
-    //color: var(--csz-red);
-  }
-
-  &.team-blue {
-    //color: var(--csz-blue);
-  }
 }
 
 img.team-name {

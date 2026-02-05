@@ -1,7 +1,8 @@
 export enum ProfileLogo {
   ComedySportz = 'comedysportz.png',
   MinorLeague =  'minorleague.png',
-  RecLeague = 'recleague.png'
+  RecLeague = 'recleague.png',
+  WryVsDry = 'wry-vs-dry.png'
 }
 
 export enum TeamLogo {
@@ -9,19 +10,25 @@ export enum TeamLogo {
   Mirthquakes = 'mirthquakes.png'
 }
 
+export interface ProfileTeam {
+  name: string
+  logo?: TeamLogo
+  color: string
+  textColor: string
+}
+
 export interface Profile {
   id: string
   name: string
   builtin?: boolean
-  logo: ProfileLogo
+  logo: ProfileLogo,
+  logoShadow?: boolean,
   social?: string
-  rounds: string[]
+  rounds: string[] | null
   teams: {
-    blue: string
-    blueLogp?: TeamLogo
-    red: string
-    redLogo?: TeamLogo
-    optional: string
+    left: ProfileTeam
+    right: ProfileTeam
+    optional: ProfileTeam
   }
   disableRoundFlyby?: boolean
   disableTeamFlyby?: boolean

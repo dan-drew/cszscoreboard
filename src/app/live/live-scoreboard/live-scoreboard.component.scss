@@ -11,6 +11,10 @@ app-score {
   object-fit: contain;
   object-position: center center;
   z-index: 100;
+
+  &.logo__shadow {
+    filter: drop-shadow(0 0 4px black);
+  }
 }
 
 app-round-names {
@@ -24,7 +28,7 @@ app-round-names {
 .round-flyby {
   font-size: var(--size-80);
   font-weight: bold;
-  font-family: var(--csz-font-family);
+  font-family: var(--heading-font-family), sans-serif;
   opacity: 90%;
   color: white;
 }

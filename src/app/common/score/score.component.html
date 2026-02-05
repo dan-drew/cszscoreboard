@@ -1,5 +1,5 @@
-<ng-template #team let-$team let-$edit="edit">
-  <div class="team csz-bg-{{$team.type}}">
+<ng-template #team let-$team>
+  <div class="team bg-{{$team.type}}-team text-{{$team.type}}-team">
     <div class="score w-100">
       @if (editable()) {
         <!-- DECREMENT SCORE -->
@@ -7,7 +7,7 @@
           <i class="bi-dash-circle"></i>
         </button>
         <!-- CURRENT SCORE -->
-        <div class="score-value csz-bold-text clickable hover-highlight" (click)="editScore($team)">
+        <div class="score-value heading-bold-text clickable hover-highlight" (click)="editScore($team)">
           {{$team.score}}
         </div>
         <!-- INCREMENT SCORE -->
@@ -17,23 +17,23 @@
       }
 
       @if (!editable()) {
-        <div class="score-value csz-bold-text">
+        <div class="score-value heading-bold-text">
           {{$team.score}}
         </div>
       }
     </div>
 
-    <div class="team-name csz-bold-text">
+    <div class="team-name heading-bold-text">
       {{$team.name}}
     </div>
   </div>
 </ng-template>
 
 <ng-container [ngTemplateOutlet]="team"
-  [ngTemplateOutletContext]="{$implicit: match.teams.blue}"
+  [ngTemplateOutletContext]="{$implicit: match.teams.left}"
  />
 <ng-container [ngTemplateOutlet]="team"
-  [ngTemplateOutletContext]="{$implicit: match.teams.red}"
+  [ngTemplateOutletContext]="{$implicit: match.teams.right}"
  />
 @if (editable() && match.teams.optionalEnabled) {
   <ng-container [ngTemplateOutlet]="team"

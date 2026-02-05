@@ -7,6 +7,8 @@
 @if (match.teams.optionalEnabled) {
   <app-optional-score />
 }
-<img class="logo" alt="logo" src="/assets/logos/{{match.logo}}">
+<img class="logo" [class.logo__shadow]="match.profile.logoShadow" alt="logo" src="/assets/logos/{{match.logo}}">
 <app-score />
-<app-round-names />
+@if (match.round.enabled) {
+  <app-round-names/>
+}

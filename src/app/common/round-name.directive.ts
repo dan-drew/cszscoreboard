@@ -18,7 +18,7 @@ export class RoundNameDirective {
 
 
   constructor() {
-    this.renderer.addClass(this.el.nativeElement, 'csz-bold-text')
+    this.renderer.addClass(this.el.nativeElement, 'heading-bold-text')
     this.renderer.addClass(this.el.nativeElement, 'clickable')
   }
 

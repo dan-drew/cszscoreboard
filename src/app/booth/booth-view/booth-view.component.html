@@ -35,7 +35,9 @@
       <app-guess-selector />
     }
   }
-  <app-rounds [editable]="true" />
+  @if (match.round.enabled) {
+    <app-rounds [editable]="true"/>
+  }
 </div>
 
 <app-sidebar />

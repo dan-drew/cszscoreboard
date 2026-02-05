@@ -7,7 +7,7 @@
     @for ($slide of slides.slides; track $slide) {
       <button
         [buttonGroupItem]="$index"
-        class="slide-item csz-text fs-3"
+        class="slide-item heading-text fs-3"
         >
         <img class="theme-background" [themeSlideBackground]="$slide" alt="Theme Background">
         <div class="theme-title" [themeSlideTitle]="$slide">{{$slide.title}}</div>

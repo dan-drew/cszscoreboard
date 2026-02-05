@@ -2,9 +2,9 @@
   class="rounded rounded-3 bg-black border border-1 border-light p-5 top-50 start-50
   translate-middle position-absolute shadow d-flex-column gap-3"
   >
-  <div class="fs-3 csz-bold-text text-center mb-3">Select Profile</div>
+  <div class="fs-3 heading-bold-text text-center mb-3">Select Profile</div>
 
-  @for ($profile of match.profiles.profiles; track $profile) {
+  @for ($profile of match.profiles.profiles(); track $profile) {
     <button
       type="button"
       class="btn btn-dark btn-lg text-start border border-light d-flex-row gap-3 px-5 align-items-center"

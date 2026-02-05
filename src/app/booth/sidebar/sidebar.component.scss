@@ -35,8 +35,8 @@
 
     .tab {
       --tab-color: white;
-      --tab-hover-color: var(--csz-blue);
-      --tab-selected-color: rgb(var(--csz-blue), 0.2);
+      --tab-hover-color: var(--left-team-bg-color);
+      --tab-selected-color: rgb(var(--left-team-bg-color), 0.2);
 
       color: var(--tab-color);
       width: 100%;
@@ -51,7 +51,7 @@
       border: 0;
 
       i {
-        font-family: bootstrap-icons sans-serif;
+        font-family: bootstrap-icons, sans-serif;
         font-size: var(--size-5);
         padding: 0;
         margin: 0;

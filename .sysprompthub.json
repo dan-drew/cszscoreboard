@@ -1,0 +1,12 @@
+{
+  "packs": [
+    {
+      "type": "claude",
+      "pack": "sysprompthub/angular-19-css/latest",
+      "agent": {
+        "name": "angular",
+        "description": "Instructions for writing UI frontend code, HTML and CSS"
+      }
+    }
+  ]
+}

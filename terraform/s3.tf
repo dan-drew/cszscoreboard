@@ -1,5 +1,5 @@
 locals {
-  dist_dir   = "${path.root}/../dist/cszscoreboard"
+  dist_dir   = "${path.root}/../dist/cszscoreboard/browser"
   dist_files = {
     for f in fileset(local.dist_dir, "**") :
     f => "${local.dist_dir}/${f}"

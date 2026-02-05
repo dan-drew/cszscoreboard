@@ -19,7 +19,7 @@ import { AsyncPipe, UpperCasePipe } from '@angular/common';
 export class LiveScoreboardComponent implements OnInit, OnDestroy {
   readonly match = inject(Match);
 
-  readonly roundFlyby = viewChild.required<FlybyComponent>('roundFlyby');
+  readonly roundFlyby = viewChild<FlybyComponent>('roundFlyby');
 
   private roundNameSubscription?: Subscription
 

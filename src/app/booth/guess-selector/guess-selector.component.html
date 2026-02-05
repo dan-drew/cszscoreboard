@@ -7,7 +7,7 @@
     @for ($guess of guessing.previews; track $guess) {
       <button
         [buttonGroupItem]="$index"
-        class="guess-item csz-text fs-3"
+        class="guess-item heading-text fs-3"
       >{{$guess.text}}</button>
     }
   </app-button-group>

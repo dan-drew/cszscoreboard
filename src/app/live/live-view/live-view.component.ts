@@ -82,6 +82,6 @@ export class LiveViewComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   get teamDirection() {
-    return this.match.winningTeam?.type === 'red' ? 'right' : 'left'
+    return this.match.winningTeam?.type === 'right' ? 'right' : 'left'
   }
 }

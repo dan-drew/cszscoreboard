@@ -1,4 +1,4 @@
-import {Profile, ProfileLogo} from "./profile";
+import {Profile, ProfileLogo, TeamLogo} from "./profile";
 import {Teams} from "./teams";
 import {Rounds} from "./rounds";
 import {Guesses} from "./guesses";
@@ -76,19 +76,19 @@ export class Match extends Cacheable<MatchCache, Profiles> {
   }
 
   get winningTeam() {
-    const result = this.teams.red.score - this.teams.blue.score
+    const result = this.teams.right.score - this.teams.left.score
 
     if (result > 0) {
-      return this.teams.red
+      return this.teams.right
     } else if (result < 0) {
-      return this.teams.blue
+      return this.teams.left
     } else {
       return null
     }
   }
 
   get hasScore(): boolean {
-    return this.teams.red.score > 0 || this.teams.blue.score > 0
+    return this.teams.right.score > 0 || this.teams.left.score > 0
   }
 
   // private get cached(): MatchCache {
@@ -112,7 +112,7 @@ export class Match extends Cacheable<MatchCache, Profiles> {
 
   delete() {
     this.profiles.delete(this.currentProfile)
-    this.profile = this.profiles.profiles[0]
+    this.profile = this.profiles.profiles()[0]
   }
 
   reset(options: CacheOptions = {}) {
@@ -144,9 +144,9 @@ export class Match extends Cacheable<MatchCache, Profiles> {
       social: this.social,
       rounds: Array.from(this.round.names),
       teams: {
-        blue: this.teams.blue.name,
-        red: this.teams.red.name,
-        optional: this.teams.optional.name
+        left: this.teams.left.toProfileTeam(),
+        right: this.teams.right.toProfileTeam(),
+        optional: this.teams.optional.toProfileTeam()
       }
     }
   }
@@ -158,7 +158,7 @@ export class Match extends Cacheable<MatchCache, Profiles> {
 
   protected override init() {
     this.profileSelected = false
-    this.setProfile(this.profiles.profiles[0], {useCache: false})
+    this.setProfile(this.profiles.profiles()[0], {useCache: false})
   }
 
   protected override serialize(): MatchCache {
@@ -174,7 +174,7 @@ export class Match extends Cacheable<MatchCache, Profiles> {
 
     if (data.profileId !== this.profile?.id) {
       const profile = data.profileId ? this.profiles.find(data.profileId) : null
-      this.setProfile(profile || this.profiles.profiles[0], {useCache: true})
+      this.setProfile(profile || this.profiles.profiles()[0], {useCache: true})
     }
 
     this.activeView = data.activeView

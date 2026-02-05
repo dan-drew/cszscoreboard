@@ -19,11 +19,11 @@
 @if (this.game; as $game) {
   @if ($game.vs === 'vs') {
     <div>
-      <div class="csz-bg-blue text-white p-2 rounded-2 fs-4 text-center">Blue Team</div>
+      <div class="bg-left-team text-white p-2 rounded-2 fs-4 text-center">Left Team</div>
       <app-guess-answers-form #blue [guesses]="$game.guesses" [answers]="match.guesses.blue!" />
     </div>
     <div>
-      <div class="csz-bg-red text-white p-2 rounded-2 fs-4 text-center">Red Team</div>
+      <div class="bg-right-team text-white p-2 rounded-2 fs-4 text-center">Right Team</div>
       <app-guess-answers-form #red [guesses]="$game.guesses" [answers]="match.guesses.red!" />
     </div>
   } @else {

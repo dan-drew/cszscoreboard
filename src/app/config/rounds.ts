@@ -35,6 +35,10 @@ export class Rounds extends Cacheable<RoundsCache> {
     super('rounds', options, profile)
   }
 
+  get enabled() {
+    return this.count > 0
+  }
+
   get current() {
     return this._current.asObservable()
   }
@@ -69,7 +73,7 @@ export class Rounds extends Cacheable<RoundsCache> {
 
   protected override init(data?: any) {
     const profile = data as Profile
-    this._names = Array.from(profile.rounds)
+    this._names = Array.from(profile.rounds || [])
   }
 
   protected override serialize(): RoundsCache {
