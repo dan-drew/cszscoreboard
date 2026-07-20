@@ -55,6 +55,10 @@ export class DiagnosticService implements ErrorHandler {
   }
 
   logError(info: ErrorInfo) {
+    if (!this.isAppCode(info)) {
+      return
+    }
+
     this.zone.runOutsideAngular(() => {
       const doIt = async () => {
         const diagnostics = this.load()
@@ -187,5 +191,39 @@ export class DiagnosticService implements ErrorHandler {
       info.stack = (await SourceMapper.map(info.stackLines)).map(line => StackParser.toString(line))
       delete info.stackLines
     }
+  }
+
+  private isAppCode(info: ErrorInfo): boolean {
+    const files = [
+      info.file,
+      ...(info.stackLines || []).map(line => line.file)
+    ].filter((file): file is string => !!file)
+
+    if (files.length === 0) {
+      return true
+    }
+
+    return files.some(file => this.isAppFile(file))
+  }
+
+  private isAppFile(file: string): boolean {
+    if (file.startsWith(window.location.origin) || file.startsWith('/')) {
+      return true
+    }
+
+    if (file.startsWith('webpack://')) {
+      return true
+    }
+
+    return !this.isExternalScheme(file)
+  }
+
+  private isExternalScheme(file: string): boolean {
+    const lower = file.toLowerCase()
+    return lower.startsWith('chrome-extension://')
+      || lower.startsWith('moz-extension://')
+      || lower.startsWith('safari-extension://')
+      || lower.startsWith('edge-extension://')
+      || lower.startsWith('devtools://')
   }
 }

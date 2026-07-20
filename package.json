@@ -7,11 +7,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "prebuild": "rm -rf dist && ./version.sh",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "start-production": "ng serve --verbose -c production",
-    "start-sw": "http-server -p 4200 -c-1 dist/cszscoreboard/"
+    "start-sw": "http-server -p 4200 -c-1 dist/cszscoreboard/",
+    "predeploy": "pnpm run build",
+    "deploy": "./deploy.sh"
   },
   "private": true,
   "dependencies": {

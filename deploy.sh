@@ -5,18 +5,21 @@ function invalidationInProgress() {
   aws cloudfront list-invalidations --distribution-id=E16RV8HYJJQVLB | grep -q 'InProgress'
 }
 
-cd terraform
+(
+  cd terraform
 
-echo 'Deploying updates...'
-terraform apply -auto-approve
+  echo 'Deploying updates...'
+  terraform init
+  terraform apply -auto-approve
 
-echo 'Invaliding CDN...'
-aws cloudfront create-invalidation --distribution-id=E16RV8HYJJQVLB --paths '/' '/*'
+  echo 'Invaliding CDN...'
+  aws cloudfront create-invalidation --distribution-id=E16RV8HYJJQVLB --paths '/' '/*'
 
-sleep 10
-while invalidationInProgress; do
-  echo -n '.'
   sleep 10
-done
+  while invalidationInProgress; do
+    echo -n '.'
+    sleep 10
+  done
+)
 
 echo ' Done.'
