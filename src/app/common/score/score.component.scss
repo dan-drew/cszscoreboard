@@ -32,11 +32,7 @@
   gap: var(--size-1);
   overflow: hidden;
   padding: var(--size-1);
-
-  @if false {
-    color: white !important;
-    -webkit-text-stroke: thick black;
-  }
+  -webkit-text-stroke: 2px #00000066;
 
   &.bg-optional-team {
     --score-size: var(--size-15);
@@ -53,12 +49,7 @@
     .score-button {
       color: inherit;
       font-size: calc(var(--score-size) / 4);
-      @if false {
-        -webkit-text-stroke: 0;
-        background: #00000066;
-        filter: drop-shadow(0 0 5px #000000);
-        border-radius: 50%;
-      }
+      -webkit-text-stroke-width: 2px;
       padding: 2px !important;
       line-height: 1;
     }
@@ -68,6 +59,7 @@
       font-weight: bold;
       min-width: 2ch;
       text-align: center;
+      -webkit-text-stroke-width: 5px;
     }
 
   }
@@ -78,7 +70,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     line-height: 1.5;
-    -webkit-text-stroke-width: 1px;
+    //-webkit-text-stroke-width: 1px;
   }
 
 }

@@ -102,16 +102,16 @@ export const builtinProfiles: Profile[] = [
     'wry-vs-dry',
     'Wry vs Dry',
     ProfileLogo.WryVsDry,
-    'Wry',
-    'Dry',
+    'Funnypenny',
+    'Octopunny',
     'Antonio',
     {
-      leftColor: black,
+      leftColor: 'darkred',
       leftTextColor: white,
-      rightColor: white,
-      rightTextColor: black,
-      rounds: null,
-      logoShadow: true
+      rightColor: 'darkgoldenrod',
+      rightTextColor: white,
+      rounds: null, // Keep it simple for AOT tech
+      logoShadow: false
     }
   )
 ]
