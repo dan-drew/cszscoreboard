@@ -12,6 +12,7 @@ import { GuessSelectorComponent } from '../guess-selector/guess-selector.compone
 import { RoundsComponent } from '../../common/rounds/rounds.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { ProfilePickerComponent } from '../profile-picker/profile-picker.component';
+import { ScoreboardPreviewService } from '../scoreboard-preview.service';
 
 @Component({
     selector: 'app-booth-view',
@@ -27,6 +28,7 @@ export class BoothViewComponent implements OnInit {
   private readonly guessing = inject(GuessingService);
   private readonly title = inject(Title);
   private readonly heartbeat = inject(HeartbeatService);
+  private readonly scoreboardPreview = inject(ScoreboardPreviewService);
 
 
   ngOnInit() {
@@ -40,5 +42,9 @@ export class BoothViewComponent implements OnInit {
       case 'themes': return this.match.themeSlides.enabled
     }
     return true
+  }
+
+  get scoreboardPreviewUrl(): string {
+    return this.scoreboardPreview.previewUrl(this.match);
   }
 }

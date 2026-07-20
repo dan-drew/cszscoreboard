@@ -7,7 +7,7 @@
         <img [src]="match.logoUrl" class="w-100 h-100 image-fit p-2" alt="Show Slate">
       </button>
       <button buttonGroupItem="scoreboard" title="Scoreboard" class="p-2">
-        <img src="/assets/scoreboard.png" class="w-100 h-100 image-cover rounded" alt="Scoreboard">
+        <img [src]="scoreboardPreviewUrl" class="w-100 h-100 image-cover rounded" alt="Scoreboard">
       </button>
       @if (viewAvailable('guesses')) {
         <button buttonGroupItem="guesses" title="Guess">
